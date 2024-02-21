@@ -1,5 +1,5 @@
-import Home from './components/screens/Home';
+import Planner from './components/screens/Planner';
 
 export default function App() {
-  return <Home />;
+  return <Planner />;
 }
