@@ -13,6 +13,7 @@
     "@react-navigation/native": "^6.1.10",
     "@react-navigation/native-stack": "^6.9.18",
     "nativewind": "^2.0.11",
+    "pretty-format": "^29.7.0",
     "react": "18.2.0",
     "react-native": "0.73.4",
     "react-native-element-dropdown": "^2.10.1",
