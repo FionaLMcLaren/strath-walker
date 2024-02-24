@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {Text, View, Button} from "react-native";
+import MapView from 'react-native-maps';
 
 export default function Planner() {
 
@@ -11,6 +12,18 @@ export default function Planner() {
 
    	return (
             <View className={styles.container}>
+
+
+               	<MapView
+                  initialRegion={{
+                    latitude: 37.78825,
+                    longitude: -122.4324,
+                    latitudeDelta: 0.0922,
+                    longitudeDelta: 0.0421,
+                  }}
+                />
+
+
                <Text>Open up App.tsx to start working on your app!</Text>
 
                 <Button
