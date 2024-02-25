@@ -26,10 +26,10 @@ export default function MapLocationPicker(props) {
             <Marker
 
               coordinate={marker.pos}
-              onPress = {e=>props.changeStart(marker.name)}
+              onPress = {e=>props.changeLoc(marker.name)}
 
             >
-            <MarkerStyle start={props.start} name={marker.name}/>
+            <MarkerStyle loc={props.loc} name={marker.name}/>
 
             </Marker>
           ))}
@@ -41,7 +41,7 @@ export default function MapLocationPicker(props) {
 }
 
 const MarkerStyle=(props)=>{
-    if(props.start === props.name){
+    if(props.loc === props.name){
         return(<View style={{backgroundColor: "yellow", padding: 10}}>
                     <Text>{props.name}</Text>
                </View>);

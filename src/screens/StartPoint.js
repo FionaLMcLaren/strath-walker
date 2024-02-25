@@ -13,13 +13,13 @@ export default function StartPoint({ navigation }) {
    	return (
 
             <View className={styles.container }>
-               <MapPicker start={start} changeStart={setStart}/>
-               <Text>Start Point</Text>
-                  <Button
+               <MapPicker loc={start} changeLoc={setStart}/>
+               <Text>Start Point: {start}</Text>
+
+                <Button
                     title="Select end point"
                     onPress={() => navigation.navigate("End Point")}
-                  />
-               <Text>{start}</Text>
+                />
             </View >
     );
 
