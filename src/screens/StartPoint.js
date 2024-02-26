@@ -21,9 +21,10 @@ export default function StartPoint({ navigation }) {
    	return (
             <View className={styles.container}>
                 <Text>Start Point</Text>
-                <Text>{startTime.toTimeString()}</Text>
+                <Text>{startTime.toString()}</Text>
 
                 <TimeSelect
+                    time={startTime}
                     timeSetter={setStartTime}
                 />
 
