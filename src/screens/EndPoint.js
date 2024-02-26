@@ -3,10 +3,14 @@ import {Text, View, Button} from "react-native";
 
 export default function EndPoint({ route, navigation }) {
 
-	const { start } = route.params;
+	const start = route.params.start;
 
-	const endTime = new Date(start);
-	endTime.setHours(endTime.getHours() + 1);
+	const [endTime, setEndTime] = React.useState(
+		new Date(
+			new Date(
+				start.getTime()).setHours(start.getHours() + 1)
+		)
+	)
 
    	const styles = {
    		container: "flex flex-1 items-center justify-center",
@@ -15,7 +19,8 @@ export default function EndPoint({ route, navigation }) {
    	return (
             <View className={styles.container}>
                 <Text>End Point</Text>
-				<Text>{start}</Text>
+				<Text>{start.toTimeString()}</Text>
+				<Text>{endTime.toTimeString()}</Text>
             </View >
     );
 

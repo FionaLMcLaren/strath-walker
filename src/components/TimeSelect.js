@@ -3,16 +3,24 @@ import {ScrollView, Text, View} from "react-native";
 import { List, Button } from "react-native-paper";
 import ScrollPicker from "react-native-wheel-scrollview-picker";
 
-export default function TimeSelect({timeSetter}) {
+/*TODO: disallow time being selected outside of working hours with warning
+disallow end times being greater than start times
+error when trying to set with current time with a time outwith the working
+hours
+rounding up current times to nearest quarter?
+portal/modal pop up for time selection
+*/
+
+export default function TimeSelect({time, timeSetter}) {
 
     const styles = {
         container: "flex flex-row items-center justify-center p-2"
     };
 
-    const hours = [...Array(24).keys()].map(i => i)
+    const hours = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
     const minutes= [0, 15, 30, 45]
 
-    const timeToSet = new Date();
+    const timeToSet = new Date(time.getTime());
     timeToSet.setSeconds(0)
 
     return (
@@ -22,7 +30,7 @@ export default function TimeSelect({timeSetter}) {
                 selectedIndex={hours.indexOf(timeToSet.getHours())}
                 wrapperBackground="transparent"
                 onValueChange={(selHour) => {
-                    timeSetter(timeToSet.setHours(selHour))
+                    timeSetter(new Date(timeToSet.setHours(selHour)))
                 }}
             />
 
@@ -31,7 +39,7 @@ export default function TimeSelect({timeSetter}) {
                 selectedIndex={minutes.indexOf(timeToSet.getMinutes())}
                 wrapperBackground="transparent"
                 onValueChange={(selMin) => {
-                    timeSetter(timeToSet.setMinutes(selMin))
+                    timeSetter(new Date(timeToSet.setMinutes(selMin)))
                 }}
             />
         </View >
