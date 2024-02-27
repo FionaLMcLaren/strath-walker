@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {Text, View, Button} from "react-native";
 import MapPicker from "../components/Map/MapLocationPicker";
 import TimeSelect from "../components/Time/TimeSelect";
+import TimeSetter from "../components/Time/TimeSetter";
 
 export default function EndPoint({ route, navigation }) {
 
@@ -35,16 +36,12 @@ export default function EndPoint({ route, navigation }) {
 				onPress={() => navigation.navigate("Routes")}
 			/>
 
-            <Text>{startTime.toTimeString()}</Text>
-            <Text>{endTime.toTimeString()}</Text>
-
-			<TimeSelect
+			<TimeSetter
 				time={endTime}
 				timeSetter={setEndTime}
 				prevTime={startTime}
-				modalVisible={modalVisible}
-				toggleModalVisible={toggleModalVisible}
 			/>
+
 		</View >
 	);
 
