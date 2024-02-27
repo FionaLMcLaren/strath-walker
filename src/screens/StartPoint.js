@@ -1,20 +1,18 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Text, View} from "react-native";
-import {Button} from "react-native-paper";
+import {Button, Switch} from "react-native-paper";
 import TimeSelect from "../components/Time/TimeSelect";
 import MapPicker from "../components/Map/MapLocationPicker";
+import TimeSetter from "../components/Time/TimeSetter";
 
 export default function StartPoint({ navigation }) {
 
     const styles = {
-        container: "justify-center h-4/5 ",
+        container: "justify-center h-4/5 bg-yellow",
     };
 
     const [start, setStart] = useState("");
-
     const [startTime, setStartTime] = React.useState(new Date());
-
-    const [modalVisible, toggleModalVisible] = React.useState(false);
 
 
     return (
@@ -24,18 +22,9 @@ export default function StartPoint({ navigation }) {
                 <MapPicker loc={start} changeLoc={setStart}/>
                 <Text>Start Point: {start}</Text>
 
-                <Text>{startTime.toString()}</Text>
-                <Button
-                    onPress={() => toggleModalVisible(true)}
-                >
-                    Set start time
-                </Button>
-
-                <TimeSelect
+                <TimeSetter
                     time={startTime}
                     timeSetter={setStartTime}
-                    modalVisible={modalVisible}
-                    toggleModalVisible={toggleModalVisible}
                 />
 
                 <Button
