@@ -1,7 +1,8 @@
-import React from "react";
-import {Text, View, ScrollView, SafeAreaView} from "react-native";
+import React, {useState} from "react";
+import {Text, View, ScrollView, SafeAreaView, TouchableHighlight} from "react-native";
 import {PathGenerator} from '../Routes/GeneratePoints.js';
 import {Location} from '../Routes/Location.js';
+import RoutesMap from '../Map/RoutesMap.js';
 
 
 export default function Routes() {
@@ -16,16 +17,17 @@ export default function Routes() {
 
    	let pathGenerator = new PathGenerator(start, end, middlePoints);
    	let paths = pathGenerator.getPaths();
+   	const [points, setPoints] = useState([start]);
 
    	return (
             <View className={styles.container}>
                <Text>Routes page</Text>
-               <SafeAreaView>
-                    <ScrollView>
-                        <RoutesSection paths={paths} start={start} end={end}/>
-                    </ScrollView>
-               </SafeAreaView>
-            </View >
+               <RoutesMap points={points}/>
+
+               <ScrollView>
+                    <RoutesSection changePoints={setPoints} paths={paths} start={start} end={end}/>
+               </ScrollView>
+            </View>
     );
 
 }
@@ -33,13 +35,15 @@ export default function Routes() {
 const RoutesSection=(props)=>{
     return props.paths.map((path) => {
         return(
-                <View>
-                    <Text>{props.start.getName()} -> </Text>
-                    <RoutesTab path={path}/>
-                    <Text>{props.end.getName()}</Text>
-                    <Text>-</Text>
-                    <Text></Text>
-                </View>
+                <TouchableHighlight onPress={e => props.changePoints(path)}>
+                    <View>
+                        <Text>{props.start.getName()} -> </Text>
+                        <RoutesTab path={path}/>
+                        <Text>{props.end.getName()}</Text>
+                        <Text>-</Text>
+                        <Text></Text>
+                    </View>
+                </TouchableHighlight>
         )
 
 
@@ -58,6 +62,8 @@ const RoutesTab=(props)=>{
     })
 
 }
+
+
 
 
 

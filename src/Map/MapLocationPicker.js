@@ -24,10 +24,8 @@ export default function MapLocationPicker(props) {
         >
         {points.map((marker) => (
             <Marker
-
               coordinate={marker.pos}
               onPress = {e=>props.changeLoc(marker.name)}
-
             >
             <MarkerStyle loc={props.loc} name={marker.name}/>
 
