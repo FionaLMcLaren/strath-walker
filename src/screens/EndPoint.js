@@ -16,7 +16,7 @@ export default function EndPoint({ route, navigation }) {
 
    	const styles = {
    		otherContainer: "flex flex-1 items-center justify-center",
-        container: "items-center justify-center h-4/5 bg-neutral-950",
+        container: "justify-center h-4/5 bg-neutral-950",
     };
 
 	return (

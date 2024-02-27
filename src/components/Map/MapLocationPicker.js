@@ -12,7 +12,7 @@ export default function MapLocationPicker(props) {
    	return(
    	    <MapView
    	      minZoomLevel={17}
-          style={StyleSheet.absoluteFillObject, {height:"75%"}}
+          style={StyleSheet.absoluteFillObject, {height:"100%"}}
           initialRegion={{
             latitude: 55.861873,
             longitude: -4.244115,
