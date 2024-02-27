@@ -41,7 +41,7 @@ export default function StartPoint({ navigation }) {
                 <Button
                     onPress={() => navigation.navigate("End Point",
                         {
-                            start: startTime
+                            startingTime: startTime
                         })
                     }
                 >

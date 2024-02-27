@@ -4,12 +4,12 @@ import MapPicker from "../components/Map/MapLocationPicker";
 
 export default function EndPoint({ route, navigation }) {
 
-	const startTime = route.params.start;
+	const startTime = route.params.startingTime;
 
 	const [endTime, setEndTime] = React.useState(
 		new Date(
 			new Date(
-                startTime.getTime()).setHours(start.getHours() + 1)
+                startTime.getTime()).setHours(startTime.getHours() + 1)
 		)
 	)
     const [end, setEnd] = useState([]);
