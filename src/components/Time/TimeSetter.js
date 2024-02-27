@@ -74,7 +74,7 @@ export default function TimeSetter({ time, timeSetter, prevTime }) {
             <Button
                 onPress={() => toggleModalVisible(true)}
             >
-                Set start time
+                Set time
             </Button>
 
             <TimeSelect
