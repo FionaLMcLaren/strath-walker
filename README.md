@@ -1,4 +1,20 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+This is a [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+
+
+# Libraries Used
+
+- Adel Reda (2023) react-native-select-dropdown, npm. Available at: https://www.npmjs.com/package/react-native-select-dropdown (Accessed: 24 February 2024).
+
+- callstack (2024) React Native Paper. Available at: https://reactnativepaper.com/ (Accessed: 24 February 2024).
+
+- NativeWind (2022). Available at: https://nativewind.dev/ (Accessed: 24 February 2024).
+
+- React Navigation (2024). Available at: https://reactnavigation.org/ (Accessed: 24 February 2024).
+
+- react-native-maps (2024) npm. Available at: https://www.npmjs.com/package/react-native-maps (Accessed: 24 February 2024).
+
+- Web Ridge (2024) Paper Dates. Available at: https://web-ridge.github.io/react-native-paper-dates/ (Accessed: 24 February 2024).
+
 
 # Getting Started
 
