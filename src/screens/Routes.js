@@ -7,7 +7,7 @@ import RoutesMap from '../components/Map/RoutesMap.js';
 export default function Routes() {
 
    	const styles = {
-   		container: "flex flex-1 items-center justify-center",
+   		container: "flex flex-1 justify-center",
    	};
 
    	const start = new Location("Rottenrow", 55.861873, -4.244115);
