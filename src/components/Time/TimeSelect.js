@@ -1,6 +1,6 @@
-import React, {useCallback, useState} from "react";
-import {ScrollView, Text, View, SafeAreaView} from "react-native";
-import { List, Button, Dialog, Portal, Provider} from "react-native-paper";
+import React, { useState} from "react";
+import { Text} from "react-native";
+import {Button, Dialog, Portal} from "react-native-paper";
 import ScrollPicker from "react-native-wheel-scrollview-picker";
 
 /*TODO
