@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {Text, View, Button} from "react-native";
 import MapPicker from "../components/Map/MapLocationPicker";
+import TimeSelect from "../components/Time/TimeSelect";
 
 export default function EndPoint({ route, navigation }) {
 
@@ -19,11 +20,15 @@ export default function EndPoint({ route, navigation }) {
         container: "justify-center h-4/5 bg-neutral-950",
     };
 
+	const [modalVisible, toggleModalVisible] = React.useState(false);
+
+
 	return (
 
 		<View className={styles.container }>
 			<MapPicker loc={end} changeLoc={setEnd}/>
 			<Text>End Point: {end}</Text>
+
 
 			<Button
 				title="Select route point"
@@ -32,6 +37,14 @@ export default function EndPoint({ route, navigation }) {
 
             <Text>{startTime.toTimeString()}</Text>
             <Text>{endTime.toTimeString()}</Text>
+
+			<TimeSelect
+				time={endTime}
+				timeSetter={setEndTime}
+				prevTime={startTime}
+				modalVisible={modalVisible}
+				toggleModalVisible={toggleModalVisible}
+			/>
 		</View >
 	);
 
