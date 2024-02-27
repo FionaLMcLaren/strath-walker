@@ -7,7 +7,7 @@ import MapPicker from "../components/Map/MapLocationPicker";
 export default function StartPoint({ navigation }) {
 
     const styles = {
-        container: "items-center justify-center h-4/5 bg-neutral-950",
+        container: "justify-center h-4/5 ",
     };
 
     const [start, setStart] = useState("");
