@@ -2,6 +2,7 @@ import React, { useState} from "react";
 import { Text} from "react-native";
 import {Button, Dialog, Portal} from "react-native-paper";
 import ScrollPicker from "react-native-wheel-scrollview-picker";
+import ErrorModal from "../Popup/PopupErr";
 
 /*TODO
 disallow end times being greater than start times
@@ -12,7 +13,7 @@ rounding up current times to nearest quarter?
 export default function TimeSelect({time, timeSetter, prevTime, modalVisible, toggleModalVisible}) {
 
     const styles = {
-        timeContainer: "flex flex-row items-center justify-center p-2",
+        timeContainer: "flex flex-row items-center justify-center gap-2",
         container: "flex items-center justify-center",
     };
 
@@ -21,20 +22,26 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
 
     const [timeToSet, setTimeToSet] = useState(new Date(time.getTime()));
 
+    const [showingErrorPopUp, setShowingErrorPopUp] = useState(false);
+
     const validateTime = () => {
         let lowTime = new Date(new Date(Date.now()).setHours(8, 0, 0));
         let highTime = new Date(new Date(Date.now()).setHours(18, 0, 0));
+
+        console.log(timeToSet)
 
         if ((timeToSet <= highTime) && (timeToSet >= lowTime)) {
             timeSetter(new Date(timeToSet.getTime()))
             return true
         } else {
+            setShowingErrorPopUp(true)
             return false
         }
     }
 
 
     return (
+        <>
             <Portal>
                 <Dialog
                     visible={modalVisible}
@@ -43,7 +50,10 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
                     <Dialog.Title>
                         Choose Time
                     </Dialog.Title>
-                    <Dialog.Content className={styles.timeContainer}>
+
+                    <Dialog.Content
+                        className={styles.timeContainer}
+                    >
                             <ScrollPicker
                                 dataSource={hours}
                                 selectedIndex={hours.indexOf(timeToSet.getHours())}
@@ -77,6 +87,16 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
+
+            <Portal>
+                <ErrorModal
+                    errorTitle={"hello world"}
+                    errorText={"not valid time"}
+                    modalVisible={showingErrorPopUp}
+                    toggleModalVisible={setShowingErrorPopUp}
+                />
+            </Portal>
+        </>
 
     );
 
