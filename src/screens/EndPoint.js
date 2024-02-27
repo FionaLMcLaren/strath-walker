@@ -2,10 +2,12 @@ import React, {useState} from "react";
 import {Text, View, Button} from "react-native";
 import MapPicker from "../components/Map/MapLocationPicker";
 import TimeSelect from "../components/Time/TimeSelect";
+import {Location} from '../components/Routes/Location.js';
 
 export default function EndPoint({ route, navigation }) {
 
 	const startTime = route.params.startingTime;
+	const start = route.params.startingLoc;
 
 	const [endTime, setEndTime] = React.useState(
 		new Date(
@@ -13,7 +15,7 @@ export default function EndPoint({ route, navigation }) {
                 startTime.getTime()).setHours(startTime.getHours() + 1)
 		)
 	)
-    const [end, setEnd] = useState([]);
+    const [end, setEnd] = useState(new Location("",0,0));
 
    	const styles = {
    		otherContainer: "flex flex-1 items-center justify-center",
@@ -27,12 +29,19 @@ export default function EndPoint({ route, navigation }) {
 
 		<View className={styles.container }>
 			<MapPicker loc={end} changeLoc={setEnd}/>
-			<Text>End Point: {end}</Text>
+			<Text>End Point: {end.getName()}</Text>
 
 
 			<Button
 				title="Select route point"
-				onPress={() => navigation.navigate("Routes")}
+				 onPress={() => navigation.navigate("Routes",
+                    {
+                        startingTime: startTime,
+                        startingLoc: start,
+                        endingTime: endTime,
+                        endingLoc: end,
+                    })
+                 }
 			/>
 
             <Text>{startTime.toTimeString()}</Text>
