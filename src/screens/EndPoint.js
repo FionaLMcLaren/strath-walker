@@ -3,7 +3,7 @@ import {Text, View, Button} from "react-native";
 import MapPicker from "../Map/MapLocationPicker";
 
 export default function EndPoint({ navigation }) {
-	const [end, setEnd] = useState("");
+	const [end, setEnd] = useState([]);
 
 	const styles = {
 		container: "items-center justify-center h-4/5 bg-neutral-950",

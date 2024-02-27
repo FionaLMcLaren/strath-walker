@@ -1,6 +1,6 @@
 export class Location{  //class to hold location data. Simply stores the longitude and the longitude
 
-    constructor(name, long, lat) {
+    constructor(name, lat, long) {
         this.name = name;
         this.longitude = long;
         this.latitude = lat;
@@ -16,6 +16,10 @@ export class Location{  //class to hold location data. Simply stores the longitu
 
     getLatitude(){
         return this.latitude;
+    }
+
+    getPos(){
+        return {latitude: this.latitude, longitude: this.longitude}
     }
 
 
