@@ -3,6 +3,7 @@ import {Text, View} from "react-native";
 import {Button} from "react-native-paper";
 import TimeSelect from "../components/Time/TimeSelect";
 import MapPicker from "../components/Map/MapLocationPicker";
+import {Location} from '../components/Routes/Location.js';
 
 export default function StartPoint({ navigation }) {
 
@@ -10,7 +11,7 @@ export default function StartPoint({ navigation }) {
         container: "justify-center h-4/5 ",
     };
 
-    const [start, setStart] = useState("");
+    const [start, setStart] = useState(new Location("",0,0));
 
     const [startTime, setStartTime] = React.useState(new Date());
 
@@ -22,7 +23,7 @@ export default function StartPoint({ navigation }) {
                 <Text>Start Point</Text>
 
                 <MapPicker loc={start} changeLoc={setStart}/>
-                <Text>Start Point: {start}</Text>
+                <Text>Start Point: {start.getName()}</Text>
 
                 <Text>{startTime.toString()}</Text>
                 <Button
@@ -41,7 +42,8 @@ export default function StartPoint({ navigation }) {
                 <Button
                     onPress={() => navigation.navigate("End Point",
                         {
-                            startingTime: startTime
+                            startingTime: startTime,
+                            startingLoc: start
                         })
                     }
                 >
