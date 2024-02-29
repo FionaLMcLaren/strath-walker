@@ -20,16 +20,12 @@ export default function TimeSetter({ time, timeSetter, prevTime }) {
 
         //round up cur time to nearest quarter
         curTime.setMinutes(Math.round(curTime.getMinutes() / 15) * 15)
-        curTime.setSeconds(0)
+        curTime.setSeconds(0, 0)
 
-        let lowTime = new Date(new Date(Date.now()).setHours(8, 0, 0));
-        let highTime = new Date(new Date(Date.now()).setHours(18, 0, 0));
+        let lowTime = new Date(new Date(Date.now()).setHours(8, 0, 0, 0));
+        let highTime = new Date(new Date(Date.now()).setHours(18, 0, 0, 0));
 
-        if ((curTime <= highTime) && (curTime >= lowTime)) {
-            return true
-        } else {
-            return false
-        }
+        return (curTime <= highTime) && (curTime >= lowTime);
 
     }
 
@@ -43,7 +39,7 @@ export default function TimeSetter({ time, timeSetter, prevTime }) {
                 setSwitchCurTime(!switchCurTime)
             }
         } else {
-            //if the
+            //if the time is outwith range, display on snackbar
             toggleSnackbarVisible(true)
         }
     }
@@ -80,6 +76,8 @@ export default function TimeSetter({ time, timeSetter, prevTime }) {
             <TimeSelect
                 time={time}
                 timeSetter={timeSetter}
+                prevTime={prevTime}
+                validTime={verifyCurTime()}
                 modalVisible={modalVisible}
                 toggleModalVisible={toggleModalVisible}/>
 
