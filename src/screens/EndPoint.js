@@ -11,7 +11,10 @@ export default function EndPoint({ route, navigation }) {
 	const [endTime, setEndTime] = React.useState(
 		new Date(
 			new Date(
-                startTime.getTime()).setHours(startTime.getHours() + 1)
+				new Date(
+					startTime.getTime()
+				).setHours(startTime.getHours() + 1)
+			).setMilliseconds(0)
 		)
 	)
     const [end, setEnd] = useState([]);

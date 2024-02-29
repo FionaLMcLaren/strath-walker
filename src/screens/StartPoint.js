@@ -12,7 +12,7 @@ export default function StartPoint({ navigation }) {
     };
 
     const [start, setStart] = useState("");
-    const [startTime, setStartTime] = React.useState(new Date());
+    const [startTime, setStartTime] = React.useState(new Date(new Date(Date.now()).setMilliseconds(0)));
 
 
     return (

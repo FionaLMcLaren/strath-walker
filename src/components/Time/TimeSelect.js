@@ -10,8 +10,7 @@ error when trying to set with current time with a time outwith the working hours
 rounding up current times to nearest quarter?
 */
 
-export default function TimeSelect({time, timeSetter, prevTime, modalVisible, toggleModalVisible}) {
-
+export default function TimeSelect({time, timeSetter, prevTime, validTime, modalVisible, toggleModalVisible}) {
     const styles = {
         timeContainer: "flex flex-row items-center justify-center gap-2",
         container: "flex items-center justify-center",
@@ -19,18 +18,19 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
 
     const hours = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
     const minutes= [0, 15, 30, 45]
-
-    const [timeToSet, setTimeToSet] = useState(new Date(time.getTime()));
+    // initial timeToSet becomes 08:00 when out of appropriate range
+    const [timeToSet, setTimeToSet] = useState(validTime ? new Date(new Date(time.getTime()).setMilliseconds(0)) : new Date(new Date(Date.now()).setHours(8, 0, 0)))
 
     const [showingErrorPopUp, setShowingErrorPopUp] = useState(false);
+    const validateNewTime = () => {
 
-    const validateTime = () => {
-        let lowTime = new Date(new Date(Date.now()).setHours(8, 0, 0));
-        let highTime = new Date(new Date(Date.now()).setHours(18, 0, 0));
+        let lowTime = new Date(new Date(Date.now()).setHours(8, 0, 0, 0));
+        let highTime = new Date(new Date(Date.now()).setHours(18, 0, 0, 0));
 
-        console.log(timeToSet)
+        let inRange = (timeToSet <= highTime) && (timeToSet >= lowTime);
+        let endAfterStart = ((prevTime && (timeToSet > prevTime)) || !prevTime);
 
-        if ((timeToSet <= highTime) && (timeToSet >= lowTime)) {
+        if (inRange && endAfterStart) {
             timeSetter(new Date(timeToSet.getTime()))
             return true
         } else {
@@ -38,7 +38,6 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
             return false
         }
     }
-
 
     return (
         <>
@@ -59,7 +58,9 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
                                 selectedIndex={hours.indexOf(timeToSet.getHours())}
                                 wrapperBackground="transparent"
                                 onValueChange={(selHour) => {
-                                    setTimeToSet(new Date(timeToSet.setHours(selHour)))
+                                    console.log("hr change:")
+                                    console.log(new Date(new Date(timeToSet.setHours(selHour)).setMilliseconds(0)))
+                                    setTimeToSet(new Date(new Date(timeToSet.setHours(selHour)).setMilliseconds(0)))
                                 }}
                             />
                             <Text>:</Text>
@@ -68,7 +69,9 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
                                 selectedIndex={minutes.indexOf(timeToSet.getMinutes())}
                                 wrapperBackground="transparent"
                                 onValueChange={(selMin) => {
-                                    setTimeToSet(new Date(timeToSet.setMinutes(selMin)))
+                                    console.log("min change:")
+                                    console.log(new Date(new Date(timeToSet.setMinutes(selMin)).setMilliseconds(0)))
+                                    setTimeToSet(new Date(new Date(timeToSet.setMinutes(selMin)).setMilliseconds(0)))
                                 }}
                             />
                     </Dialog.Content>
@@ -76,7 +79,7 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
                     <Dialog.Actions>
                             <Button
                                 onPress={() => {
-                                    if (validateTime(timeToSet)) {
+                                    if (validateNewTime(timeToSet)) {
                                         toggleModalVisible(false)
                                     } else {
                                         console.log("not valid time")
