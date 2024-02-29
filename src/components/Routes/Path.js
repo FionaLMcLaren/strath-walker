@@ -17,6 +17,14 @@ export class Path{
         return this.path;
     }
 
+    getFirst() {
+        return this.path[0];
+    }
+
+    getIntermediates() {
+        return this.path.slice(1, this.path.length-1);
+    }
+
     getLast(){
         return this.last;
     }

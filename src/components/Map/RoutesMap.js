@@ -1,11 +1,9 @@
-import React, {useState} from "react";
 import {Text, View, StyleSheet} from "react-native";
 import MapView from "react-native-maps";
 import {Marker} from "react-native-maps";
-import {styled} from 'nativewind';
 
 
-export default function RoutesMap(props) {
+export default function RoutesMap({ points }) {
 
    	return(
    	    <MapView
@@ -19,7 +17,7 @@ export default function RoutesMap(props) {
             longitudeDelta: 0.002,
           }}
         >
-        {props.points.map((marker) => (
+        {points.map((marker) => (
             <Marker coordinate={marker.getPos()}>
                 <View style={{backgroundColor: "blue", padding: 10}}>
                     <Text>{marker.getName()}</Text>
