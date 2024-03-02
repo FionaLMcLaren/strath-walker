@@ -32,6 +32,8 @@ export class Polyline {
         return this.duration;
     }
 
+
+
 }
 
 export const getPolyline = async (path) => {

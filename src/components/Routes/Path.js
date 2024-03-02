@@ -28,6 +28,7 @@ export class Path{
         this.name.push(node.getName());
         this.path.push(node);
         this.last = node;
+
     }
 
     getPath(){
