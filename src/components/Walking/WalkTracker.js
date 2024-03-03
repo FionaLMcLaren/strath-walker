@@ -32,35 +32,48 @@ export class WalkTracker {
             let lineEndLong = parseFloat(lineEnd["longitude"]).toFixed(4);
             let lineEndLat = parseFloat(lineEnd["latitude"]).toFixed(4);
 
-            let m1 = this.calculateGradient(nodeLong, nodeLat, lineStartLong, lineStartLat);
-            let m2 = this.calculateGradient(lineEndLong, lineEndLat, nodeLong, nodeLat);
 
-            let actualM = this.calculateGradient(lineStartLong, lineStartLat, lineEndLong, lineEndLat);
-            //TODO FIX divide by zero issues
+            let dist1 = this.calculateDistance(nodeLong, nodeLat, lineStartLong, lineStartLat);
+            let dist2 = this.calculateDistance(lineEndLong, lineEndLat, nodeLong, nodeLat);
 
-            let diff = (Math.abs(m1-m2));
-            let diffA1 = (Math.abs(actualM-m2));
-            let diffA2 = (Math.abs(m1-actualM));
+            let total = dist1 + dist2;
+
+            let actualDist = this.calculateDistance(lineStartLong, lineStartLat, lineEndLong, lineEndLat);
 
             let between = (lineStartLong <= nodeLong && nodeLong <= lineEndLong) || (lineStartLong >= nodeLong && nodeLong >= lineEndLong) || (lineStartLat <= nodeLat && nodeLat <= lineEndLat) || (lineStartLat >= nodeLat && nodeLat >= lineEndLat)
-            console.log(nodeLong);
-            console.log(m2);
-            console.log(actualM);
-            if (diff < 0.3 && diffA1 < 0.3 && diffA2 < 0.3 && between){
-                this.poly.setCoords([node.getPos()]+this.poly.getCoordinates().splice(i+1));
-                console.log([node.getPos()]+this.poly.getCoordinates().splice(i+1));
+
+            if ((total <= actualDist + (0.2 * actualDist)) && between){
+                let newLine = [node.getPos()];
+                let newCoord = this.poly.getCoordinates().splice(i+1);
+                newLine = newLine.concat(newCoord);
+                this.poly.setCoords(newLine);
                 return true;
             }
         }
         return false;
     }
 
-    calculateGradient(xLong, xLat, yLong, yLat){
-        return (xLong-yLong)/(xLat-yLat);
-    }
+    calculateDistance(startLong, startLat, endLong, endLat){
+        let r = 6371000;
 
+        let prevLat = this.convertRadians(startLat);
+        let currLat = this.convertRadians(endLat);
+
+        let prevLong = this.convertRadians(startLong);
+        let currLong = this.convertRadians(endLong);
+
+        return  2 * r * Math.asin(Math.sqrt(
+            Math.pow(Math.sin((currLat-prevLat)/2), 2) +
+            Math.cos(prevLat) *
+            Math.cos(currLat) *
+            Math.pow(Math.sin((currLong-prevLong)/2), 2)));
+    }
     getPath(){
         return this.path;
+    }
+
+    convertRadians(deg){  //simple conversion from degrees to radians
+        return deg * Math.PI/180;
     }
 
 

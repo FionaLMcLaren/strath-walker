@@ -32,7 +32,6 @@ export default function Walk({route, navigation}) {
 
 	Geolocation.watchPosition(
 		loc => {
-			console.log(loc);
 			setLoc(new Location("De la Sol (Me, Myself and I)", loc["coords"]["latitude"], loc["coords"]["longitude"]));
 
 		},
