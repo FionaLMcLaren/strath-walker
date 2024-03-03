@@ -5,6 +5,8 @@ import {Location} from '../components/Routes/Location.js';
 import Geolocation from '@react-native-community/geolocation';
 import {Polyline} from "../components/Routes/PolylineRequest";
 import {decode} from "@googlemaps/polyline-codec";
+import {WalkTracker} from "../components/Walking/WalkTracker.js";
+
 
 export default function Walk({route, navigation}) {
 
@@ -16,22 +18,28 @@ export default function Walk({route, navigation}) {
 
 
 
-	const [currLoc, setLoc] = useState(route.params.startingLoc);
-	const polyline = new Polyline("Route ", decode("{_wsIro}XdIoCqGmL"), [], 0, "0s");
+	const [currLoc, setLoc] = useState(new Location("Royal College", 55.85961, -4.23744));
+	const [polyline, setPoly] = useState(new Polyline("Route ", decode("w_}sI~rzX_Cq@kArO"), [], 0, "0s"));
+
+	const [tracker] = useState(new WalkTracker(polyline, setPoly));
 
 	useEffect(() => {
-		console.log(currLoc);
+		tracker.addNode(currLoc);
+		console.log(polyline.getCoordinates());
+		console.log(tracker.onLine());
+		console.log(polyline.getCoordinates());
 	});
 
 	Geolocation.watchPosition(
 		loc => {
+			console.log(loc);
 			setLoc(new Location("De la Sol (Me, Myself and I)", loc["coords"]["latitude"], loc["coords"]["longitude"]));
 
 		},
 		error => {
 			console.log(error.code, error.message);
 		},
-		{distanceFilter: 100},
+		{},
 	);
 
    	return (
