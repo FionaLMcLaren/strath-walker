@@ -14,7 +14,10 @@ export class PathGenerator{
             this.possPaths(visited, points, distSoFar, end);
          });
 
-        this.paths = Object.values(this.distDict);
+        // Concatenate the start and end points to each potential middle route
+        this.paths = Object.values(this.distDict).map((middlePoints => {
+            return [start, ...middlePoints, end];
+        }));
     }
 
     possPaths(visited, pos, distSoFar, end){
@@ -100,7 +103,7 @@ export class PathGenerator{
 
 
     getPaths(){
-        return this.paths;
+        return this.paths.map((path) => { return new Path(path) });
     }
 
 

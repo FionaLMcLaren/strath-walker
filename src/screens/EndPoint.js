@@ -2,13 +2,14 @@ import React, {useState} from "react";
 import {Text, View} from "react-native";
 import {Button} from "react-native-paper";
 import MapPicker from "../components/Map/MapLocationPicker";
-import TimeSelect from "../components/Time/TimeSelect";
 import TimeSetter from "../components/Time/TimeSetter";
 import Toast from "../components/Popup/Toast";
+import {Location} from '../components/Routes/Location.js';
 
 export default function EndPoint({ route, navigation }) {
 
 	const startTime = route.params.startingTime;
+	const start = route.params.startingLoc;
 
 	const [endTime, setEndTime] = React.useState(
 		new Date(
@@ -19,7 +20,7 @@ export default function EndPoint({ route, navigation }) {
 			).setMilliseconds(0)
 		)
 	)
-    const [end, setEnd] = useState([]);
+    const [end, setEnd] = useState(new Location("",0,0));
 
    	const styles = {
    		otherContainer: "flex flex-1 items-center justify-center",
@@ -36,16 +37,21 @@ export default function EndPoint({ route, navigation }) {
 
 	return (
 		<>
-			<View className={styles.container }>
-				<MapPicker loc={end} changeLoc={setEnd}/>
-				<Text>End Point: {end}</Text>
-
+            <View className={styles.container }>
+                <MapPicker loc={end} changeLoc={setEnd}/>
+                <Text>End Point: {end.getName()}</Text>
 
 				<Button
 					onPress={() =>
 					{
 						if (checkSelection()) {
-							navigation.navigate("Routes")
+							navigation.navigate("Routes", {
+                                startingTime: startTime,
+                                startingLoc: start,
+                                endingTime: endTime,
+                                endingLoc: end,
+                                }
+                                )
 						} else {
 							toggleSnackbarVisible(true);
 						}
