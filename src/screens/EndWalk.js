@@ -13,17 +13,15 @@ export default function EndWalk({route, navigation}) {
     const [currLoc, setLoc] = useState(route.params.startingLoc);
     const [coordinates, setCoordinates] = useState([]);
 
-    function pushNewLine(newNodePos) {
-        let c = coordinates.slice();
-        c.push(newNodePos)
-        setCoordinates(c);
+    function pushNewLine(newNode) {
+        setCoordinates(c=>([...c, newNode]));
     }
 
-    renderEndWalk(route.params.coords, pushNewLine, setLoc);
+
 
     useEffect(() => {
-        console.log(coordinates);
-    });
+        renderEndWalk(route.params.coords, pushNewLine, setLoc);
+    }, []);
 
     return (
         <View className={styles.container}>

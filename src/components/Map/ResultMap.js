@@ -27,7 +27,6 @@ export function ResultMap(props) {
             </Marker>
 
             {
-                props.coordinates &&
                 <Polyline
                     key="ResultLine"
                     coordinates={props.coordinates}
