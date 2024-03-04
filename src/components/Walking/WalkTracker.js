@@ -1,9 +1,9 @@
 export class WalkTracker {
 
-    constructor(poly, changePoly) {
+    constructor(poly, points) {
         this.path = [];
         this.poly = poly;
-        this.changePoly = poly;
+        this.checkpoint = points;
         this.initalTime = new Date();
     }
 
@@ -14,9 +14,27 @@ export class WalkTracker {
         if(!end || end.getPos() !== node.getPos()){
             this.path.push(node);
         }
-
+        return this.checkAtCheckPoint(node);
 
     }
+
+    checkAtCheckPoint(node){
+        let rangeMaxLat = this.checkpoint[0].getLatitude() + 0.0001;
+        let rangeMaxLong = this.checkpoint[0].getLongitude() + 0.0001;
+        let rangeMinLat = this.checkpoint[0].getLatitude() - 0.0001;
+        let rangeMinLong = this.checkpoint[0].getLongitude() - 0.0001;
+
+        if(node.getLatitude()<rangeMaxLat && node.getLongitude()<rangeMaxLong && node.getLatitude()>rangeMinLat && node.getLongitude()>rangeMinLong){
+            this.checkpoint.slice(1)
+            if(this.checkpoint.length === 0){
+                return true;
+            }
+        }
+
+        return false;
+
+    }
+
 
     onLine(){
         let node = this.path[this.path.length-1];
@@ -25,6 +43,11 @@ export class WalkTracker {
 
         for(let i =0; i<this.poly.getCoordinates().length-1; i++){
             let lineStart = this.poly.getCoordinates()[i];
+
+            if(lineStart === this.checkpoint[0].getPos){
+                return false;
+            }
+
             let lineStartLong = parseFloat(lineStart["longitude"]).toFixed(4);
             let lineStartLat = parseFloat(lineStart["latitude"]).toFixed(4);
 
@@ -44,7 +67,7 @@ export class WalkTracker {
 
             if ((total <= actualDist + (0.2 * actualDist)) && between){
                 let newLine = [node.getPos()];
-                let newCoord = this.poly.getCoordinates().splice(i+1);
+                let newCoord = this.poly.getCoordinates().slice(i+1);
                 newLine = newLine.concat(newCoord);
                 this.poly.setCoords(newLine);
                 return true;
@@ -70,6 +93,14 @@ export class WalkTracker {
     }
     getPath(){
         return this.path;
+    }
+
+    getTime(){
+        return new Date().getTime();
+    }
+
+    getStart(){
+        return this.initalTime.getTime();
     }
 
     convertRadians(deg){  //simple conversion from degrees to radians

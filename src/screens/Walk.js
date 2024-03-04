@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {Text, View} from "react-native";
+import {Button, Text, View} from "react-native";
 import {WalkMap} from '../components/Map/WalkMap.js';
 import {Location} from '../components/Routes/Location.js';
 import Geolocation from '@react-native-community/geolocation';
@@ -14,25 +14,36 @@ export default function Walk({route, navigation}) {
    		container: "flex flex-1 justify-center",
    	};
 
-
-
-
-
+	const p= new Polyline("Route ", decode("w_}sI~rzX_Cq@kArO"), [], 0, "0s");
+	const points = [new Location("a", 55.85997, -4.23719), new Location("b", 55.86034, -4.23981)];
 	const [currLoc, setLoc] = useState(new Location("Royal College", 55.85961, -4.23744));
-	const [polyline, setPoly] = useState(new Polyline("Route ", decode("w_}sI~rzX_Cq@kArO"), [], 0, "0s"));
+	const [polyline] = useState(p);
 
-	const [tracker] = useState(new WalkTracker(polyline, setPoly));
+	const [tracker] = useState(new WalkTracker(p, points));
 
 	useEffect(() => {
-		tracker.addNode(currLoc);
+		if(tracker.addNode(currLoc)){
+			navigation.navigate("EndWalk",
+				{
+					startingTime: tracker.getStart(),
+					startingLoc: route.params.startingLoc,
+					endingTime: tracker.getTime(),
+					endingLoc: route.params.endingLoc,
+					coords: tracker.getPath(),
+				})
+		}
 		console.log(polyline.getCoordinates());
 		console.log(tracker.onLine());
 		console.log(polyline.getCoordinates());
+		console.log(".");
+		console.log(tracker.getPath());
+		console.log(".");
 	});
 
 	Geolocation.watchPosition(
 		loc => {
-			setLoc(new Location("De la Sol (Me, Myself and I)", loc["coords"]["latitude"], loc["coords"]["longitude"]));
+			console.log(loc);
+			setLoc(new Location("User Location", loc["coords"]["latitude"], loc["coords"]["longitude"]));
 
 		},
 		error => {
@@ -45,6 +56,18 @@ export default function Walk({route, navigation}) {
             <View className={styles.container}>
                <Text>Walk page</Text>
 				<WalkMap current={currLoc} polyline={polyline}/>
+				<Button
+					title="End Walk"
+					onPress={() => navigation.navigate("EndWalk",
+						{
+							startingTime: tracker.getStart(),
+							startingLoc: route.params.startingLoc,
+							endingTime: tracker.getTime(),
+							endingLoc: route.params.endingLoc,
+							coords: tracker.getPath(),
+						})
+					}
+				/>
             </View >
     );
 
