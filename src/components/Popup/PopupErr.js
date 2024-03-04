@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React from "react";
 import { Text} from "react-native";
 import {Button, Dialog, Portal} from "react-native-paper";
 

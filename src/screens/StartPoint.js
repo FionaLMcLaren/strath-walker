@@ -4,6 +4,7 @@ import {Button, Switch} from "react-native-paper";
 import TimeSelect from "../components/Time/TimeSelect";
 import MapPicker from "../components/Map/MapLocationPicker";
 import TimeSetter from "../components/Time/TimeSetter";
+import Toast from "../components/Popup/Toast";
 
 export default function StartPoint({ navigation }) {
 
@@ -14,8 +15,14 @@ export default function StartPoint({ navigation }) {
     const [start, setStart] = useState("");
     const [startTime, setStartTime] = React.useState(new Date(new Date(Date.now()).setMilliseconds(0)));
 
+    const [snackbarVisible, toggleSnackbarVisible] = React.useState(false);
+
+    const checkSelection = () => {
+        return start && startTime;
+    }
 
     return (
+        <>
             <View className={styles.container}>
                 <Text>Start Point</Text>
 
@@ -28,17 +35,27 @@ export default function StartPoint({ navigation }) {
                 />
 
                 <Button
-                    onPress={() => navigation.navigate("End Point",
+                    onPress={() =>
                         {
-                            startingTime: startTime
-                        })
+                            if (checkSelection()) {
+                                navigation.navigate("End Point", {startingTime: startTime})
+                            } else {
+                                toggleSnackbarVisible(true);
+                            }
+                        }
                     }
                 >
                     Set end point
                 </Button>
-
-
             </View >
+
+            <Toast
+                text={"You must have a start point set "}
+                snackbarVisible={snackbarVisible}
+                toggleSnackbarVisible={toggleSnackbarVisible}
+            />
+
+        </>
     );
 
 }

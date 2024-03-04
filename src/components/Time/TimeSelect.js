@@ -19,7 +19,11 @@ export default function TimeSelect({time, timeSetter, prevTime, validTime, modal
     const hours = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
     const minutes= [0, 15, 30, 45]
     // initial timeToSet becomes 08:00 when out of appropriate range
-    const [timeToSet, setTimeToSet] = useState(validTime ? new Date(new Date(time.getTime()).setMilliseconds(0)) : new Date(new Date(Date.now()).setHours(8, 0, 0)))
+    const [timeToSet, setTimeToSet] = useState(
+        validTime ?
+            new Date(new Date(time.getTime()).setSeconds(0, 0))
+            : new Date(new Date(Date.now()).setHours(8, 0, 0, 0))
+    )
 
     const [showingErrorPopUp, setShowingErrorPopUp] = useState(false);
     const validateNewTime = () => {

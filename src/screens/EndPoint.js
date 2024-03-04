@@ -1,8 +1,10 @@
 import React, {useState} from "react";
-import {Text, View, Button} from "react-native";
+import {Text, View} from "react-native";
+import {Button} from "react-native-paper";
 import MapPicker from "../components/Map/MapLocationPicker";
 import TimeSelect from "../components/Time/TimeSelect";
 import TimeSetter from "../components/Time/TimeSetter";
+import Toast from "../components/Popup/Toast";
 
 export default function EndPoint({ route, navigation }) {
 
@@ -25,27 +27,48 @@ export default function EndPoint({ route, navigation }) {
     };
 
 	const [modalVisible, toggleModalVisible] = React.useState(false);
+	const [snackbarVisible, toggleSnackbarVisible] = React.useState(false);
+
+	const checkSelection = () => {
+		return endTime && end;
+	}
 
 
 	return (
+		<>
+			<View className={styles.container }>
+				<MapPicker loc={end} changeLoc={setEnd}/>
+				<Text>End Point: {end}</Text>
 
-		<View className={styles.container }>
-			<MapPicker loc={end} changeLoc={setEnd}/>
-			<Text>End Point: {end}</Text>
 
+				<Button
+					onPress={() =>
+					{
+						if (checkSelection()) {
+							navigation.navigate("Routes")
+						} else {
+							toggleSnackbarVisible(true);
+						}
+					}
+					}
+				>
+					Get routes
+				</Button>
 
-			<Button
-				title="Select route point"
-				onPress={() => navigation.navigate("Routes")}
+				<TimeSetter
+					time={endTime}
+					timeSetter={setEndTime}
+					prevTime={startTime}
+				/>
+
+			</View>
+
+			<Toast
+				text={"You must have an end point set "}
+				snackbarVisible={snackbarVisible}
+				toggleSnackbarVisible={toggleSnackbarVisible}
 			/>
-
-			<TimeSetter
-				time={endTime}
-				timeSetter={setEndTime}
-				prevTime={startTime}
-			/>
-
-		</View >
+		</>
 	);
 
 }
