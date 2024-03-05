@@ -8,9 +8,7 @@ export default function StartWalk({route, navigation}) {
    		container: "flex flex-1 items-center justify-center",
    	};
 
-
-
-	const start = "13:50";
+	const start = route.params.startingTime;
 
 	const [time, setTime] = useState("--");
 	changeTime(start, setTime);
@@ -27,6 +25,7 @@ export default function StartWalk({route, navigation}) {
 							startingLoc: route.params.startingLoc,
 							endingTime: route.params.endingTime,
 							endingLoc: route.params.endingLoc,
+							selectedRoute: route.params.selectedRoute,
 						})
 					}
 				/>
@@ -44,6 +43,7 @@ export default function StartWalk({route, navigation}) {
 							startingLoc: route.params.startingLoc,
 							endingTime: route.params.endingTime,
 							endingLoc: route.params.endingLoc,
+							selectedRoute: route.params.selectedRoute,
 						})
 					}
 				/>

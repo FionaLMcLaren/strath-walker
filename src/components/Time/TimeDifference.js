@@ -1,10 +1,6 @@
 
 
-export function changeTime(start, setStateTime){
-    let startDate = new Date();
-
-    startDate.setHours(start.substring(0, 2));
-    startDate.setMinutes(start.substring(3));
+export function changeTime(startDate, setStateTime){
 
     let changeTimer = setInterval(function(){
         let currTime = new Date().getTime();
