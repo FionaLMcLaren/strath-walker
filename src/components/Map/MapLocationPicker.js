@@ -52,7 +52,7 @@ const MarkerStyle=(props)=>{
 
 
 const styles = {
-   		map: "items-center justify-center h-4/5 bg-neutral-950",
+   		map: "items-center justify-center h-4/5 ",
    	};
 
 
