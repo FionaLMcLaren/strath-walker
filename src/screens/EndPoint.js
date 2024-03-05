@@ -3,7 +3,7 @@ import {Text, View} from "react-native";
 import {Button} from "react-native-paper";
 import MapPicker from "../components/Map/MapLocationPicker";
 import TimeSetter from "../components/Time/TimeSetter";
-import Toast from "../components/Popup/Toast";
+import Toast from "../components/Elements/Toast";
 import {Location} from '../components/Routes/Location.js';
 
 export default function EndPoint({ route, navigation }) {
@@ -30,10 +30,6 @@ export default function EndPoint({ route, navigation }) {
 	const [modalVisible, toggleModalVisible] = React.useState(false);
 	const [snackbarVisible, toggleSnackbarVisible] = React.useState(false);
 
-	const checkSelection = () => {
-		return endTime && end;
-	}
-
 
 	return (
 		<>
@@ -44,7 +40,7 @@ export default function EndPoint({ route, navigation }) {
 				<Button
 					onPress={() =>
 					{
-						if (checkSelection()) {
+						if (end.getName()) {
 							navigation.navigate("Routes", {
                                 startingTime: startTime,
                                 startingLoc: start,
