@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {View} from "react-native";
-import {Button, Portal, Snackbar, Switch, Text} from "react-native-paper";
+import {Button, Text} from "react-native-paper";
 import TimeSelect from "./TimeSelect";
-import Toast from "../Popup/Toast";
+import SwitchBtn from "../Elements/Switch";
 
 export default function TimeSetter({ time, timeSetter, prevTime }) {
 
@@ -13,9 +13,6 @@ export default function TimeSetter({ time, timeSetter, prevTime }) {
     };
 
     const [modalVisible, toggleModalVisible] = React.useState(false);
-    const [snackbarVisible, toggleSnackbarVisible] = React.useState(false);
-
-    const [switchCurTime, setSwitchCurTime] = React.useState(true);
 
     const verifyCurTime = () => {
         let curTime = new Date(Date.now())
@@ -28,22 +25,6 @@ export default function TimeSetter({ time, timeSetter, prevTime }) {
         let highTime = new Date(new Date(Date.now()).setHours(18, 0, 0, 0));
 
         return (curTime <= highTime) && (curTime >= lowTime);
-
-    }
-
-    const toggleCurTimeUse = () => {
-        if (verifyCurTime()) {
-            if (switchCurTime) {
-                //turn off current time
-                setSwitchCurTime(!switchCurTime)
-            } else {
-                //turn on current time
-                setSwitchCurTime(!switchCurTime)
-            }
-        } else {
-            //if the time is outwith range, display on snackbar
-            toggleSnackbarVisible(true)
-        }
     }
 
     const showTime = () => {
@@ -58,9 +39,19 @@ export default function TimeSetter({ time, timeSetter, prevTime }) {
 
     }
 
+    const setSwitchValue = () => {
+        let curTime = new Date(Date.now())
+
+        //round up cur time to nearest quarter
+        curTime.setMinutes(Math.round(curTime.getMinutes() / 15) * 15)
+        curTime.setSeconds(0, 0)
+
+        return time == curTime
+    }
+
     //on page load
     useEffect(() => {
-        setSwitchCurTime(verifyCurTime())
+
         if (!verifyCurTime()) {
             if (prevTime && ((prevTime.getHours()+1) < 18)) {
                 let nextHour = prevTime.getHours() + 1;
@@ -69,26 +60,42 @@ export default function TimeSetter({ time, timeSetter, prevTime }) {
                 timeSetter(new Date(new Date(Date.now()).setHours(8, 0, 0, 0)));
             }
 
+        } else {
+            let curTime = new Date(Date.now())
+
+            curTime.setMinutes(Math.round(curTime.getMinutes() / 15) * 15)
+            curTime.setSeconds(0, 0)
+
+            if (prevTime) {
+                if ((prevTime.getHours()+1) < 18) {
+                    let nextHour = prevTime.getHours() + 1;
+                    timeSetter(new Date(curTime.setHours(nextHour)))
+                } else {
+                    timeSetter(new Date(curTime.setHours(18)))
+                }
+            } else {
+                timeSetter(new Date(curTime))
+            }
+
         }
-    }, [setSwitchCurTime, timeSetter, prevTime])
+    }, [timeSetter, prevTime])
 
     return (
-        <><View className={styles.container}>
-            <View className={styles.switchCon}>
-                <Text>Use current time</Text>
-                <Button
-                    onPress={toggleCurTimeUse}
-                >
-                    <Switch
-                        value={switchCurTime}
-                        onValueChange={toggleCurTimeUse}/>
-                </Button>
-            </View>
+        <View className={styles.container}>
+            <SwitchBtn
+                switchDefault={setSwitchValue()}
+                switchText={"Use current time"}
+                switchVerifier={verifyCurTime()}
+                verifyFailMsg={"Current time cannot be used as it is outwith University hours"}
+            />
 
             <Button
                 icon="clock-outline"
                 mode="outlined"
-                onPress={() => toggleModalVisible(true)}
+                onPress={() => {
+                        toggleModalVisible(true)
+                    }
+                }
             >
                 <View className={styles.buttonCon} >
                     <Text>
@@ -104,17 +111,10 @@ export default function TimeSetter({ time, timeSetter, prevTime }) {
                 prevTime={prevTime}
                 validTime={verifyCurTime()}
                 modalVisible={modalVisible}
-                toggleModalVisible={toggleModalVisible}/>
+                toggleModalVisible={toggleModalVisible}
+            />
 
         </View>
-
-        <Toast
-            text={"Current time cannot be used as it is outwith University hours "}
-            snackbarVisible={snackbarVisible}
-            toggleSnackbarVisible={toggleSnackbarVisible}
-        />
-
-    </>
     );
 
 }

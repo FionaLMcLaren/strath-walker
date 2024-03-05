@@ -16,8 +16,8 @@ export default function App() {
         <PaperProvider>
             <NavigationContainer>
               <Stack.Navigator initialRouteName="Starting Point">
-                <Stack.Screen name="Starting Point" component={StartPoint} />
-                <Stack.Screen name="End Point" component={EndPoint} />
+                <Stack.Screen name="StartPoint" component={StartPoint} />
+                <Stack.Screen name="EndPoint" component={EndPoint} />
                 <Stack.Screen name="StartWalk" component={StartWalk} />
                 <Stack.Screen name="Walk" component={Walk} />
                 <Stack.Screen name="EndWalk" component={EndWalk} />

@@ -2,7 +2,7 @@ import React, { useState} from "react";
 import { Text} from "react-native";
 import {Button, Dialog, Portal} from "react-native-paper";
 import ScrollPicker from "react-native-wheel-scrollview-picker";
-import ErrorModal from "../Popup/PopupErr";
+import ErrorModal from "../Elements/PopupErr";
 
 /*TODO
 disallow end times being greater than start times
@@ -26,6 +26,7 @@ export default function TimeSelect({time, timeSetter, prevTime, validTime, modal
     )
 
     const [showingErrorPopUp, setShowingErrorPopUp] = useState(false);
+
     const validateNewTime = () => {
 
         let lowTime = new Date(new Date(Date.now()).setHours(8, 0, 0, 0));

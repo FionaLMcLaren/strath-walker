@@ -4,7 +4,7 @@ export class WalkTracker {
         this.path = [];
         console.log(poly.getPath());
         this.poly = poly;
-        this.checkpoint = this.poly.getPath();
+        this.checkpoint = this.poly.getPath().getPath();
         this.initalTime = new Date();
     }
 
@@ -20,6 +20,7 @@ export class WalkTracker {
     }
 
     checkAtCheckPoint(node){
+        console.log(this.checkpoint);
         let rangeMaxLat = this.checkpoint[0].getLatitude() + 0.0001;
         let rangeMaxLong = this.checkpoint[0].getLongitude() + 0.0001;
         let rangeMinLat = this.checkpoint[0].getLatitude() - 0.0001;
