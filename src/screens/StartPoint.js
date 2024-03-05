@@ -16,6 +16,7 @@ export default function StartPoint({ navigation }) {
     const [startTime, setStartTime] = React.useState(new Date(new Date(Date.now()).setMilliseconds(0)));
 
     const [snackbarVisible, toggleSnackbarVisible] = React.useState(false);
+    const [modalVisible, toggleModalVisible] = React.useState(false);
 
     const checkSelection = () => {
         return start && startTime;

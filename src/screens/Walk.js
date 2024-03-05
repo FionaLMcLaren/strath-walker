@@ -14,12 +14,11 @@ export default function Walk({route, navigation}) {
    		container: "flex flex-1 justify-center",
    	};
 
-	const p= new Polyline("Route ", decode("w_}sI~rzX_Cq@kArO"), [], 0, "0s");
-	const points = [new Location("a", 55.85997, -4.23719), new Location("b", 55.86034, -4.23981)];
-	const [currLoc, setLoc] = useState(new Location("Royal College", 55.85961, -4.23744));
-	const [polyline] = useState(p);
-
-	const [tracker] = useState(new WalkTracker(p, points));
+	//const p= new Polyline("Route ", decode("w_}sI~rzX_Cq@kArO"), [], 0, "0s");
+	//const points = [new Location("a", 55.85997, -4.23719), new Location("b", 55.86034, -4.23981)];
+	const [currLoc, setLoc] = useState(route.params.startingLoc);
+	const [polyline] = useState(route.params.selectedRoute);
+	const [tracker] = useState(new WalkTracker(route.params.selectedRoute));
 
 	useEffect(() => {
 		if(tracker.addNode(currLoc)){
@@ -35,9 +34,6 @@ export default function Walk({route, navigation}) {
 		console.log(polyline.getCoordinates());
 		console.log(tracker.onLine());
 		console.log(polyline.getCoordinates());
-		console.log(".");
-		console.log(tracker.getPath());
-		console.log(".");
 	});
 
 	Geolocation.watchPosition(

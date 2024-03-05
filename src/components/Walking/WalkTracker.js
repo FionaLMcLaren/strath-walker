@@ -1,9 +1,10 @@
 export class WalkTracker {
 
-    constructor(poly, points) {
+    constructor(poly) {
         this.path = [];
+        console.log(poly.getPath());
         this.poly = poly;
-        this.checkpoint = points;
+        this.checkpoint = this.poly.getPath();
         this.initalTime = new Date();
     }
 
