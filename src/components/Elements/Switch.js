@@ -16,9 +16,9 @@ export default function SwitchBtn({ switchDefault, switchText, switchAction, swi
     const toggleSwitch = () => {
         if (switchVerifier != false) {
             switchSetter(!switchValue)
-            if (!switchValue) {
+            if (!switchValue && switchAction) {
                 switchAction()
-            } else {
+            } else if (switchOffAction) {
                 switchOffAction()
             }
         }
@@ -36,7 +36,7 @@ export default function SwitchBtn({ switchDefault, switchText, switchAction, swi
                     onPress={toggleSwitch}
                 >
                     <Switch
-                        value={switchValue}
+                        value={switchDefault}
                         onValueChange={toggleSwitch}/>
                 </Button>
             </View>
