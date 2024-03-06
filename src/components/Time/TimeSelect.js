@@ -10,7 +10,7 @@ error when trying to set with current time with a time outwith the working hours
 rounding up current times to nearest quarter?
 */
 
-export default function TimeSelect({time, timeSetter, prevTime, validTime, modalVisible, toggleModalVisible}) {
+export default function TimeSelect({time, timeSetter, prevTime, validTime, modalVisible, toggleModalVisible, switchSetter }) {
     const styles = {
         timeContainer: "flex flex-row items-center justify-center gap-2",
         container: "flex items-center justify-center",
@@ -86,6 +86,7 @@ export default function TimeSelect({time, timeSetter, prevTime, validTime, modal
                                 onPress={() => {
                                     if (validateNewTime(timeToSet)) {
                                         toggleModalVisible(false)
+
                                     } else {
                                         console.log("not valid time")
                                     }
@@ -98,7 +99,7 @@ export default function TimeSelect({time, timeSetter, prevTime, validTime, modal
 
             <Portal>
                 <ErrorModal
-                    errorTitle={"hello world"}
+                    errorTitle={"Time Error"}
                     errorText={"not valid time"}
                     modalVisible={showingErrorPopUp}
                     toggleModalVisible={setShowingErrorPopUp}

@@ -28,7 +28,6 @@ export default function TimeSetter({ time, timeSetter, prevTime }) {
     }
 
     const showTime = () => {
-
         let minutes = time.getMinutes();
         let minutesStr = ((minutes < 10) ? "0" + minutes.toString() : minutes.toString())
 
@@ -46,7 +45,21 @@ export default function TimeSetter({ time, timeSetter, prevTime }) {
         curTime.setMinutes(Math.round(curTime.getMinutes() / 15) * 15)
         curTime.setSeconds(0, 0)
 
-        return time == curTime
+        console.log(curTime.toString())
+        console.log(time.toString())
+        console.log(time.toString() == curTime.toString())
+
+        return time.toString() == curTime.toString()
+    }
+
+    const setAsCurrTime = () => {
+        let curTime = new Date(Date.now())
+
+        //round up cur time to nearest quarter
+        curTime.setMinutes(Math.round(curTime.getMinutes() / 15) * 15)
+        curTime.setSeconds(0, 0)
+
+        timeSetter(curTime)
     }
 
     //on page load
@@ -87,6 +100,7 @@ export default function TimeSetter({ time, timeSetter, prevTime }) {
                 switchText={"Use current time"}
                 switchVerifier={verifyCurTime()}
                 verifyFailMsg={"Current time cannot be used as it is outwith University hours"}
+                switchAction={setAsCurrTime}
             />
 
             <Button
