@@ -32,6 +32,12 @@ export class Polyline {
         return this.duration;
     }
 
+    setCoords(c){
+        this.coordinates = c;
+    }
+
+
+
 }
 
 export const getPolyline = async (path) => {
