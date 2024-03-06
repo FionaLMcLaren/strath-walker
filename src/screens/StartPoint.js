@@ -3,7 +3,7 @@ import {Text, View} from "react-native";
 import {Button} from "react-native-paper";
 import MapPicker from "../components/Map/MapLocationPicker";
 import TimeSetter from "../components/Time/TimeSetter";
-import Toast from "../components/Popup/Toast";
+import Toast from "../components/Elements/Toast";
 import {Location} from '../components/Routes/Location.js';
 
 export default function StartPoint({ navigation }) {
@@ -16,10 +16,7 @@ export default function StartPoint({ navigation }) {
     const [startTime, setStartTime] = React.useState(new Date(new Date(Date.now()).setMilliseconds(0)));
 
     const [snackbarVisible, toggleSnackbarVisible] = React.useState(false);
-
-    const checkSelection = () => {
-        return start && startTime;
-    }
+    const [modalVisible, toggleModalVisible] = React.useState(false);
 
     return (
         <>
@@ -39,8 +36,8 @@ export default function StartPoint({ navigation }) {
                 <Button
                     onPress={() =>
                         {
-                            if (checkSelection()) {
-                                navigation.navigate("End Point",
+                            if (start.getName()) {
+                                navigation.navigate("EndPoint",
                                 {
                                     startingTime: startTime,
                                     startingLoc: start
@@ -56,7 +53,7 @@ export default function StartPoint({ navigation }) {
             </View>
 
             <Toast
-                text={"You must have a start point set "}
+                text={"You must have a start point set!"}
                 snackbarVisible={snackbarVisible}
                 toggleSnackbarVisible={toggleSnackbarVisible}
             />
