@@ -15,17 +15,22 @@ export default function MapLocationPicker(props) {
         Geolocation.getCurrentPosition(
             loc => {
                 props.changeLoc(new Location("User Location", loc.coords.latitude, loc.coords.longitude))
+                setUsingCurLoc(true);
             },
             error => {
                 console.log(error.code, error.message);
+                setUsingCurLoc(false);
             },
             {},
         );
     }
 
-    const resetLoc = () => { props.changeLoc(new Location("",0,0)) }
+    const resetLoc = () => {
+        props.changeLoc(new Location("",0,0))
+        setUsingCurLoc(false);
+    }
 
-
+    const [usingCurLoc, setUsingCurLoc] = useState(false);
 
     return(
            <View>
@@ -51,7 +56,7 @@ export default function MapLocationPicker(props) {
                 </MapView>
 
                <SwitchBtn
-                   switchDefault={false}
+                   switchDefault={usingCurLoc}
                    switchText={"Use current location"}
                    switchAction={setToCurLoc}
                    switchOffAction={resetLoc}
