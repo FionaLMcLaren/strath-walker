@@ -1,4 +1,3 @@
-import Home from './src/screens/Home';
 import StartPoint from './src/screens/StartPoint';
 import EndPoint from './src/screens/EndPoint';
 import Routes from './src/screens/Routes';
@@ -16,8 +15,7 @@ export default function App() {
     return(
         <PaperProvider>
             <NavigationContainer>
-              <Stack.Navigator initialRouteName="Home">
-                <Stack.Screen name="Home" component={Home} />
+              <Stack.Navigator initialRouteName="Starting Point">
                 <Stack.Screen name="StartPoint" component={StartPoint} />
                 <Stack.Screen name="EndPoint" component={EndPoint} />
                 <Stack.Screen name="StartWalk" component={StartWalk} />
