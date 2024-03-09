@@ -51,6 +51,17 @@ export class Path{
         return this.name;
     }
 
+    getReadableName() {
+        const pathName = this.getFirst().getName() + " to " + this.getLast().getName();
+        if (this.path.length > 2) {
+            const numberOfStops = this.path.length - 2;
+            const stopPlural = numberOfStops === 1 ? "stop" : "stops";
+            return pathName + " (with " + numberOfStops + " " + stopPlural + ")";
+        } else {
+            return pathName + " (direct)";
+        }
+    }
+
     getDistance() {
         return this.distance;
     }
