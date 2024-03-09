@@ -12,7 +12,7 @@ import {Location} from '../components/Routes/Location.js';
 export default function StartPoint({ navigation }) {
 
     const styles = {
-        container: "justify-center h-4/5",
+        container: "flex justify-center ",
     };
 
     const [start, setStart] = useState(new Location("",0,0));
@@ -22,21 +22,28 @@ export default function StartPoint({ navigation }) {
     const [modalVisible, toggleModalVisible] = React.useState(false);
 
     return (
-        <>
+        <View className="mt-6">
             <View className={styles.container}>
-                <Text>Start Point</Text>
-
-                <View className="mt-12">
+                <View>
                 <Title
                     title={"Location"}
-                    icon={"walk"}
+                    icon={"map-marker"}
                     colour={"yl"}
                 />
+                    <View className="flex flex-row self-center gap-2">
+                        <Text className="text-black text-xl tracking-wide">Start Point</Text>
+                        <Text className="text-amber-500 text-xl tracking-wide"> {start.getName()? start.getName() : "Not Set"}</Text>
+                    </View>
 
                 <MapPicker loc={start} changeLoc={setStart}/>
-                <Text>Start Point: {start.getName()}</Text>
+
                 </View>
 
+                <Title
+                        title={"Time"}
+                        icon={"clock-time-eight"}
+                        colour={"pk"}
+                />
 
                 <TimeSetter
                     time={startTime}
@@ -70,7 +77,7 @@ export default function StartPoint({ navigation }) {
                 toggleSnackbarVisible={toggleSnackbarVisible}
             />
 
-        </>
+        </View>
     );
 
 }

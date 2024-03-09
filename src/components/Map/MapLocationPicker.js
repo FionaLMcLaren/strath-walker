@@ -90,7 +90,7 @@ export default function MapLocationPicker(props) {
 
                </View>
 
-               <View className="h-3/4 scale-95 rounded-md border-2 border-b-8">
+               <View className="h-96 scale-95 rounded-md border-2 border-b-8">
                 <MapView
                   minZoomLevel={17}
                   style={StyleSheet.absoluteFillObject, {height:"100%"}}
