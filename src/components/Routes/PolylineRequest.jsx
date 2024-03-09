@@ -64,14 +64,6 @@ export const getPolyline = async (path) => {
                         },
                     },
                 },
-                intermediates: intermediateLocations.map(intermediate => ({
-                    location: {
-                        latLng: {
-                            latitude: intermediate.getLatitude(),
-                            longitude: intermediate.getLongitude(),
-                        },
-                    },
-                })),
                 destination: {
                     location: {
                         latLng: {
@@ -80,30 +72,47 @@ export const getPolyline = async (path) => {
                         },
                     },
                 },
+                intermediates: intermediateLocations.map(intermediate => ({
+                    location: {
+                        latLng: {
+                            latitude: intermediate.getLatitude(),
+                            longitude: intermediate.getLongitude(),
+                        },
+                    },
+                })),
                 travelMode: 'WALK',
                 computeAlternativeRoutes: false,
                 routeModifiers: {
                     avoidIndoor: true,
                 },
                 languageCode: 'en-UK',
-                units: 'metric',
+                units: 'METRIC',
             }),
-        });
-        let data = await response.json();
+        })
+        const data = await response.json();
+        if (Object.keys(data).length === 0) return undefined; // routing impossible: ie from america to uk
+
+        const route = data.routes[0];
+        const polyline = route.polyline.encodedPolyline;
+        const decodedPolyline = decode(polyline);
+        const distance = route.distanceMeters;
+        const duration = route.duration;
+
         console.log("Finished fetching route from " + path.getNamePath().join(" -> ") + "!");
+
         return new Polyline(
             path.getNamePath().join(" -> "),
-            decode(data.routes[0].polyline.encodedPolyline),
+            decodedPolyline,
             path,
-            data.routes[0].distanceMeters,
-            data.routes[0].duration
+            distance,
+            duration
         );
     } catch (error) {
         console.error('Error:', error);
     }
 };
 
-export const getSuitablePolylines = async(sortedPaths, startTime, endTime) => {
+export const getSuitablePolylines = async (sortedPaths, startTime, endTime) => {
     const UPPER_LEEWAY = 120; // 2 minutes of leeway for the maximum duration
     const LOWER_LEEWAY = 600; // 10 minutes of leeway for the minimum duration
     const freeTimeinSeconds = (endTime.getTime() - startTime.getTime()) / 1000;
@@ -122,7 +131,12 @@ export const getSuitablePolylines = async(sortedPaths, startTime, endTime) => {
     const debugTime = new Date().getTime();
 
     while (!(minDurationIndex in polylineDictionary) || !(maxDurationIndex in polylineDictionary)) {
-        let polyline = await getPolyline(sortedPaths[currentIndex]);
+        const polyline = await getPolyline(sortedPaths[currentIndex]);
+        if (polyline === undefined) {
+            console.log("This route is impossible! Assuming the rest are the same...");
+            minDurationIndex = 0; maxDurationIndex = -1;
+            break;
+        }
         polylineDictionary[currentIndex] = polyline;
         const TOO_LONG = polyline.getDuration() > freeTimeUpperBound;
         const TOO_SHORT = polyline.getDuration() < freeTimeLowerBound;
