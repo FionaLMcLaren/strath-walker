@@ -46,7 +46,7 @@ export const getPolyline = async (path) => {
     const endLocation = path.getLast();
 
     try {
-        console.log("Fetching route from " + path.getNamePath().join(" -> ") + "...");
+        console.log("Fetching route " + path.getReadableName() + "...");
         const response = await fetch('https://routes.googleapis.com/directions/v2:computeRoutes', {
             method: 'POST',
             headers: {
@@ -98,7 +98,7 @@ export const getPolyline = async (path) => {
         const distance = route.distanceMeters;
         const duration = route.duration;
 
-        console.log("Finished fetching route from " + path.getNamePath().join(" -> ") + "!");
+        console.log("Finished fetching route from " + path.getReadableName() + "!");
 
         return new Polyline(
             path.getNamePath().join(" -> "),
@@ -130,7 +130,7 @@ export const getSuitablePolylines = async (sortedPaths, startTime, endTime) => {
     console.log("Possible paths: " + sortedPaths.length);
     const debugTime = new Date().getTime();
 
-    while (!(minDurationIndex in polylineDictionary) || !(maxDurationIndex in polylineDictionary)) {
+    while ( (!(minDurationIndex in polylineDictionary) || !(maxDurationIndex in polylineDictionary)) && minDurationIndex <= maxDurationIndex) {
         const polyline = await getPolyline(sortedPaths[currentIndex]);
         if (polyline === undefined) {
             console.log("This route is impossible! Assuming the rest are the same...");
@@ -142,10 +142,12 @@ export const getSuitablePolylines = async (sortedPaths, startTime, endTime) => {
         const TOO_SHORT = polyline.getDuration() < freeTimeLowerBound;
         if (TOO_LONG) {
             maxDurationIndex = currentIndex - 1;
-            currentIndex = Math.floor((currentIndex + minDurationIndex) / 2);
+            currentIndex = Math.ceil((currentIndex + minDurationIndex) / 2);
+            if (currentIndex in polylineDictionary) currentIndex--; // final check to avoid infinite loop
         } else if (TOO_SHORT) {
             minDurationIndex = currentIndex + 1;
             currentIndex = Math.floor((currentIndex + maxDurationIndex) / 2);
+            if (currentIndex in polylineDictionary) currentIndex++; // final check to avoid infinite loop
         } else {
             let lowerSearchIndex = currentIndex;
             while (lowerSearchIndex > minDurationIndex) {

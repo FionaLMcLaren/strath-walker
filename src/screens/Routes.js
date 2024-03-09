@@ -69,9 +69,7 @@ const RouteOption=({ route, onPress })=> {
     return(
         <TouchableHighlight onPress={() => onPress(route)}>
             <View>
-                <Text>[{route.getPath().getFirst().getName()}] -&gt; </Text>
-                { route.getPath().getIntermediates().map((location) => { return(<Text key={location.getName()}>{location.getName()} -&gt;</Text>) }) }
-                <Text>[{route.getPath().getLast().getName()}]</Text>
+                <Text>{route.path.getReadableName()}</Text>
                 <Text>Duration: {route.getDuration()}s</Text>
                 <Text>Distance: {route.getDistance()}m</Text>
             </View>
