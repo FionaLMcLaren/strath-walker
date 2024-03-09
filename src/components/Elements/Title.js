@@ -32,7 +32,7 @@ export default function Title({title, icon, colour}) {
                     {title}
                 </Text>
                 <View className={classNames(
-                    "absolute h-3 w-28 right-0 bottom-0",
+                    "absolute h-3 w-24 right-0 bottom-0",
                     colour==="tq" && "bg-teal-200",
                     colour==="pk" && "bg-pink-100",
                     colour==="yl" && "bg-yellow-100")}/>
