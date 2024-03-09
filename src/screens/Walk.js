@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from "react";
 import {Button, Text, View} from "react-native";
 import {WalkMap} from '../components/Map/WalkMap.js';
+import {Path} from '../components/Routes/Path.js';
 import {Location} from '../components/Routes/Location.js';
 import Geolocation from '@react-native-community/geolocation';
 import {Polyline} from "../components/Routes/PolylineRequest";
 import {decode} from "@googlemaps/polyline-codec";
 import {WalkTracker} from "../components/Walking/WalkTracker.js";
-
+import CompassModal from "../components/Walking/CompassModal.js";
 
 export default function Walk({route, navigation}) {
 
@@ -14,11 +15,16 @@ export default function Walk({route, navigation}) {
    		container: "flex flex-1 justify-center",
    	};
 
-	//const p= new Polyline("Route ", decode("w_}sI~rzX_Cq@kArO"), [], 0, "0s");
-	//const points = [new Location("a", 55.85997, -4.23719), new Location("b", 55.86034, -4.23981)];
+	const p= new Polyline("Route ", decode("{_wsIpo}XjImCuGyL"), new Path([new Location("a", 55.82693, -4.25152), new Location("b", 55.82843, -4.24914)]), 0, "0s");
+
 	const [currLoc, setLoc] = useState(route.params.startingLoc);
-	const [polyline] = useState(route.params.selectedRoute);
-	const [tracker] = useState(new WalkTracker(route.params.selectedRoute));
+	//const [polyline] = useState(route.params.selectedRoute);
+	const [polyline] = useState(p);
+	const [directionDist, changeDist] = useState(0);
+	const [directionAngle, changeAngle] = useState(0);
+	const [tracker] = useState(new WalkTracker(p, changeDist, changeAngle));
+
+
 
 	useEffect(() => {
 		if(tracker.addNode(currLoc)){
@@ -52,6 +58,8 @@ export default function Walk({route, navigation}) {
             <View className={styles.container}>
                <Text>Walk page</Text>
 				<WalkMap current={currLoc} polyline={polyline}/>
+				<Text>{directionDist}m {directionAngle}</Text>
+				<CompassModal/>
 				<Button
 					title="End Walk"
 					onPress={() => navigation.navigate("EndWalk",
