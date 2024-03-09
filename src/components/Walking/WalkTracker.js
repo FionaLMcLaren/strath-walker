@@ -1,16 +1,23 @@
 export class WalkTracker {
 
-    constructor(poly) {
+    constructor(poly, changeDist, changeAngle) {
         this.path = [];
         console.log(poly.getPath());
         this.poly = poly;
         this.checkpoint = this.poly.getPath().getPath();
         this.initalTime = new Date();
+        this.distance = 0;
+        this.changeDist = changeDist;
+        this.changeAngle = changeAngle;
     }
 
     addNode(node){
         let end = this.path[this.path.length-1];
         console.log(this.path);
+
+        if(end){
+            this.distance += this.calculateDistance(node.getLongitude(), node.getLatitude(), end.getLongitude(), end.getLatitude())
+        }
 
         if(!end || end.getPos() !== node.getPos()){
             this.path.push(node);
@@ -72,6 +79,8 @@ export class WalkTracker {
                 let newCoord = this.poly.getCoordinates().slice(i+1);
                 newLine = newLine.concat(newCoord);
                 this.poly.setCoords(newLine);
+                this.changeDist(dist2);
+                this.setAngle(nodeLong, nodeLat, lineEndLong, lineEndLat);
                 return true;
             }
         }
@@ -107,6 +116,18 @@ export class WalkTracker {
 
     convertRadians(deg){  //simple conversion from degrees to radians
         return deg * Math.PI/180;
+    }
+
+    setAngle(startLong, startLat, endLong, endLat){
+        let opposite = this.calculateDistance(startLong, startLat, startLong, endLat);
+        let adjacent = this.calculateDistance(startLong, startLat, endLong, startLat);
+        let angle = Math.atan(opposite/adjacent);
+        if(endLong > startLong){
+            angle += 90
+        }else{
+            angle += 180
+        }
+        this.changeAngle(angle);
     }
 
 

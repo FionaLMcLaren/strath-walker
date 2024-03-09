@@ -41,7 +41,7 @@ export default function EndPoint({ route, navigation }) {
 					onPress={() =>
 					{
 						if (end.getName()) {
-							navigation.navigate("Routes", {
+							navigation.navigate("Walk", {
                                 startingTime: startTime,
                                 startingLoc: start,
                                 endingTime: endTime,
