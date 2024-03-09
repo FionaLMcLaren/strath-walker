@@ -1,3 +1,4 @@
+import "./global.css"
 import Home from './src/screens/Home';
 import StartPoint from './src/screens/StartPoint';
 import EndPoint from './src/screens/EndPoint';

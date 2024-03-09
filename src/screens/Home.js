@@ -1,28 +1,39 @@
 import React, {useState} from "react";
 import {Text, View} from "react-native";
 import {Button} from "react-native-paper";
+import HomeBtn from "../components/Elements/HomeBtn";
 
 export default function Home({ navigation }) {
+    const styles = {
+        wrapper: "flex-1 items-center justify-center gap-2",
+    };
+
     return (
-        <View>
+        <View className={styles.wrapper}>
             <Text>Welcome!</Text>
 
-            <Button
-                onPress={() => navigation.navigate("StartPoint")}>
-                Start a new walk
-            </Button>
+            <HomeBtn
+                action={() => navigation.navigate("StartPoint")}
+                title={"Start new walk"}
+                colour={"tq"}
+                icon={"walk"}
+            />
 
-            <Button
-                //onPress={() => navigation.navigate("")}
-            >
-                See past walks
-            </Button>
+            <HomeBtn
+                //action={() => navigation.navigate("")}
+                title={"See past walks"}
+                colour={"pk"}
+                icon={"walk"}
+            />
 
-            <Button
-                //onPress={() => navigation.navigate("")}
-            >
-                See saved routes
-            </Button>
+            <HomeBtn
+                //action={() => navigation.navigate("")}
+                title={"See saved routes"}
+                colour={"yl"}
+                icon={"walk"}
+            />
+
+
         </View>
     )
 }
