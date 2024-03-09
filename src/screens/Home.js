@@ -20,14 +20,14 @@ export default function Home({ navigation }) {
             />
 
             <HomeBtn
-                //action={() => navigation.navigate("")}
+                action={() => navigation.navigate("")}
                 title={"See past walks"}
                 colour={"pk"}
                 icon={"walk"}
             />
 
             <HomeBtn
-                //action={() => navigation.navigate("")}
+                action={() => navigation.navigate("")}
                 title={"See saved routes"}
                 colour={"yl"}
                 icon={"walk"}

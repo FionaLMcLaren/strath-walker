@@ -17,7 +17,7 @@ export default function App() {
     return(
         <PaperProvider>
             <NavigationContainer>
-              <Stack.Navigator initialRouteName="Home">
+              <Stack.Navigator initialRouteName="StartPoint">
                 <Stack.Screen name="Home" component={Home} />
                 <Stack.Screen name="StartPoint" component={StartPoint} />
                 <Stack.Screen name="EndPoint" component={EndPoint} />

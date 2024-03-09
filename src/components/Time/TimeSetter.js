@@ -113,7 +113,7 @@ export default function TimeSetter({ time, timeSetter, prevTime }) {
             >
                 <View className={styles.buttonCon} >
                     <Text>
-                        {prevTime ? 'End Time' : 'Start Time'}
+                        Custom time
                     </Text>
                     <Text>{showTime()}</Text>
                 </View>
