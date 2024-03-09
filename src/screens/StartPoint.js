@@ -4,6 +4,9 @@ import {Button} from "react-native-paper";
 import MapPicker from "../components/Map/MapLocationPicker";
 import TimeSetter from "../components/Time/TimeSetter";
 import Toast from "../components/Elements/Toast";
+
+import Title from "../components/Elements/Title";
+
 import {Location} from '../components/Routes/Location.js';
 
 export default function StartPoint({ navigation }) {
@@ -23,8 +26,17 @@ export default function StartPoint({ navigation }) {
             <View className={styles.container}>
                 <Text>Start Point</Text>
 
+                <View className="mt-12">
+                <Title
+                    title={"Location"}
+                    icon={"walk"}
+                    colour={"yl"}
+                />
+
                 <MapPicker loc={start} changeLoc={setStart}/>
                 <Text>Start Point: {start.getName()}</Text>
+                </View>
+
 
                 <TimeSetter
                     time={startTime}

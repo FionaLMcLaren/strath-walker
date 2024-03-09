@@ -17,17 +17,17 @@ export default function HomeBtn({title, icon, colour, action}) {
 
 
             <View className="flex ">
-                <View className="absolute scale-125 -translate-x-5 -translate-y-5 bg-white border-2 p-4">
+                <View className="absolute scale-125 -translate-x-5 -translate-y-5 bg-white border-2 p-4 ">
                     <Icon
                         source={icon}
                         size={40}
-                        className="text-white stroke-black"
                     />
                 </View>
 
                 <View className="flex flex-row gap-1 self-end ">
                     <Text
-                        className="text-xl translate-y-0.5 antialiased tracking-wide font-extrabold "
+                        className="text-xl translate-y-0.5 antialiased "
+                        style={{fontFamily: "MPLUSRounded1c-ExtraBold"}}
                     >
                         {title}
                     </Text>
