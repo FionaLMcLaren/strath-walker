@@ -1,8 +1,9 @@
 import React, { useState} from "react";
-import { Text} from "react-native";
-import {Button, Dialog, Portal} from "react-native-paper";
+import { Pressable, Text, View} from "react-native";
+import {Portal, Modal} from "react-native-paper";
 import ScrollPicker from "react-native-wheel-scrollview-picker";
 import ErrorModal from "../Elements/PopupErr";
+import TimeModal from "../Elements/Modal"
 
 /*TODO
 disallow end times being greater than start times
@@ -44,58 +45,47 @@ export default function TimeSelect({time, timeSetter, prevTime, validTime, modal
         }
     }
 
+    const validateSubmit = () => {
+        if (validateNewTime(timeToSet)) {
+            toggleModalVisible(false)
+
+        } else {
+            console.log("not valid time")
+        }
+    }
+
     return (
         <>
-            <Portal>
-                <Dialog
-                    visible={modalVisible}
-                    onDismiss={() => toggleModalVisible(false)}
-                >
-                    <Dialog.Title>
-                        Choose Time
-                    </Dialog.Title>
-
-                    <Dialog.Content
-                        className={styles.timeContainer}
-                    >
-                            <ScrollPicker
-                                dataSource={hours}
-                                selectedIndex={hours.indexOf(timeToSet.getHours())}
-                                wrapperBackground="transparent"
-                                onValueChange={(selHour) => {
-                                    console.log("hr change:")
-                                    console.log(new Date(new Date(timeToSet.setHours(selHour)).setMilliseconds(0)))
-                                    setTimeToSet(new Date(new Date(timeToSet.setHours(selHour)).setMilliseconds(0)))
-                                }}
-                            />
-                            <Text>:</Text>
-                            <ScrollPicker
-                                dataSource={minutes}
-                                selectedIndex={minutes.indexOf(timeToSet.getMinutes())}
-                                wrapperBackground="transparent"
-                                onValueChange={(selMin) => {
-                                    console.log("min change:")
-                                    console.log(new Date(new Date(timeToSet.setMinutes(selMin)).setMilliseconds(0)))
-                                    setTimeToSet(new Date(new Date(timeToSet.setMinutes(selMin)).setMilliseconds(0)))
-                                }}
-                            />
-                    </Dialog.Content>
-
-                    <Dialog.Actions>
-                            <Button
-                                onPress={() => {
-                                    if (validateNewTime(timeToSet)) {
-                                        toggleModalVisible(false)
-
-                                    } else {
-                                        console.log("not valid time")
-                                    }
-                            }}>
-                                Confirm
-                            </Button>
-                    </Dialog.Actions>
-                </Dialog>
-            </Portal>
+            <TimeModal
+                title={"Choose Time"}
+                modalVisible={modalVisible}
+                toggleModalVisible={toggleModalVisible}
+                confirmAction={validateSubmit}
+            >
+                <View className="flex flex-row justify-center items-center gap-2 p-6">
+                    <ScrollPicker
+                        dataSource={hours}
+                        selectedIndex={hours.indexOf(timeToSet.getHours())}
+                        wrapperBackground="transparent"
+                        onValueChange={(selHour) => {
+                            console.log("hr change:")
+                            console.log(new Date(new Date(timeToSet.setHours(selHour)).setMilliseconds(0)))
+                            setTimeToSet(new Date(new Date(timeToSet.setHours(selHour)).setMilliseconds(0)))
+                        }}
+                    />
+                    <Text>:</Text>
+                    <ScrollPicker
+                        dataSource={minutes}
+                        selectedIndex={minutes.indexOf(timeToSet.getMinutes())}
+                        wrapperBackground="transparent"
+                        onValueChange={(selMin) => {
+                            console.log("min change:")
+                            console.log(new Date(new Date(timeToSet.setMinutes(selMin)).setMilliseconds(0)))
+                            setTimeToSet(new Date(new Date(timeToSet.setMinutes(selMin)).setMilliseconds(0)))
+                        }}
+                    />
+                </View>
+            </TimeModal>
 
             <Portal>
                 <ErrorModal

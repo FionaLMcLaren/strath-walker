@@ -31,8 +31,12 @@ export default function StartPoint({ navigation }) {
                     colour={"yl"}
                 />
                     <View className="flex flex-row self-center gap-2">
-                        <Text className="text-black text-xl tracking-wide">Start Point</Text>
-                        <Text className="text-amber-500 text-xl tracking-wide"> {start.getName()? start.getName() : "Not Set"}</Text>
+                        <View className="border-2 border-b-4 rounded-lg p-1 px-2 bg-yellow-300 ">
+                            <Text className="text-black text-xl tracking-wide">Start Point</Text>
+                        </View>
+                        <View className="p-2">
+                            <Text className="text-black text-xl tracking-wide"> {start.getName()? start.getName() : "Not Set"}</Text>
+                        </View>
                     </View>
 
                 <MapPicker loc={start} changeLoc={setStart}/>
