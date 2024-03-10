@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {Button, Text, View} from "react-native";
+import {Animated, Button, ImageBackground, Text, View} from "react-native";
 import {WalkMap} from '../components/Map/WalkMap.js';
 import {Path} from '../components/Routes/Path.js';
 import {Location} from '../components/Routes/Location.js';
@@ -8,6 +8,7 @@ import {Polyline} from "../components/Routes/PolylineRequest";
 import {decode} from "@googlemaps/polyline-codec";
 import {WalkTracker} from "../components/Walking/WalkTracker.js";
 import CompassModal from "../components/Walking/CompassModal.js";
+import {Dialog, Portal} from "react-native-paper";
 
 export default function Walk({route, navigation}) {
 
@@ -23,6 +24,7 @@ export default function Walk({route, navigation}) {
 	const [directionDist, changeDist] = useState(0);
 	const [directionAngle, changeAngle] = useState(0);
 	const [tracker] = useState(new WalkTracker(p, changeDist, changeAngle));
+	const [modalVisible, toggleModalVisible] = React.useState(false);
 
 
 
@@ -59,21 +61,46 @@ export default function Walk({route, navigation}) {
                <Text>Walk page</Text>
 				<WalkMap current={currLoc} polyline={polyline}/>
 				<Text>{directionDist}m {directionAngle}</Text>
-				<CompassModal/>
+				<CompassModal destination={directionAngle}/>
+
 				<Button
-					title="End Walk"
-					onPress={() => navigation.navigate("EndWalk",
-						{
-							startingTime: tracker.getStart(),
-							startingLoc: route.params.startingLoc,
-							endingTime: tracker.getTime(),
-							endingLoc: route.params.endingLoc,
-							coords: tracker.getPath(),
-						})
-					}
-				/>
+					onPress={() => {toggleModalVisible(true)}}
+				 	title="EndWalk"
+				>End Walk</Button>
+
+				<Portal>
+					<Dialog
+						visible={modalVisible}
+						onDismiss={() => toggleModalVisible(false)}
+					>
+						<Dialog.Title>
+							End Walk?
+						</Dialog.Title>
+
+						<Button
+							title="End Walk Here"
+							onPress={() => navigation.navigate("EndWalk",
+								{
+									startingTime: tracker.getStart(),
+									startingLoc: route.params.startingLoc,
+									endingTime: tracker.getTime(),
+									endingLoc: route.params.endingLoc,
+									coords: tracker.getPath(),
+								})
+							}
+						/>
+
+						<Button
+							title="Lead Me Back"
+						/>
+
+					</Dialog>
+				</Portal>
+
             </View >
     );
 
 }
+
+
 

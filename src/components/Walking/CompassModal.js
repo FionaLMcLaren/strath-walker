@@ -4,7 +4,7 @@ import CompassHeading from "react-native-compass-heading";
 import React, {useState, useRef} from "react";
 
 
-export default function CompassModal(){
+export default function CompassModal({destination}){
 
     const [modalVisible, toggleModalVisible] = React.useState(false);
     const [angle, setAngle] = useState(0);
@@ -15,7 +15,7 @@ export default function CompassModal(){
         <View>
             <Button
                 onPress={() => {toggleModalVisible(true);
-                    const degree_rate = 20;
+                    const degree_rate = 45;
 
                     CompassHeading.start(degree_rate, ({heading}) => {
                         setAngle(heading);
@@ -23,7 +23,7 @@ export default function CompassModal(){
                         Animated.timing(animationDegree, {
                             useNativeDriver: false,
                             toValue: heading,
-                            duration: 1,
+                            duration: 200,
                         }).start();
                     });}}
             >Compass</Button>
@@ -47,12 +47,16 @@ export default function CompassModal(){
                     >
                         <Animated.Image
                             style={{
-                                width: 200,
-                                height: 200,
+                                width: 100,
+                                height: 100,
+                                borderColor: 'red',
+                                borderWidth: 5,
                                 transform: [{rotate: `${angle}deg`}],
                             }}
                             source={require('../../../images/arrow.png')}
                         />
+
+                        <DestinationArrow destination = {destination}/>
 
                     </ImageBackground>
 
@@ -66,4 +70,21 @@ export default function CompassModal(){
         </View>
 
     );
+}
+
+const DestinationArrow = ({destination}) => {
+    if(destination){
+        return(
+        <Image
+            style={{
+                width: 100,
+                height: 100,
+                borderColor: 'green',
+                borderWidth: 5,
+                transform: [{rotate: `${destination}deg`}],
+            }}
+            source={require('../../../images/arrow.png')}
+        />
+        );
+    }
 }
