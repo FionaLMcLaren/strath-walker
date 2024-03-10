@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import {View} from "react-native";
-import {Button, Text} from "react-native-paper";
+import {Pressable, View} from "react-native";
+import {Button, Icon, Text} from "react-native-paper";
 import TimeSelect from "./TimeSelect";
 import SwitchBtn from "../Elements/Switch";
 
@@ -95,6 +95,27 @@ export default function TimeSetter({ time, timeSetter, prevTime }) {
 
     return (
         <View className={styles.container}>
+
+
+                <Pressable
+                    onPress={() => {
+                            toggleModalVisible(true)
+                        }
+                    }
+                >
+                    <View className="border-black border-2 bg-white rounded-md p-2 px-4 z-10">
+                        <View className="flex flex-row gap-x-4 items-center" >
+                            <Icon source="clock" size={20}/>
+                            <Text className="text-xl ">
+                                {prevTime ? 'End Time' : 'Start Time'}
+                            </Text>
+                            <Text className="text-xl ">{showTime()}</Text>
+                        </View>
+                    </View>
+
+                    <View className="absolute w-60 h-full bg-pink-300 p-6 scale-105 scale-y-125 border-black border-2 border-b-4 rounded-lg" />
+                </Pressable>
+
             <SwitchBtn
                 switchDefault={setSwitchValue()}
                 switchText={"Use current time"}
@@ -102,22 +123,6 @@ export default function TimeSetter({ time, timeSetter, prevTime }) {
                 verifyFailMsg={"Current time cannot be used as it is outwith University hours"}
                 switchAction={setAsCurrTime}
             />
-
-            <Button
-                icon="clock-outline"
-                mode="outlined"
-                onPress={() => {
-                        toggleModalVisible(true)
-                    }
-                }
-            >
-                <View className={styles.buttonCon} >
-                    <Text>
-                        Custom time
-                    </Text>
-                    <Text>{showTime()}</Text>
-                </View>
-            </Button>
 
             <TimeSelect
                 time={time}
