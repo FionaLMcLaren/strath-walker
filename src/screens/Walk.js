@@ -10,57 +10,60 @@ import {WalkTracker} from "../components/Walking/WalkTracker.js";
 import CompassModal from "../components/Walking/CompassModal.js";
 import {Dialog, Portal} from "react-native-paper";
 
+
 export default function Walk({route, navigation}) {
 
    	const styles = {
    		container: "flex flex-1 justify-center",
    	};
 
-	const p= new Polyline("Route ", decode("{_wsIpo}XjImCuGyL"), new Path([new Location("a", 55.82693, -4.25152), new Location("b", 55.82843, -4.24914)]), 0, "0s");
 
-	const [currLoc, setLoc] = useState(route.params.startingLoc);
-	//const [polyline] = useState(route.params.selectedRoute);
-	const [polyline] = useState(p);
-	const [directionDist, changeDist] = useState(0);
-	const [directionAngle, changeAngle] = useState(0);
-	const [tracker] = useState(new WalkTracker(p, changeDist, changeAngle));
+	const [currLoc, setLoc] = useState();
+	const [polyline] = useState(route.params.selectedRoute);
+	const [directionDist, changeDist] = useState();
+	const [directionAngle, changeAngle] = useState();
+	const [tracker] = useState(new WalkTracker(route.params.selectedRoute, changeDist, changeAngle));
 	const [modalVisible, toggleModalVisible] = React.useState(false);
 
 
 
 	useEffect(() => {
-		if(tracker.addNode(currLoc)){
-			navigation.navigate("EndWalk",
-				{
-					startingTime: tracker.getStart(),
-					startingLoc: route.params.startingLoc,
-					endingTime: tracker.getTime(),
-					endingLoc: route.params.endingLoc,
-					coords: tracker.getPath(),
-				})
+		if(currLoc){
+			if(tracker.addNode(currLoc)){
+				tracker.stopWalk();
+				toggleModalVisible(false);
+				navigation.navigate("EndWalk",
+					{
+						walkTracker: tracker,
+						startingLoc: route.params.startingLoc,
+					})
+			}
+			console.log(tracker.onLine());
 		}
-		console.log(polyline.getCoordinates());
-		console.log(tracker.onLine());
-		console.log(polyline.getCoordinates());
+
 	});
 
 	Geolocation.watchPosition(
 		loc => {
 			console.log(loc);
-			setLoc(new Location("User Location", loc["coords"]["latitude"], loc["coords"]["longitude"]));
+			setLoc({"latitude": loc["coords"]["latitude"], "longitude": loc["coords"]["longitude"] });
 
 		},
 		error => {
 			console.log(error.code, error.message);
 		},
-		{},
+		{
+			interval:5000,
+			maximumAge: 10000,
+			distanceFilter: 10,
+		},
 	);
 
    	return (
             <View className={styles.container}>
                <Text>Walk page</Text>
-				<WalkMap current={currLoc} polyline={polyline}/>
-				<Text>{directionDist}m {directionAngle}</Text>
+				<WalkMap current={currLoc} polyline={polyline} start={route.params.startingLoc}/>
+				<DirectionTab direction={directionDist} angle={directionAngle}/>
 				<CompassModal destination={directionAngle}/>
 
 				<Button
@@ -79,15 +82,15 @@ export default function Walk({route, navigation}) {
 
 						<Button
 							title="End Walk Here"
-							onPress={() => navigation.navigate("EndWalk",
+							onPress={() =>{
+								tracker.stopWalk();
+								toggleModalVisible(false);
+								navigation.navigate("EndWalk",
 								{
-									startingTime: tracker.getStart(),
+									walkTracker: tracker,
 									startingLoc: route.params.startingLoc,
-									endingTime: tracker.getTime(),
-									endingLoc: route.params.endingLoc,
-									coords: tracker.getPath(),
-								})
-							}
+								});
+							}}
 						/>
 
 						<Button
@@ -100,6 +103,14 @@ export default function Walk({route, navigation}) {
             </View >
     );
 
+}
+
+const DirectionTab = ({direction, angle}) =>{
+	if(direction && angle){
+		return(<Text>{directionDist}m {directionAngle}°</Text>);
+	}else{
+		return(<Text>--m --°</Text>);
+	}
 }
 
 

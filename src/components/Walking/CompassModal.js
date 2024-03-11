@@ -15,7 +15,7 @@ export default function CompassModal({destination}){
         <View>
             <Button
                 onPress={() => {toggleModalVisible(true);
-                    const degree_rate = 45;
+                    const degree_rate = 5;
 
                     CompassHeading.start(degree_rate, ({heading}) => {
                         setAngle(heading);
