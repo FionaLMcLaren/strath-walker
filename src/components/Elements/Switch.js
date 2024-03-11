@@ -1,8 +1,9 @@
 import React, { useState} from "react";
 import {View, Pressable, Switch} from "react-native";
-import {Button, Text} from "react-native-paper";
+import {Button} from "react-native-paper";
 import Toast from "./Toast";
 import classNames from 'classnames';
+import Text from "./Text";
 
 export default function SwitchBtn({ switchDefault, switchText, switchAction, switchOffAction, switchVerifier, verifyFailMsg  }) {
 

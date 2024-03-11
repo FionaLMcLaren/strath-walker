@@ -1,9 +1,10 @@
 import React, {useState} from "react";
-import {Text, View, StyleSheet} from "react-native";
+import { View, StyleSheet} from "react-native";
 import MapView from "react-native-maps";
 import {Location} from '../Routes/Location.js';
 import {Marker} from "react-native-maps";
 import SwitchBtn from "../Elements/Switch";
+import Text from "../Elements/Text";
 import Geolocation from "@react-native-community/geolocation";
 
 

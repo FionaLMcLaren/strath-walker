@@ -1,6 +1,7 @@
 import React from "react";
-import { View, Text} from "react-native";
-import {Icon  } from "react-native-paper";
+import { View} from "react-native";
+import Text from "../Elements/Text"
+import {Icon} from "react-native-paper";
 import classNames from 'classnames';
 
 export default function Title({title, icon, colour}) {
@@ -26,8 +27,8 @@ export default function Title({title, icon, colour}) {
 
             <View className="relative">
                 <Text
-                    className="text-black text-2xl tracking-wide z-10"
-                    style={{fontFamily:"MPLUSRounded1c-Black"}}
+                    black={true}
+                    title={true}
                 >
                     {title}
                 </Text>
