@@ -3,7 +3,7 @@ import {Animated, Button, ImageBackground, Text, View} from "react-native";
 import {WalkMap} from '../components/Map/WalkMap.js';
 import {Path} from '../components/Routes/Path.js';
 import {Location} from '../components/Routes/Location.js';
-import Geolocation from '@react-native-community/geolocation';
+import Geolocation from 'react-native-geolocation-service';;
 import {Polyline} from "../components/Routes/PolylineRequest";
 import {decode} from "@googlemaps/polyline-codec";
 import {WalkTracker} from "../components/Walking/WalkTracker.js";
