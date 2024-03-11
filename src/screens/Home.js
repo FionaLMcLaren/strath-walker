@@ -1,7 +1,7 @@
 import React, {useState} from "react";
-import {Text, View} from "react-native";
-import {Button} from "react-native-paper";
+import {View} from "react-native";
 import HomeBtn from "../components/Elements/HomeBtn";
+import Text from "../components/Elements/Text";
 
 export default function Home({ navigation }) {
     const styles = {

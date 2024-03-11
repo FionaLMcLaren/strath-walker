@@ -1,9 +1,10 @@
 import React, {useState} from "react";
-import {Text, View} from "react-native";
-import {Button} from "react-native-paper";
+import {View} from "react-native";
 import MapPicker from "../components/Map/MapLocationPicker";
 import TimeSetter from "../components/Time/TimeSetter";
 import Toast from "../components/Elements/Toast";
+import Text from "../components/Elements/Text";
+import Button from "../components/Elements/Btn";
 
 import Title from "../components/Elements/Title";
 
@@ -16,7 +17,7 @@ export default function StartPoint({ navigation }) {
     };
 
     const [start, setStart] = useState(new Location("",0,0));
-    const [startTime, setStartTime] = React.useState(new Date(new Date(Date.now()).setMilliseconds(0)));
+    const [startTime, setStartTime] = React.useState(new Date(new Date(Date.now()).setSeconds(0, 0)));
 
     const [snackbarVisible, toggleSnackbarVisible] = React.useState(false);
     const [modalVisible, toggleModalVisible] = React.useState(false);
@@ -57,7 +58,9 @@ export default function StartPoint({ navigation }) {
                 />
 
                 <Button
-                    onPress={() =>
+                    colour="tq"
+                    title={"set end point"}
+                    action={() =>
                         {
                             if (start.getName()) {
                                 navigation.navigate("EndPoint",
@@ -70,9 +73,7 @@ export default function StartPoint({ navigation }) {
                             }
                         }
                     }
-                >
-                    Set end point
-                </Button>
+                />
             </View>
 
             <Toast
