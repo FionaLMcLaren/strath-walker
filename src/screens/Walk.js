@@ -3,7 +3,7 @@ import {Animated, Button, ImageBackground, Text, View} from "react-native";
 import {WalkMap} from '../components/Map/WalkMap.js';
 import {Path} from '../components/Routes/Path.js';
 import {Location} from '../components/Routes/Location.js';
-import Geolocation from 'react-native-geolocation-service';;
+import Geolocation from "react-native-geolocation-service";
 import {Polyline} from "../components/Routes/PolylineRequest";
 import {decode} from "@googlemaps/polyline-codec";
 import {WalkTracker} from "../components/Walking/WalkTracker.js";
@@ -40,8 +40,7 @@ export default function Walk({route, navigation}) {
 			}
 			console.log(tracker.onLine());
 		}
-
-	});
+	}, [currLoc]);
 
 	Geolocation.watchPosition(
 		loc => {
@@ -53,9 +52,7 @@ export default function Walk({route, navigation}) {
 			console.log(error.code, error.message);
 		},
 		{
-			interval:5000,
-			maximumAge: 10000,
-			distanceFilter: 10,
+			enableHighAccuracy: true, timeout: 15000, maximumAge: 10000
 		},
 	);
 
@@ -105,9 +102,9 @@ export default function Walk({route, navigation}) {
 
 }
 
-const DirectionTab = ({direction, angle}) =>{
-	if(direction && angle){
-		return(<Text>{directionDist}m {directionAngle}°</Text>);
+const DirectionTab = ({dist, angle}) =>{
+	if(dist && angle){
+		return(<Text>{dist}m {angle}°</Text>);
 	}else{
 		return(<Text>--m --°</Text>);
 	}
