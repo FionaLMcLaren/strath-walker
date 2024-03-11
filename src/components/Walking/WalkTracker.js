@@ -75,8 +75,11 @@ export class WalkTracker {
             let actualDist = this.calculateDistance(lineStartLong, lineStartLat, lineEndLong, lineEndLat);
 
             let between = (lineStartLong <= nodeLong && nodeLong <= lineEndLong) || (lineStartLong >= nodeLong && nodeLong >= lineEndLong) || (lineStartLat <= nodeLat && nodeLat <= lineEndLat) || (lineStartLat >= nodeLat && nodeLat >= lineEndLat)
-
-            if ((total <= actualDist + (0.2 * actualDist)) && between){
+            console.log(between);
+            console.log(total);
+            console.log(actualDist);
+            console.log(actualDist + (0.5 * actualDist));
+            if ((total <= (actualDist + (0.5 * actualDist))) && between){
                 let newLine = [node];
                 let newCoord = this.poly.getCoordinates().slice(i+1);
                 newLine = newLine.concat(newCoord);
