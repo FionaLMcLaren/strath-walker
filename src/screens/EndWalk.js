@@ -10,8 +10,21 @@ export default function EndWalk({route, navigation}) {
         container: "flex flex-1 justify-center",
     };
 
-    const [currLoc, setLoc] = useState(route.params.startingLoc);
+    const walkTracker = route.params.walkTracker;
+
+    const [currLoc, setLoc] = useState();
     const [coordinates, setCoordinates] = useState([]);
+
+    const distance = walkTracker.getDistance();
+    const duration = walkTracker.getDuration();
+    let pace = 0;
+    if (duration > 0){
+        pace = distance/duration;
+    }
+
+    const points = walkTracker.getPoints();
+    const history = walkTracker.getLocationHistory();
+
 
     function pushNewLine(newNode) {
         setCoordinates(c=>([...c, newNode]));
@@ -20,13 +33,16 @@ export default function EndWalk({route, navigation}) {
 
 
     useEffect(() => {
-        renderEndWalk(route.params.coords, pushNewLine, setLoc);
+        renderEndWalk(walkTracker.getLocationHistory().slice(), pushNewLine, setLoc);
     }, []);
 
     return (
         <View className={styles.container}>
             <Text>Walk page</Text>
-            <ResultMap current={currLoc} coordinates={coordinates} />
+            <ResultMap current={currLoc} coordinates={coordinates} points = {points} start={route.params.startingLoc}/>
+            <Text>Distance: {distance}m</Text>
+            <Text>Duration: {duration}s</Text>
+            <Text>Pace: {pace}</Text>
 
             <Button
                 title="Start New Walk"
