@@ -1,39 +1,41 @@
+import {getPolyline} from "../Routes/PolylineRequest.jsx"
+import {Location} from "../Routes/Location.js"
+import {Path} from "../Routes/Path.js"
+
 export class WalkTracker {
 
     constructor(poly, changeDist, changeAngle) {
-        this.path = [];
-        console.log(poly.getPath());
+        this.locationHistory = [];
         this.poly = poly;
+        this.points = this.poly.getPath().getPath();
         this.checkpoint = this.poly.getPath().getPath();
-        this.initalTime = new Date();
+        this.initialTime = new Date();
         this.distance = 0;
         this.changeDist = changeDist;
         this.changeAngle = changeAngle;
     }
 
     addNode(node){
-        let end = this.path[this.path.length-1];
-        console.log(this.path);
+        let end = this.locationHistory[this.locationHistory.length-1];
 
         if(end){
-            this.distance += this.calculateDistance(node.getLongitude(), node.getLatitude(), end.getLongitude(), end.getLatitude())
+            this.distance += this.calculateDistance(node["longitude"], node["latitude"], end["longitude"], end["latitude"])
         }
 
-        if(!end || end.getPos() !== node.getPos()){
-            this.path.push(node);
+        if(!end || end !== node){
+            this.locationHistory.push(node);
         }
         return this.checkAtCheckPoint(node);
 
     }
 
     checkAtCheckPoint(node){
-        console.log(this.checkpoint);
-        let rangeMaxLat = this.checkpoint[0].getLatitude() + 0.0001;
-        let rangeMaxLong = this.checkpoint[0].getLongitude() + 0.0001;
-        let rangeMinLat = this.checkpoint[0].getLatitude() - 0.0001;
-        let rangeMinLong = this.checkpoint[0].getLongitude() - 0.0001;
+        let rangeMaxLat = this.checkpoint[0]["latitude"] + 0.0001;
+        let rangeMaxLong = this.checkpoint[0]["longitude"] + 0.0001;
+        let rangeMinLat = this.checkpoint[0]["latitude"] - 0.0001;
+        let rangeMinLong = this.checkpoint[0]["longitude"] - 0.0001;
 
-        if(node.getLatitude()<rangeMaxLat && node.getLongitude()<rangeMaxLong && node.getLatitude()>rangeMinLat && node.getLongitude()>rangeMinLong){
+        if(node["latitude"]<rangeMaxLat && node["longitude"]<rangeMaxLong && node["latitude"]>rangeMinLat && node["longitude"]>rangeMinLong){
             this.checkpoint.slice(1)
             if(this.checkpoint.length === 0){
                 return true;
@@ -46,23 +48,23 @@ export class WalkTracker {
 
 
     onLine(){
-        let node = this.path[this.path.length-1];
-        let nodeLong = parseFloat(node.getLongitude()).toFixed(4);
-        let nodeLat = parseFloat(node.getLatitude()).toFixed(4);
+        let node = this.locationHistory[this.locationHistory.length-1];
+        let nodeLong = node["longitude"];
+        let nodeLat = node["latitude"];
 
         for(let i =0; i<this.poly.getCoordinates().length-1; i++){
             let lineStart = this.poly.getCoordinates()[i];
 
-            if(lineStart === this.checkpoint[0].getPos){
+            if(lineStart === this.checkpoint[0].getPos()){
                 return false;
             }
 
-            let lineStartLong = parseFloat(lineStart["longitude"]).toFixed(4);
-            let lineStartLat = parseFloat(lineStart["latitude"]).toFixed(4);
+            let lineStartLong = lineStart["longitude"];
+            let lineStartLat = lineStart["latitude"];
 
             let lineEnd = this.poly.getCoordinates()[i+1];
-            let lineEndLong = parseFloat(lineEnd["longitude"]).toFixed(4);
-            let lineEndLat = parseFloat(lineEnd["latitude"]).toFixed(4);
+            let lineEndLong = lineEnd["longitude"];
+            let lineEndLat = lineEnd["latitude"];
 
 
             let dist1 = this.calculateDistance(nodeLong, nodeLat, lineStartLong, lineStartLat);
@@ -75,7 +77,7 @@ export class WalkTracker {
             let between = (lineStartLong <= nodeLong && nodeLong <= lineEndLong) || (lineStartLong >= nodeLong && nodeLong >= lineEndLong) || (lineStartLat <= nodeLat && nodeLat <= lineEndLat) || (lineStartLat >= nodeLat && nodeLat >= lineEndLat)
 
             if ((total <= actualDist + (0.2 * actualDist)) && between){
-                let newLine = [node.getPos()];
+                let newLine = [node];
                 let newCoord = this.poly.getCoordinates().slice(i+1);
                 newLine = newLine.concat(newCoord);
                 this.poly.setCoords(newLine);
@@ -102,16 +104,33 @@ export class WalkTracker {
             Math.cos(currLat) *
             Math.pow(Math.sin((currLong-prevLong)/2), 2)));
     }
-    getPath(){
-        return this.path;
+    getLocationHistory(){
+        return this.locationHistory;
     }
 
-    getTime(){
-        return new Date().getTime();
+
+    stopWalk(){
+        this.endTime = new Date();
     }
 
     getStart(){
-        return this.initalTime.getTime();
+        return this.initialTime.getTime();
+    }
+    getEnd(){
+        return this.endTime.getTime();
+    }
+
+    getDistance(){
+        return this.distance;
+    }
+
+    getDuration(){
+        return (this.endTime - this.initialTime)/1000;
+    }
+
+
+    getPoints(){
+        return this.points
     }
 
     convertRadians(deg){  //simple conversion from degrees to radians
@@ -128,6 +147,30 @@ export class WalkTracker {
             angle += 180
         }
         this.changeAngle(angle);
+    }
+
+    backHome(){
+        this.changeDist();
+        this.changeAngle();
+
+        this.checkpoints = [this.checkpoints[this.checkpoints.length - 1]];
+        let currLocation = this.locationHistory[this.locationHistory.length -1];
+        let pathArr = [new Location("User Location", currLocation["latitude"], currLocation["longitude"]), this.checkpoints[0]]
+        let path = new Path(pathArr);
+        let route = getPolyline(path);
+        this.poly = route.getPath().getPath();
+    }
+
+    reroute(){
+        this.changeDist();
+        this.changeAngle();
+
+        let currLocation = this.locationHistory[this.locationHistory.length -1];
+        let pathArr = [new Location("User Location", currLocation["latitude"], currLocation["longitude"])]
+        pathArr.concat(this.checkpoints);
+        let path = new Path(pathArr);
+        let route = getPolyline(path);
+        this.poly = route.getPath().getPath();
     }
 
 

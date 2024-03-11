@@ -12,20 +12,13 @@ export function WalkMap(props) {
             minZoomLevel={10}
             style={StyleSheet.absoluteFillObject, {height:"30%"}}
             initialRegion={{
-                latitude: props.current.getLatitude(),
-                longitude: props.current.getLongitude(),
+                latitude: props.start.getLatitude(),
+                longitude: props.start.getLongitude(),
                 latitudeDelta: 0.002,
                 longitudeDelta: 0.002,
             }}
         >
-            <Marker
-                coordinate={props.current.getPos()}
-            >
-                <View style={{backgroundColor: "yellow", padding: 10}}>
-                    <Text>Me</Text>
-                </View>
-
-            </Marker>
+            <PosMarker currentPos = {props.current}/>
 
             {
                 props.polyline &&
@@ -45,6 +38,22 @@ const styles = {
     map: "items-center justify-center h-4/5 bg-neutral-950",
 };
 
+
+const PosMarker = ({currentPos}) => {
+    if(currentPos){
+        return(
+            <Marker
+                coordinate={currentPos}
+            >
+                <View style={{backgroundColor: "yellow", padding: 10}}>
+                    <Text>Me</Text>
+                </View>
+
+            </Marker>
+        );
+    }
+
+}
 
 
 
