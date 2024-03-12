@@ -75,16 +75,19 @@ export class WalkTracker {
             let actualDist = this.calculateDistance(lineStartLong, lineStartLat, lineEndLong, lineEndLat);
 
             let between = (lineStartLong <= nodeLong && nodeLong <= lineEndLong) || (lineStartLong >= nodeLong && nodeLong >= lineEndLong) || (lineStartLat <= nodeLat && nodeLat <= lineEndLat) || (lineStartLat >= nodeLat && nodeLat >= lineEndLat)
-            console.log(between);
-            console.log(total);
-            console.log(actualDist);
-            console.log(actualDist + (0.5 * actualDist));
+
             if ((total <= (actualDist + (0.5 * actualDist))) && between){
                 let newLine = [node];
                 let newCoord = this.poly.getCoordinates().slice(i+1);
                 newLine = newLine.concat(newCoord);
                 this.poly.setCoords(newLine);
-                this.changeDist(dist2);
+                console.log(dist2);
+                let roundedDist = Math.floor(dist2/10) * 10;
+                if((dist2%10) > 5){
+                    roundedDist += 10;
+                }
+
+                this.changeDist(roundedDist);
                 this.setAngle(nodeLong, nodeLat, lineEndLong, lineEndLat);
                 return true;
             }
@@ -141,15 +144,22 @@ export class WalkTracker {
     }
 
     setAngle(startLong, startLat, endLong, endLat){
-        let opposite = this.calculateDistance(startLong, startLat, startLong, endLat);
-        let adjacent = this.calculateDistance(startLong, startLat, endLong, startLat);
-        let angle = Math.atan(opposite/adjacent);
-        if(endLong > startLong){
-            angle += 90
-        }else{
-            angle += 180
+        let angle = Math.round(Math.atan(Math.abs((startLong-endLong)/(startLat-endLat))) * 180/Math.PI);  //Uses arctan(opp/adj) = angle
+        if((endLong > startLong) && (endLat < startLat)){  //Accounting for position of angle E, W and S
+            angle = 180-angle;
+        }else if((endLong < startLong) && (endLat < startLat)){
+            angle = 270-angle;
+        }else if((endLong < startLong) && (endLat > startLat)){
+            angle = 360-angle;
         }
-        this.changeAngle(angle);
+
+        let directions = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"]
+        let arrayPos = (Math.floor((angle+22.5)/45))%8;
+        let direction = directions[arrayPos];
+        console.log(arrayPos);
+        console.log(direction);
+        let writtenAngle = angle + "° " + direction;
+        this.changeAngle(writtenAngle);
     }
 
     backHome(){
