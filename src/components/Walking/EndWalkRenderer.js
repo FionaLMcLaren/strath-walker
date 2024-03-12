@@ -11,7 +11,7 @@ export function renderEndWalk(coord, pushNewLine, changePos){
             clearInterval(animateCoord);
         }
 
-        pushNewLine(newNode.getPos());
+        pushNewLine(newNode);
 
         changePos(newNode);
     }, 5000);
