@@ -53,7 +53,7 @@ export default function Walk({route, navigation}) {
 			console.log(error.code, error.message);
 		},
 		{
-			enableHighAccuracy: true, timeout: 15000, maximumAge: 10000
+			enableHighAccuracy: true, interval: 10000
 		},
 	);
 
