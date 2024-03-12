@@ -19,10 +19,11 @@ export default function Walk({route, navigation}) {
 
 
 	const [currLoc, setLoc] = useState();
-	const [polyline] = useState(route.params.selectedRoute);
+	const p= new Polyline("Route ", decode("sa}sIxtzX_AcB"), new Path([new Location("a", 55.85997, -4.23739), new Location("b", 55.82843, -4.24914)]), 0, "0s");
+	const [polyline] = useState(p);
 	const [directionDist, changeDist] = useState();
 	const [directionAngle, changeAngle] = useState();
-	const [tracker] = useState(new WalkTracker(route.params.selectedRoute, changeDist, changeAngle));
+	const [tracker] = useState(new WalkTracker(p, changeDist, changeAngle));
 	const [modalVisible, toggleModalVisible] = React.useState(false);
 
 
@@ -60,7 +61,7 @@ export default function Walk({route, navigation}) {
             <View className={styles.container}>
                <Text>Walk page</Text>
 				<WalkMap current={currLoc} polyline={polyline} start={route.params.startingLoc}/>
-				<DirectionTab direction={directionDist} angle={directionAngle}/>
+				<DirectionTab dist={directionDist} angle={directionAngle}/>
 				<CompassModal destination={directionAngle}/>
 
 				<Button
@@ -104,7 +105,7 @@ export default function Walk({route, navigation}) {
 
 const DirectionTab = ({dist, angle}) =>{
 	if(dist && angle){
-		return(<Text>{dist}m {angle}°</Text>);
+		return(<Text>Head {dist}m at {angle}</Text>);
 	}else{
 		return(<Text>--m --°</Text>);
 	}
