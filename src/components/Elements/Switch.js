@@ -38,14 +38,14 @@ export default function SwitchBtn({ switchDefault, switchText, switchAction, swi
                     onPress={toggleSwitch}
                     className={classNames(
                         "rounded-full border-2 border-b-4 border-b-4 m-0.5",
-                        switchDefault && "bg-teal-400",
-                        !switchDefault && "bg-gray-400"
+                        switchValue && "bg-teal-400",
+                        !switchValue && "bg-gray-400"
                     )}
                 >
                     <Switch
                         thumbColor={"white"}
                         trackColor={{true: "#2dd4bf", false: "#a1a1aa"}}
-                        value={switchDefault}
+                        value={switchValue}
                         onValueChange={toggleSwitch}
 
                     />

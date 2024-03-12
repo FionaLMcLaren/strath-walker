@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, {useRef, useState} from "react";
 import { Pressable, View} from "react-native";
 import {Portal, Modal} from "react-native-paper";
 import ScrollPicker from "react-native-wheel-scrollview-picker";
@@ -19,13 +19,24 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
     // initial timeToSet becomes 08:00 when out of appropriate range
     const [timeToSet, setTimeToSet] = useState(new Date(new Date(Date.now()).setHours(8, 0, 0, 0)));
 
+    const [selHour, setSelHour] = useState(timeToSet.getHours());
+    const [selMin, setSelMin] = useState(timeToSet.getMinutes());
+
+    const hourRef = useRef();
+    const minRef = useRef();
+
     const [showingErrorPopUp, setShowingErrorPopUp] = useState(false);
 
     const verifyCurTime = () => {
         let curTime = new Date(Date.now())
 
         //round up cur time to nearest quarter
-        curTime.setMinutes(Math.round(curTime.getMinutes() / 15) * 15)
+        if (curTime.getMinutes() > 45) {
+            curTime.setHours(curTime.getHours() + 1)
+            curTime.setMinutes(0);
+        } else {
+            curTime.setMinutes(Math.round(curTime.getMinutes() / 15) * 15)
+        }
         curTime.setSeconds(0, 0)
 
         let lowTime = new Date(new Date(Date.now()).setHours(8, 0, 0, 0));
@@ -38,7 +49,12 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
         let curTime = new Date(Date.now())
 
         //round up cur time to nearest quarter
-        curTime.setMinutes(Math.round(curTime.getMinutes() / 15) * 15)
+        if (curTime.getMinutes() > 45) {
+            curTime.setHours(curTime.getHours() + 1)
+            curTime.setMinutes(0);
+        } else {
+            curTime.setMinutes(Math.round(curTime.getMinutes() / 15) * 15)
+        }
         curTime.setSeconds(0, 0)
 
         console.log(curTime.toString())
@@ -52,10 +68,19 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
         let curTime = new Date(Date.now())
 
         //round up cur time to nearest quarter
-        curTime.setMinutes(Math.round(curTime.getMinutes() / 15) * 15)
+        if (curTime.getMinutes() > 45) {
+            curTime.setHours(curTime.getHours() + 1)
+            curTime.setMinutes(0);
+        } else {
+            curTime.setMinutes(Math.round(curTime.getMinutes() / 15) * 15)
+        }
         curTime.setSeconds(0, 0)
 
         setTimeToSet(curTime)
+        setSelHour(curTime.getHours())
+        setSelMin(curTime.getMinutes())
+        hourRef.current && hourRef.current.scrollToTargetIndex(hours.indexOf(curTime.getHours()));
+        minRef.current && minRef.current.scrollToTargetIndex(minutes.indexOf(curTime.getMinutes()));
     }
 
 
@@ -79,7 +104,6 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
     const validateSubmit = () => {
         if (validateNewTime(timeToSet)) {
             toggleModalVisible(false)
-
         } else {
             console.log("not valid time")
         }
@@ -105,31 +129,35 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
                     <View className="absolute border-b-4 border-2 rounded-md w-10 h-1/4 left-1/4 scale-125 "/>
                     <View className="absolute border-b-4 border-2 rounded-md w-10 h-1/4 right-1/4 scale-125 "/>
                     <ScrollPicker
+                        ref={hourRef}
                         dataSource={hours}
-                        selectedIndex={hours.indexOf(timeToSet.getHours())}
+                        selectedIndex={selHour}
                         wrapperBackground="transparent"
                         highlightColor="transparent"
                         itemHeight={30}
                         activeItemTextStyle={{fontFamily:"MPLUSRounded1c-ExtraBold", color: "black", fontSize: 18 }}
                         itemTextStyle={{fontFamily:"MPLUSRounded1c-Medium", fontSize: 12}}
-                        onValueChange={(selHour) => {
+                        onValueChange={(hour) => {
                             console.log("hr change:")
-                            console.log(new Date(new Date(timeToSet.setHours(selHour)).setSeconds(0,0)))
+                            console.log(new Date(new Date(timeToSet.setHours(hour)).setSeconds(0,0)))
+                            setSelHour(hour)
                             setTimeToSet(new Date(new Date(timeToSet.setHours(selHour)).setSeconds(0,0)))
                         }}
                     />
 
                     <ScrollPicker
+                        ref={minRef}
                         dataSource={minutes}
-                        selectedIndex={minutes.indexOf(timeToSet.getMinutes())}
+                        selectedIndex={selMin}
                         wrapperBackground="transparent"
                         highlightColor="transparent"
                         itemHeight={30}
                         activeItemTextStyle={{fontFamily:"MPLUSRounded1c-ExtraBold", color: "black", fontSize: 18 }}
                         itemTextStyle={{fontFamily:"MPLUSRounded1c-Medium", fontSize: 12}}
-                        onValueChange={(selMin) => {
+                        onValueChange={(min) => {
                             console.log("min change:")
-                            console.log(new Date(new Date(timeToSet.setMinutes(selMin)).setSeconds(0,0)))
+                            console.log(new Date(new Date(timeToSet.setMinutes(min)).setSeconds(0,0)))
+                            setSelMin(min)
                             setTimeToSet(new Date(new Date(timeToSet.setMinutes(selMin)).setSeconds(0,0)))
                         }}
                     />
