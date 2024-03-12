@@ -83,17 +83,17 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
         minRef.current && minRef.current.scrollToTargetIndex(minutes.indexOf(curTime.getMinutes()));
     }
 
-
     const validateNewTime = () => {
 
         let lowTime = new Date(new Date(Date.now()).setHours(8, 0, 0, 0));
         let highTime = new Date(new Date(Date.now()).setHours(18, 0, 0, 0));
 
-        let inRange = (timeToSet <= highTime) && (timeToSet >= lowTime);
-        let endAfterStart = ((prevTime && (timeToSet > prevTime)) || !prevTime);
+        let newTime = new Date(new Date(Date.now()).setHours(selHour, selMin, 0, 0))
+        let inRange = (newTime <= highTime) && (newTime >= lowTime);
+        let endAfterStart = ((prevTime && (newTime > prevTime)) || !prevTime);
 
         if (inRange && endAfterStart) {
-            timeSetter(new Date(timeToSet.getTime()))
+            timeSetter(new Date(newTime))
             return true
         } else {
             setShowingErrorPopUp(true)
@@ -102,6 +102,7 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
     }
 
     const validateSubmit = () => {
+
         if (validateNewTime(timeToSet)) {
             toggleModalVisible(false)
         } else {

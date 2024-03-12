@@ -4,18 +4,12 @@ import MapPicker from "../components/Map/MapLocationPicker";
 import TimeSetter from "../components/Time/TimeSetter";
 import Toast from "../components/Elements/Toast";
 import Text from "../components/Elements/Text";
-import Button from "../components/Elements/Btn";
-
+import Button from "../components/Elements/NextBtn";
 import Title from "../components/Elements/Title";
 
 import {Location} from '../components/Routes/Location.js';
 
 export default function StartPoint({ navigation }) {
-
-    const styles = {
-        container: "flex justify-center ",
-    };
-
     const [start, setStart] = useState(new Location("",0,0));
     const [startTime, setStartTime] = React.useState(new Date(new Date(Date.now()).setSeconds(0, 0)));
 
@@ -23,9 +17,10 @@ export default function StartPoint({ navigation }) {
     const [modalVisible, toggleModalVisible] = React.useState(false);
 
     return (
-        <View className="mt-6">
-            <View className={styles.container}>
+        <View className="mt-4">
+            <View className="flex justify-center ">
                 <View>
+
                 <Title
                     title={"Location"}
                     icon={"map-marker"}

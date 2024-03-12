@@ -6,13 +6,6 @@ import SwitchBtn from "../Elements/Switch";
 import Text from "../Elements/Text";
 
 export default function TimeSetter({ time, timeSetter, prevTime }) {
-
-    const styles = {
-        container: "flex items-center justify-center",
-        switchCon: "flex flex-row items-center justify-center gap-3",
-        buttonCon: "flex flex-row gap-x-5",
-    };
-
     const [modalVisible, toggleModalVisible] = React.useState(false);
 
     const showTime = () => {
@@ -28,7 +21,7 @@ export default function TimeSetter({ time, timeSetter, prevTime }) {
 
 
     return (
-        <View className={styles.container}>
+        <View className="flex items-center justify-center">
                 <Pressable
                     onPress={() => {
                             toggleModalVisible(true)
