@@ -7,6 +7,8 @@ import Walk from './src/screens/Walk';
 import StartWalk from './src/screens/StartWalk';
 import EndWalk from './src/screens/EndWalk';
 
+import NavHead from './src/components/Elements/NavHead';
+
 import { Provider as PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -17,7 +19,13 @@ export default function App() {
     return(
         <PaperProvider>
             <NavigationContainer>
-              <Stack.Navigator initialRouteName="StartPoint">
+              <Stack.Navigator
+                  initialRouteName="StartPoint"
+                  screenOptions={{
+                      header: NavHead,
+                      headerMode: 'float'
+                  }}
+              >
                 <Stack.Screen name="Home" component={Home} />
                 <Stack.Screen name="StartPoint" component={StartPoint} />
                 <Stack.Screen name="EndPoint" component={EndPoint} />
