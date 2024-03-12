@@ -50,6 +50,12 @@ export default function StartPoint({ navigation }) {
                 >
                     Set end point
                 </Button>
+
+                <Button
+                    onPress={() => navigation.navigate("WalkDataView",)}
+                >
+                    View past walk data
+                </Button>
             </View>
 
             <Toast

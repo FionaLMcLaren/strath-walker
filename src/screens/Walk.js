@@ -37,6 +37,7 @@ export default function Walk({route, navigation}) {
 					endingTime: tracker.getTime(),
 					endingLoc: route.params.endingLoc,
 					coords: tracker.getPath(),
+					distance: 0, //TODO: check in about what the current saved distance is for (and if there is one specifically to track "travelled so far"
 				})
 		}
 		console.log(polyline.getCoordinates());
@@ -86,6 +87,8 @@ export default function Walk({route, navigation}) {
 									endingTime: tracker.getTime(),
 									endingLoc: route.params.endingLoc,
 									coords: tracker.getPath(),
+									selectedRoute: route.params.selectedRoute,
+									distance: 0,
 								})
 							}
 						/>

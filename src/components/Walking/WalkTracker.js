@@ -114,6 +114,10 @@ export class WalkTracker {
         return this.initalTime.getTime();
     }
 
+    getDistance(){
+        return this.distance;
+    }
+
     convertRadians(deg){  //simple conversion from degrees to radians
         return deg * Math.PI/180;
     }

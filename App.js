@@ -8,6 +8,7 @@ import EndWalk from './src/screens/EndWalk';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import WalkDataView from "./src/screens/WalkDataView";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,7 @@ export default function App() {
                 <Stack.Screen name="Walk" component={Walk} />
                 <Stack.Screen name="EndWalk" component={EndWalk} />
                 <Stack.Screen name="Routes" component={Routes} />
+                <Stack.Screen name="WalkDataView" component={WalkDataView} />
               </Stack.Navigator>
             </NavigationContainer>
         </PaperProvider>
