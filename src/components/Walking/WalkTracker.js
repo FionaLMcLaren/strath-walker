@@ -4,7 +4,7 @@ import {Path} from "../Routes/Path.js"
 
 export class WalkTracker {
 
-    constructor(poly, changeDist, changeAngle) {
+    constructor(poly, changeDist, changeAngle, changeHeading) {
         this.locationHistory = [];
         this.poly = poly;
         this.points = this.poly.getPath().getPath();
@@ -13,6 +13,7 @@ export class WalkTracker {
         this.distance = 0;
         this.changeDist = changeDist;
         this.changeAngle = changeAngle;
+        this.changeHeading = changeHeading;
     }
 
     addNode(node){
@@ -155,11 +156,8 @@ export class WalkTracker {
 
         let directions = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"]
         let arrayPos = (Math.floor((angle+22.5)/45))%8;
-        let direction = directions[arrayPos];
-        console.log(arrayPos);
-        console.log(direction);
-        let writtenAngle = angle + "° " + direction;
-        this.changeAngle(writtenAngle);
+        this.changeHeading(directions[arrayPos]);
+        this.changeAngle(angle);
     }
 
     backHome(){
