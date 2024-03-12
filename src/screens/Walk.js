@@ -19,11 +19,10 @@ export default function Walk({route, navigation}) {
 
 
 	const [currLoc, setLoc] = useState();
-	const p= new Polyline("Route ", decode("sa}sIxtzX_AcB"), new Path([new Location("a", 55.85997, -4.23739), new Location("b", 55.82843, -4.24914)]), 0, "0s");
-	const [polyline] = useState(p);
+	const [polyline] = useState(route.params.selectedRoute);
 	const [directionDist, changeDist] = useState();
 	const [directionAngle, changeAngle] = useState();
-	const [tracker] = useState(new WalkTracker(p, changeDist, changeAngle));
+	const [tracker] = useState(new WalkTracker(route.params.selectedRoute, changeDist, changeAngle));
 	const [modalVisible, toggleModalVisible] = React.useState(false);
 
 
