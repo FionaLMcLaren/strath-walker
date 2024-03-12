@@ -77,7 +77,7 @@ export class WalkTracker {
 
             let between = (lineStartLong <= nodeLong && nodeLong <= lineEndLong) || (lineStartLong >= nodeLong && nodeLong >= lineEndLong) || (lineStartLat <= nodeLat && nodeLat <= lineEndLat) || (lineStartLat >= nodeLat && nodeLat >= lineEndLat)
 
-            if ((total <= (actualDist + (0.5 * actualDist))) && between){
+            if ((total <= (actualDist + (0.1 * actualDist))) && between){
                 let newLine = [node];
                 let newCoord = this.poly.getCoordinates().slice(i+1);
                 newLine = newLine.concat(newCoord);
