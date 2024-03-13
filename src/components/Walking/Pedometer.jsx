@@ -15,14 +15,14 @@ import { scan } from 'rxjs';
 // TODO: Might need a cooldown period at beginning / in between steps? Reads long periods of acceleration as constant steps. How good is this in practice?
 const ACCELEROMETER_UPDATE_INTERVAL = 400;  // Time in ms between each accelerometer reading
 const HIGH_PASS_FILTER_ALPHA        = 0.8;  // Controls the smoothing of the gravity high pass filter (low value = takes longer to adjust to changes like rotation)
-const STEP_DETECTION_THRESHOLD      = 0.8;  // The acceleration threshold for detecting a step (m/s)
-const LOW_PASS_FILTER_ALPHA         = 0.95; // Controls the amount of smoothing applied to the speed (low value = ignores sudden spikes)
+const STEP_DETECTION_THRESHOLD      = 3.15;  // The acceleration threshold for detecting a step (m/s)
+const LOW_PASS_FILTER_ALPHA         = 0.55; // Controls the amount of smoothing applied to the speed (low value = ignores sudden spikes)
 
 setUpdateIntervalForType(SensorTypes.accelerometer, ACCELEROMETER_UPDATE_INTERVAL);
 
 const Pedometer = () => {
 
-    const [steps, setSteps] = useState(0);
+    const [steps, setSteps] = useState(-2);
 
     // Low pass filter to smooth out the accelerometer data
     const [speed, setSpeed] = useState({x: 0, y: 0, z: 0});
