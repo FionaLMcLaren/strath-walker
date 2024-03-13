@@ -5,6 +5,7 @@ import MapPicker from "../components/Map/MapLocationPicker";
 import TimeSetter from "../components/Time/TimeSetter";
 import Toast from "../components/Elements/Toast";
 import {Location} from '../components/Routes/Location.js';
+import Pedometer from "../components/Walking/Pedometer.jsx";
 
 export default function StartPoint({ navigation }) {
 
@@ -22,6 +23,7 @@ export default function StartPoint({ navigation }) {
         <>
             <View className={styles.container}>
                 <Text>Start Point</Text>
+
 
                 <MapPicker loc={start} changeLoc={setStart}/>
                 <Text>Start Point: {start.getName()}</Text>
@@ -50,6 +52,7 @@ export default function StartPoint({ navigation }) {
                 >
                     Set end point
                 </Button>
+                <Pedometer />
             </View>
 
             <Toast
