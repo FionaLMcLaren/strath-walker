@@ -6127,6 +6127,11 @@ react-native-asset@^2.1.1:
     sha1-file "^1.0.4"
     xcode "^2.0.0"
 
+react-native-compass-heading@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/react-native-compass-heading/-/react-native-compass-heading-1.5.0.tgz#88c8de29b9b249cc6c371014194ee63d5ef80b5b"
+  integrity sha512-FQwQYyjH2eZttM90HS2LGuxSC+cRDdRHfenC1o1qmLmGniDlr+sxUMw++5zke6LunaRualv6P2yakFDOj+5TUA==
+
 react-native-css-interop@0.0.36:
   version "0.0.36"
   resolved "https://registry.npmjs.org/react-native-css-interop/-/react-native-css-interop-0.0.36.tgz"
@@ -6151,6 +6156,11 @@ react-native-element-dropdown@^2.10.1:
   integrity sha512-7J3K6T1LZo5H2rsEdAPpYDwhgog4UvatFq8bsW3dCrd2oyXiftn83gcQP1NKRYl4QMyb4WCMXIf+FqmZzS4o/Q==
   dependencies:
     lodash "^4.17.21"
+
+react-native-geolocation-service@^5.3.1:
+  version "5.3.1"
+  resolved "https://registry.yarnpkg.com/react-native-geolocation-service/-/react-native-geolocation-service-5.3.1.tgz#4ce1017789da6fdfcf7576eb6f59435622af4289"
+  integrity sha512-LTXPtPNmrdhx+yeWG47sAaCgQc3nG1z+HLLHlhK/5YfOgfLcAb9HAkhREPjQKPZOUx8pKZMIpdGFUGfJYtimXQ==
 
 react-native-maps@^1.10.3:
   version "1.10.3"

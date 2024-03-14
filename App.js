@@ -9,18 +9,23 @@ import EndWalk from './src/screens/EndWalk';
 
 import NavHead from './src/components/Elements/NavHead';
 
-import { Provider as PaperProvider } from 'react-native-paper';
+import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+    const theme = {
+        ...DefaultTheme,
+        mode: 'light',
+    }
+
     return(
-        <PaperProvider>
+        <PaperProvider theme={theme}>
             <NavigationContainer>
               <Stack.Navigator
-                  initialRouteName="Home"
+                  initialRouteName="StartPoint"
                   screenOptions={{
                       header: NavHead
                   }}
