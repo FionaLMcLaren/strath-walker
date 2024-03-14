@@ -1,10 +1,13 @@
 import React, {useState} from "react";
-import {Text, View} from "react-native";
-import {Button} from "react-native-paper";
+import {View} from "react-native";
 import MapPicker from "../components/Map/MapLocationPicker";
 import TimeSetter from "../components/Time/TimeSetter";
 import Toast from "../components/Elements/Toast";
+import Text from "../components/Elements/Text";
+import Button from "../components/Elements/NextBtn";
+import Title from "../components/Elements/Title";
 import {Location} from '../components/Routes/Location.js';
+import Label from "../components/Elements/Label";
 
 export default function EndPoint({ route, navigation }) {
 
@@ -22,47 +25,64 @@ export default function EndPoint({ route, navigation }) {
 	)
     const [end, setEnd] = useState(new Location("",0,0));
 
-   	const styles = {
-   		otherContainer: "flex flex-1 items-center justify-center",
-        container: "justify-center h-4/5 ",
-    };
-
 	const [modalVisible, toggleModalVisible] = React.useState(false);
 	const [snackbarVisible, toggleSnackbarVisible] = React.useState(false);
 
 
 	return (
-		<>
-            <View className={styles.container }>
-                <MapPicker loc={end} changeLoc={setEnd}/>
-                <Text>End Point: {end.getName()}</Text>
+		<View className="mt-4">
+			<View className="flex justify-center ">
+				<View>
 
-				<Button
-					onPress={() =>
-					{
-						if (end.getName()) {
-							navigation.navigate("Routes", {
-                                startingTime: startTime,
-                                startingLoc: start,
-                                endingTime: endTime,
-                                endingLoc: end,
-                                }
-                                )
-						} else {
-							toggleSnackbarVisible(true);
-						}
-					}
-					}
-				>
-					Get routes
-				</Button>
+					<Title
+						title={"Location"}
+						icon={"map-marker"}
+						colour={"yl"}
+					/>
+
+					<Label
+						title={"End Point"}
+						text={end.getName()? end.getName() : "Not Set"}
+						colour={"yl"}
+					/>
+
+					<MapPicker loc={end} changeLoc={setEnd}/>
+
+				</View>
+
+				<Title
+					title={"Time"}
+					icon={"clock-time-eight"}
+					colour={"pk"}
+				/>
 
 				<TimeSetter
 					time={endTime}
 					timeSetter={setEndTime}
 					prevTime={startTime}
+					modalVisible={modalVisible}
+					toggleModalVisible={toggleModalVisible}
 				/>
 
+				<Button
+					colour="tq"
+					title={"Get routes"}
+					action={() =>
+						{
+							if (end.getName()) {
+								navigation.navigate("Routes", {
+										startingTime: startTime,
+										startingLoc: start,
+										endingTime: endTime,
+										endingLoc: end,
+									}
+								)
+							} else {
+								toggleSnackbarVisible(true);
+							}
+						}
+					}
+				/>
 			</View>
 
 			<Toast
@@ -70,8 +90,7 @@ export default function EndPoint({ route, navigation }) {
 				snackbarVisible={snackbarVisible}
 				toggleSnackbarVisible={toggleSnackbarVisible}
 			/>
-		</>
+		</View>
 	);
-
 }
 
