@@ -12,8 +12,7 @@ import { accelerometer, setUpdateIntervalForType, SensorTypes } from 'react-nati
 import { scan } from 'rxjs';
 import {Dialog, Portal} from "react-native-paper";
 
-// TODO: It's possible that adjusting these alone won't really be enough to get a proper reading.
-// TODO: Might need a cooldown period at beginning / in between steps? Reads long periods of acceleration as constant steps. How good is this in practice?
+
 const ACCELEROMETER_UPDATE_INTERVAL = 400;  // Time in ms between each accelerometer reading
 const HIGH_PASS_FILTER_ALPHA        = 0.8;  // Controls the smoothing of the gravity high pass filter (low value = takes longer to adjust to changes like rotation)
 const STEP_DETECTION_THRESHOLD      = 3.15;  // The acceleration threshold for detecting a step (m/s)
@@ -64,16 +63,16 @@ const Pedometer = ({steps, setSteps}) => {
         }, [])
     )
 
-    const [modalVisible, toggleModalVisible] = React.useState(false);
+    const [modalVisible2, toggleModal2Visible] = React.useState(false);
 
     return (
         <View>
             <Text>Steps: {steps}</Text>
-            <Button title={info} onClick={() => toggleModalVisible(true)}>?</Button>
+            <Button title="info" onPress={() => toggleModal2Visible(true)}>?</Button>
             <Portal>
                 <Dialog
-                    visible={modalVisible}
-                    onDismiss={() => toggleModalVisible(false)}
+                    visible={modalVisible2}
+                    onDismiss={() => toggleModal2Visible(false)}
                 >
                     <Text>For the best results put the phone into your pocket</Text>
 

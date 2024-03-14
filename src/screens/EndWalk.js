@@ -40,7 +40,7 @@ export default function EndWalk({route, navigation}) {
             <ResultMap current={currLoc} coordinates={coordinates} points = {points} start={route.params.startingLoc}/>
             <Text>Distance: {distance}m</Text>
             <Text>Duration: {duration}s</Text>
-            <Text>Pace: {pace}</Text>
+            <Text>Pace: {pace}m/s</Text>
 
             <Button
                 title="Start New Walk"

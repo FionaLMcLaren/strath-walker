@@ -66,10 +66,6 @@ export class PathGenerator{
 
 
 
-    convertRadians(deg){  //simple conversion from degrees to radians
-        return deg * Math.PI/180;
-    }
-
 
     getPaths(){
         return this.paths.map((path) => { return new Path(path) });
