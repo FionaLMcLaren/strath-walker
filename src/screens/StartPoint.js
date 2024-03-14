@@ -6,6 +6,7 @@ import Toast from "../components/Elements/Toast";
 import Text from "../components/Elements/Text";
 import Button from "../components/Elements/NextBtn";
 import Title from "../components/Elements/Title";
+import Label from "../components/Elements/Label";
 
 import {Location} from '../components/Routes/Location.js';
 
@@ -13,7 +14,7 @@ export default function StartPoint({ navigation }) {
     const [start, setStart] = useState(new Location("",0,0));
     const [startTime, setStartTime] = React.useState(new Date(new Date(Date.now()).setSeconds(0, 0)));
 
-    const [snackbarVisible, toggleSnackbarVisible] = React.useState(false);
+    const [snackbarVisible, toggleSnackbarVisible] = React.useState(true);
     const [modalVisible, toggleModalVisible] = React.useState(false);
 
     return (
@@ -26,14 +27,14 @@ export default function StartPoint({ navigation }) {
                     icon={"map-marker"}
                     colour={"yl"}
                 />
-                    <View className="flex flex-row self-center gap-2">
-                        <View className="border-2 border-b-4 rounded-lg p-1 px-2 bg-yellow-300 ">
-                            <Text className="text-black text-xl tracking-wide">Start Point</Text>
-                        </View>
-                        <View className="p-2">
-                            <Text className="text-black text-xl tracking-wide"> {start.getName()? start.getName() : "Not Set"}</Text>
-                        </View>
-                    </View>
+
+
+                <Label
+                    title={"Start Point"}
+                    text={start.getName()? start.getName() : "Not Set"}
+                    colour={"yl"}
+                />
+
 
                 <MapPicker loc={start} changeLoc={setStart}/>
 
