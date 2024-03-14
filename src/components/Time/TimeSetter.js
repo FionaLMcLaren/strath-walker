@@ -38,7 +38,7 @@ export default function TimeSetter({ time, timeSetter, prevTime }) {
                         </View>
                     </View>
 
-                    <View className="absolute w-60 h-full bg-pink-300 p-6 scale-105 scale-y-125 border-black border-2 border-b-4 rounded-lg" />
+                    <View className="absolute w-3/5 h-full bg-pink-300 p-6 scale-105 scale-y-125 border-black border-2 border-b-4 rounded-lg" />
                 </Pressable>
 
             <TimeSelect

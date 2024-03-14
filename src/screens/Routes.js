@@ -14,8 +14,13 @@ export default function Routes({route, navigation}) {
     const endTime = route.params.endingTime;
     const end = route.params.endingLoc;
 
-    //const start = new Location("Rottenrow", 55.861873, -4.244115);
-    //const end = new Location("Royal College", 55.8612, -4.2464);
+    /*
+    const startTime = new Date(new Date().setHours(8,0,0,0));
+    const endTime = new Date(new Date().setHours(8,30,0,0));
+    const start = new Location("Rottenrow", 55.861873, -4.244115);
+    const end = new Location("Royal College", 55.8612, -4.2464);
+     */
+
     const middlePoints = [new Location("George Square", 55.8612, -4.2502), new Location("Glasgow Green", 55.8491, -4.2353), new Location("Buchanan Galleries", 55.8638, -4.2524)];
 
 
@@ -30,8 +35,6 @@ export default function Routes({route, navigation}) {
 
         getSuitablePolylines(potentialPaths, startTime, endTime).then(routes => setRoutes(routes));
     }, []);
-
-
 
     const [selectedRoute, setSelectedRoute] = useState(null);
 

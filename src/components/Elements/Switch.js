@@ -1,7 +1,7 @@
 import React, { useState} from "react";
 import {View, Pressable, Switch} from "react-native";
 import {Button} from "react-native-paper";
-import Toast from "./Toast";
+import Popup from "./Popup";
 import classNames from 'classnames';
 import Text from "./Text";
 
@@ -52,10 +52,8 @@ export default function SwitchBtn({ switchDefault, switchText, switchAction, swi
                 </Pressable>
             </View>
 
-            <Toast
+            <Popup
                 text={verifyFailMsg}
-                snackbarVisible={toastVisible}
-                toggleSnackbarVisible={toggleToastVisible}
             />
         </>
     );
