@@ -18,7 +18,8 @@ export default function Txt(props) {
         <Text
             style={getTextStyle()}
             className={classNames(
-                "text-black z-10",
+                "z-10",
+                !props.color && "text-black",
                 props.accent && "text-l",
                 !props.accent && !props.title && "text-xl",
                 props.title && "tracking-wide text-2xl"

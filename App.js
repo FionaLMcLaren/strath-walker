@@ -20,10 +20,9 @@ export default function App() {
         <PaperProvider>
             <NavigationContainer>
               <Stack.Navigator
-                  initialRouteName="StartPoint"
+                  initialRouteName="Home"
                   screenOptions={{
-                      header: NavHead,
-                      headerMode: 'float'
+                      header: NavHead
                   }}
               >
                 <Stack.Screen name="Home" component={Home} />

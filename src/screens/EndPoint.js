@@ -7,6 +7,7 @@ import Text from "../components/Elements/Text";
 import Button from "../components/Elements/NextBtn";
 import Title from "../components/Elements/Title";
 import {Location} from '../components/Routes/Location.js';
+import Label from "../components/Elements/Label";
 
 export default function EndPoint({ route, navigation }) {
 
@@ -38,15 +39,12 @@ export default function EndPoint({ route, navigation }) {
 						icon={"map-marker"}
 						colour={"yl"}
 					/>
-					<View className="flex flex-row self-center gap-2">
-						<View className="border-2 border-b-4 rounded-lg p-1 px-2 bg-yellow-300 ">
-							<Text className="text-black text-xl tracking-wide">End Point</Text>
-						</View>
-						<View className="p-2">
-							<Text className="text-black text-xl tracking-wide"> {end.getName()? end.getName() : "Not" +
-								" Set"}</Text>
-						</View>
-					</View>
+
+					<Label
+						title={"End Point"}
+						text={end.getName()? end.getName() : "Not Set"}
+						colour={"yl"}
+					/>
 
 					<MapPicker loc={end} changeLoc={setEnd}/>
 

@@ -12,8 +12,7 @@ export default function NextBtn({title, colour, action}) {
             <Pressable
                 onPress={action}
                 className={classNames(
-                    " rounded-3xl border-2 border-white p-1.5 mx-6 flex justify-center overflow-hidden  " +
-                    " active:scale-95 transition-all ",
+                    " rounded-3xl border-2 border-white p-1.5 mx-6 flex justify-center overflow-hidden ",
                     colour==="tq" && "bg-teal-400",
                     colour==="pk" && "bg-pink-300",
                     colour==="yl" && "bg-yellow-300")}>
