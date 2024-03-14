@@ -3,13 +3,14 @@
 // Step Detection logic based on 'Lecture 1: Pedometer Algorithm Explained' by Navigine on YouTube.
 // (https://www.youtube.com/watch?v=cpwrwPTqMac)
 
-import {useCallback, useState} from "react";
+import React, {useCallback, useState} from "react";
 import {useFocusEffect} from "@react-navigation/native";
-import { Text } from "react-native";
+import {Button, Text, View} from "react-native";
 
 // https://react-native-sensors.github.io/docs/Usage.html
 import { accelerometer, setUpdateIntervalForType, SensorTypes } from 'react-native-sensors';
 import { scan } from 'rxjs';
+import {Dialog, Portal} from "react-native-paper";
 
 // TODO: It's possible that adjusting these alone won't really be enough to get a proper reading.
 // TODO: Might need a cooldown period at beginning / in between steps? Reads long periods of acceleration as constant steps. How good is this in practice?
@@ -20,9 +21,7 @@ const LOW_PASS_FILTER_ALPHA         = 0.55; // Controls the amount of smoothing 
 
 setUpdateIntervalForType(SensorTypes.accelerometer, ACCELEROMETER_UPDATE_INTERVAL);
 
-const Pedometer = () => {
-
-    const [steps, setSteps] = useState(-2);
+const Pedometer = ({steps, setSteps}) => {
 
     // Low pass filter to smooth out the accelerometer data
     const [speed, setSpeed] = useState({x: 0, y: 0, z: 0});
@@ -65,8 +64,23 @@ const Pedometer = () => {
         }, [])
     )
 
+    const [modalVisible, toggleModalVisible] = React.useState(false);
+
     return (
-        <Text>Steps: {steps}</Text>
+        <View>
+            <Text>Steps: {steps}</Text>
+            <Button title={info} onClick={() => toggleModalVisible(true)}>?</Button>
+            <Portal>
+                <Dialog
+                    visible={modalVisible}
+                    onDismiss={() => toggleModalVisible(false)}
+                >
+                    <Text>For the best results put the phone into your pocket</Text>
+
+                </Dialog>
+            </Portal>
+        </View>
+
     )
 
 }
