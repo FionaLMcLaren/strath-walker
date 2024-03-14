@@ -4,6 +4,7 @@ import {PathGenerator} from '../components/Routes/GeneratePoints.js';
 import {Location} from '../components/Routes/Location.js';
 import {RouteChoiceMap} from '../components/Map/RouteChoiceMap.js';
 import {getSuitablePolylines} from "../components/Routes/PolylineRequest";
+import {loadPaths, savePath} from "../components/Routes/PathStorage";
 
 export default function Routes({route, navigation}) {
 
