@@ -18,13 +18,12 @@ export default function Walk({route, navigation}) {
    		container: "flex flex-1 justify-center",
    	};
 
-
 	const [currLoc, setLoc] = useState();
-	const [polyline] = useState(route.params.selectedRoute);
+	const [polyline, changePoly] = useState(route.params.selectedRoute);
 	const [directionDist, changeDist] = useState();
 	const [directionAngle, changeAngle] = useState();
 	const [directionHeading, changeHeading] = useState();
-	const [tracker] = useState(new WalkTracker(route.params.selectedRoute, changeDist, changeAngle, changeHeading));
+	const [tracker] = useState(new WalkTracker(route.params.selectedRoute, changeDist, changeAngle, changeHeading, changePoly));
 	const [modalVisible, toggleModalVisible] = React.useState(false);
 	const [steps, setSteps] = useState(-2);
 	const [onLine, changeOnLine] = useState(true);
@@ -54,7 +53,7 @@ export default function Walk({route, navigation}) {
 			console.log(error.code, error.message);
 		},
 		{
-			enableHighAccuracy: true, interval: 5000
+			enableHighAccuracy: true, interval: 2000
 		},
 	);
 
@@ -94,7 +93,10 @@ export default function Walk({route, navigation}) {
 						/>
 
 						<Button
-							onPress={() => {tracker.goHome()}}
+							onPress={() => {
+								tracker.goHome();
+								toggleModalVisible(false);
+							}}
 							title="Lead Me Back"
 						/>
 
