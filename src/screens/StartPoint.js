@@ -1,34 +1,50 @@
-import React, {useEffect, useState} from "react";
-import {Text, View} from "react-native";
-import {Button} from "react-native-paper";
+import React, {useState} from "react";
+import {View} from "react-native";
 import MapPicker from "../components/Map/MapLocationPicker";
 import TimeSetter from "../components/Time/TimeSetter";
 import Toast from "../components/Elements/Toast";
+import Text from "../components/Elements/Text";
+import Button from "../components/Elements/NextBtn";
+import Title from "../components/Elements/Title";
+import Label from "../components/Elements/Label";
+
 import {Location} from '../components/Routes/Location.js';
 
-
 export default function StartPoint({ navigation }) {
-
-    const styles = {
-        container: "justify-center h-4/5",
-    };
-
     const [start, setStart] = useState(new Location("",0,0));
-    const [startTime, setStartTime] = React.useState(new Date(new Date(Date.now()).setMilliseconds(0)));
+    const [startTime, setStartTime] = React.useState(new Date(new Date(Date.now()).setSeconds(0, 0)));
 
-    const [snackbarVisible, toggleSnackbarVisible] = React.useState(false);
+    const [snackbarVisible, toggleSnackbarVisible] = React.useState(true);
     const [modalVisible, toggleModalVisible] = React.useState(false);
 
-
-
     return (
-        <>
-            <View className={styles.container}>
-                <Text>Start Point</Text>
+        <View className="mt-4">
+            <View className="flex justify-center ">
+                <View>
+
+                <Title
+                    title={"Location"}
+                    icon={"map-marker"}
+                    colour={"yl"}
+                />
+
+
+                <Label
+                    title={"Start Point"}
+                    text={start.getName()? start.getName() : "Not Set"}
+                    colour={"yl"}
+                />
 
 
                 <MapPicker loc={start} changeLoc={setStart}/>
-                <Text>Start Point: {start.getName()}</Text>
+
+                </View>
+
+                <Title
+                        title={"Time"}
+                        icon={"clock-time-eight"}
+                        colour={"pk"}
+                />
 
                 <TimeSetter
                     time={startTime}
@@ -38,7 +54,9 @@ export default function StartPoint({ navigation }) {
                 />
 
                 <Button
-                    onPress={() =>
+                    colour="tq"
+                    title={"set end point"}
+                    action={() =>
                         {
                             if (start.getName()) {
                                 navigation.navigate("EndPoint",
@@ -51,9 +69,7 @@ export default function StartPoint({ navigation }) {
                             }
                         }
                     }
-                >
-                    Set end point
-                </Button>
+                />
             </View>
 
             <Toast
@@ -62,7 +78,7 @@ export default function StartPoint({ navigation }) {
                 toggleSnackbarVisible={toggleSnackbarVisible}
             />
 
-        </>
+        </View>
     );
 
 }
