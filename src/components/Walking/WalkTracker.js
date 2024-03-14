@@ -1,13 +1,16 @@
 import {getPolyline} from "../Routes/PolylineRequest.jsx"
 import {Location} from "../Routes/Location.js"
+import {calculateDistance} from "../Routes/Distance.js"
 import {Path} from "../Routes/Path.js"
 
 export class WalkTracker {
 
     constructor(poly, changeDist, changeAngle, changeHeading) {
         this.locationHistory = [];
+        this.sentNotif = false;
         this.poly = poly;
         this.points = this.poly.getPath().getPath();
+        this.pathDist = this.poly.getDistance();
         this.checkpoint = this.poly.getPath().getPath();
         this.initialTime = new Date();
         this.distance = 0;
@@ -20,7 +23,7 @@ export class WalkTracker {
         let end = this.locationHistory[this.locationHistory.length-1];
 
         if(end){
-            this.distance += this.calculateDistance(node["longitude"], node["latitude"], end["longitude"], end["latitude"])
+            this.distance += calculateDistance(node["longitude"], node["latitude"], end["longitude"], end["latitude"])
         }
 
         if(!end || end !== node){
@@ -68,12 +71,12 @@ export class WalkTracker {
             let lineEndLat = lineEnd["latitude"];
 
 
-            let dist1 = this.calculateDistance(nodeLong, nodeLat, lineStartLong, lineStartLat);
-            let dist2 = this.calculateDistance(lineEndLong, lineEndLat, nodeLong, nodeLat);
+            let dist1 = calculateDistance(nodeLong, nodeLat, lineStartLong, lineStartLat);
+            let dist2 = calculateDistance(lineEndLong, lineEndLat, nodeLong, nodeLat);
 
             let total = dist1 + dist2;
 
-            let actualDist = this.calculateDistance(lineStartLong, lineStartLat, lineEndLong, lineEndLat);
+            let actualDist = calculateDistance(lineStartLong, lineStartLat, lineEndLong, lineEndLat);
 
             let between = (lineStartLong <= nodeLong && nodeLong <= lineEndLong) || (lineStartLong >= nodeLong && nodeLong >= lineEndLong) || (lineStartLat <= nodeLat && nodeLat <= lineEndLat) || (lineStartLat >= nodeLat && nodeLat >= lineEndLat)
 
@@ -96,21 +99,7 @@ export class WalkTracker {
         return false;
     }
 
-    calculateDistance(startLong, startLat, endLong, endLat){
-        let r = 6371000;
 
-        let prevLat = this.convertRadians(startLat);
-        let currLat = this.convertRadians(endLat);
-
-        let prevLong = this.convertRadians(startLong);
-        let currLong = this.convertRadians(endLong);
-
-        return  2 * r * Math.asin(Math.sqrt(
-            Math.pow(Math.sin((currLat-prevLat)/2), 2) +
-            Math.cos(prevLat) *
-            Math.cos(currLat) *
-            Math.pow(Math.sin((currLong-prevLong)/2), 2)));
-    }
     getLocationHistory(){
         return this.locationHistory;
     }
@@ -160,7 +149,7 @@ export class WalkTracker {
         this.changeAngle(angle);
     }
 
-    backHome(){
+    goHome(){
         this.changeDist();
         this.changeAngle();
 
@@ -182,6 +171,27 @@ export class WalkTracker {
         let path = new Path(pathArr);
         let route = getPolyline(path);
         this.poly = route.getPath().getPath();
+    }
+
+    checkTime(){
+        if(!this.sentNotif){
+            let timeDiff = new Date() - this.initialTime
+            let pace = this.calculatePace(timeDiff);
+            let roughRemainingDist = this.pathDist - this.distance;
+            if((roughRemainingDist/pace)>timeDiff){
+                this.sentNotif = true;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    calculatePace(duration){
+        let pace = 0;
+        if (duration > 0){
+            pace = this.distance/duration;
+        }
+        return pace;
     }
 
 

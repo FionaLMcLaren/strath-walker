@@ -17,13 +17,11 @@ export default function EndWalk({route, navigation}) {
 
     const distance = walkTracker.getDistance();
     const duration = walkTracker.getDuration();
-    let pace = 0;
-    if (duration > 0){
-        pace = distance/duration;
-    }
+    const pace = walkTracker.calculatePace(duration);
 
     const points = walkTracker.getPoints();
     const history = walkTracker.getLocationHistory();
+    const steps = route.params.steps;
 
 
     function pushNewLine(newNode) {

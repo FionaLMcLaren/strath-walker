@@ -9,6 +9,7 @@ import {decode} from "@googlemaps/polyline-codec";
 import {WalkTracker} from "../components/Walking/WalkTracker.js";
 import CompassModal from "../components/Walking/CompassModal.js";
 import {Dialog, Portal} from "react-native-paper";
+import Pedometer from "../components/Walking/Pedometer.jsx";
 
 
 export default function Walk({route, navigation}) {
@@ -25,7 +26,8 @@ export default function Walk({route, navigation}) {
 	const [directionHeading, changeHeading] = useState();
 	const [tracker] = useState(new WalkTracker(route.params.selectedRoute, changeDist, changeAngle, changeHeading));
 	const [modalVisible, toggleModalVisible] = React.useState(false);
-
+	const [steps, setSteps] = useState(-2);
+	const [onLine, changeOnLine] = useState(true);
 
 
 	useEffect(() => {
@@ -33,13 +35,12 @@ export default function Walk({route, navigation}) {
 			if(tracker.addNode(currLoc)){
 				tracker.stopWalk();
 				toggleModalVisible(false);
-				navigation.navigate("EndWalk",
-					{
-						walkTracker: tracker,
-						startingLoc: route.params.startingLoc,
-					})
+
 			}
-			console.log(tracker.onLine());
+			changeOnLine(tracker.onLine());
+			if(tracker.checkTime()){
+
+			}
 		}
 	}, [currLoc]);
 
@@ -53,7 +54,7 @@ export default function Walk({route, navigation}) {
 			console.log(error.code, error.message);
 		},
 		{
-			enableHighAccuracy: true, interval: 10000
+			enableHighAccuracy: true, interval: 5000
 		},
 	);
 
@@ -61,9 +62,9 @@ export default function Walk({route, navigation}) {
             <View className={styles.container}>
                <Text>Walk page</Text>
 				<WalkMap current={currLoc} polyline={polyline} start={route.params.startingLoc}/>
-				<DirectionTab dist={directionDist} angle={directionAngle} header={directionHeading}/>
+				<DirectionTab onLine={onLine} walkTracker={tracker} dist={directionDist} angle={directionAngle} header={directionHeading}/>
 				<CompassModal destination={directionAngle}/>
-
+				<Pedometer steps={steps} setSteps={setSteps}/>
 				<Button
 					onPress={() => {toggleModalVisible(true)}}
 				 	title="EndWalk"
@@ -84,27 +85,42 @@ export default function Walk({route, navigation}) {
 								tracker.stopWalk();
 								toggleModalVisible(false);
 								navigation.navigate("EndWalk",
-								{
-									walkTracker: tracker,
-									startingLoc: route.params.startingLoc,
-								});
+									{
+										walkTracker: tracker,
+										startingLoc: route.params.startingLoc,
+										steps: steps,
+									})
 							}}
 						/>
 
 						<Button
+							onPress={() => {tracker.goHome()}}
 							title="Lead Me Back"
 						/>
 
 					</Dialog>
 				</Portal>
-
             </View >
     );
 
 }
 
-const DirectionTab = ({dist, angle, header}) =>{
-	if(dist && angle){
+
+
+const DirectionTab = ({onLine, walkTracker, dist, angle, header}) =>{
+	if(!onLine){
+		return(
+			<View>
+				<Text>Not on the route</Text>
+				<Button
+					onPress={() => {walkTracker.reroute();}}
+					title="Reroute"
+				>
+					Would you like to reroute?
+				</Button>
+			</View>
+		);
+	}else if(dist && angle){
 		return(<Text>Head {dist}m at {angle}° {header}</Text>);
 	}else{
 		return(<Text>--m --°</Text>);

@@ -1,11 +1,14 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Text, View} from "react-native";
 import {Button} from "react-native-paper";
 import MapPicker from "../components/Map/MapLocationPicker";
 import TimeSetter from "../components/Time/TimeSetter";
 import Toast from "../components/Elements/Toast";
 import {Location} from '../components/Routes/Location.js';
-import Pedometer from "../components/Walking/Pedometer.jsx";
+import PushNotification from "react-native-push-notification";
+import {CHANNEL_IMPORTANCE} from "react-native-notification-channels";
+import NotificationChannels from "react-native-push-notification";
+
 
 export default function StartPoint({ navigation }) {
 
@@ -18,6 +21,38 @@ export default function StartPoint({ navigation }) {
 
     const [snackbarVisible, toggleSnackbarVisible] = React.useState(false);
     const [modalVisible, toggleModalVisible] = React.useState(false);
+
+    async function configChannels() {
+
+        let channelExists = await NotificationChannels.channelExists('my_new_channel')
+        if (channelExists) {
+            NotificationChannels.deleteChannel('my_new_channel')
+            console.log('my_new_channel was deleted')
+        }
+
+        const list = await NotificationChannels.listChannels()
+        console.log('channel list:', list)
+
+        const groupCreated = await NotificationChannels.createChannelGroup(
+            'my_new_group', 'Personal Only'
+        )
+        console.log('groupCreated', groupCreated)
+
+        const channelCreated = await NotificationChannels.createChannel({
+            channelId: 'test',
+            channelName: 'Important Notifications',
+            channelDescription: 'A notification channel which will receive all the important notifications from this app',
+            importance: CHANNEL_IMPORTANCE.IMPORTANCE_HIGH,
+        })
+        PushNotification.localNotification({
+            channelId: "test", message:"test"});
+    }
+
+    useEffect(() => {
+        configChannels()
+    }, []);
+
+
 
     return (
         <>
@@ -52,7 +87,6 @@ export default function StartPoint({ navigation }) {
                 >
                     Set end point
                 </Button>
-                <Pedometer />
             </View>
 
             <Toast
