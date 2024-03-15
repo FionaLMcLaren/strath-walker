@@ -1,19 +1,19 @@
-import React, { useState} from "react";
+import React, {useRef, useState} from "react";
 import {View, Pressable, Switch} from "react-native";
 import {Button} from "react-native-paper";
-import Popup from "./Popup";
+import {Popup} from "./Popup";
 import classNames from 'classnames';
 import Text from "./Text";
 
 export default function SwitchBtn({ switchDefault, switchText, switchAction, switchOffAction, switchVerifier, verifyFailMsg  }) {
 
     const [switchValue, switchSetter] = React.useState(switchDefault);
-    const [toastVisible, toggleToastVisible] = React.useState(false);
 
     const styles = {
         container: "flex items-center justify-center",
         switchCon: "flex flex-row items-center justify-center gap-2 p-1",
     };
+    const popup= useRef();
 
     const toggleSwitch = () => {
         if (switchVerifier != false) {
@@ -54,6 +54,7 @@ export default function SwitchBtn({ switchDefault, switchText, switchAction, swi
 
             <Popup
                 text={verifyFailMsg}
+                innerRef={popup}
             />
         </>
     );

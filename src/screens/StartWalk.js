@@ -26,7 +26,6 @@ function TitleBlock() {
 }
 
 export default function StartWalk({route, navigation}) {
-
 	const start = route.params.startingTime;
 
 	const [time, setTime] = useState("--");

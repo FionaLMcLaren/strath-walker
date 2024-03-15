@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {View} from "react-native";
 import MapPicker from "../components/Map/MapLocationPicker";
 import TimeSetter from "../components/Time/TimeSetter";
-import Popup from "../components/Elements/Popup";
+import {Popup} from "../components/Elements/Popup";
 import Text from "../components/Elements/Text";
 import Button from "../components/Elements/NextBtn";
 import Title from "../components/Elements/Title";
@@ -15,11 +15,10 @@ export default function EndPoint({ route, navigation }) {
 	const start = route.params.startingLoc;
 
 	const [endTime, setEndTime] = React.useState(new Date(new Date().setHours(9,0,0,0)));
-
     const [end, setEnd] = useState(new Location("",0,0));
 
 	const [modalVisible, toggleModalVisible] = React.useState(false);
-
+	const popup= useRef();
 
 
 	return (
@@ -72,7 +71,7 @@ export default function EndPoint({ route, navigation }) {
 									}
 								)
 							} else {
-								toggleSnackbarVisible(true);
+								popup.current.showPopup
 							}
 						}
 					}
@@ -81,6 +80,7 @@ export default function EndPoint({ route, navigation }) {
 
 			<Popup
 				text={"You must have an end point set "}
+				innerRef={popup}
 			/>
 		</View>
 	);

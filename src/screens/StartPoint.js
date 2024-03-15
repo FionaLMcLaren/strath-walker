@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {View} from "react-native";
 import MapPicker from "../components/Map/MapLocationPicker";
 import TimeSetter from "../components/Time/TimeSetter";
-import Popup from "../components/Elements/Popup";
+import {Popup} from "../components/Elements/Popup";
 import Text from "../components/Elements/Text";
 import Button from "../components/Elements/NextBtn";
 import Title from "../components/Elements/Title";
@@ -17,6 +17,7 @@ export default function StartPoint({ navigation }) {
     const [startTime, setStartTime] = React.useState(new Date(new Date().setHours(8,0,0,0)));
 
     const [modalVisible, toggleModalVisible] = React.useState(false);
+    const popup= useRef(Popup("You must have a start point set!"));
 
 
     return (
@@ -68,7 +69,7 @@ export default function StartPoint({ navigation }) {
                                     startingLoc: start
                                 })
                             } else {
-                                toggleSnackbarVisible(true);
+                                popup.current.showPopup()
                             }
                         }
                     }
@@ -76,7 +77,8 @@ export default function StartPoint({ navigation }) {
             </View>
 
             <Popup
-                text={"You must have a start point set!"}
+                text=
+                innerRef={popup}
             />
 
         </View>
