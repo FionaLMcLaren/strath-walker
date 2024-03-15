@@ -60,6 +60,7 @@ export default function EndPoint({ route, navigation }) {
 				<Button
 					colour="tq"
 					title={"Get routes"}
+					arrow="true"
 					action={() =>
 						{
 							if (end.getName()) {
