@@ -1,15 +1,12 @@
 import React, {useState, useEffect} from "react";
-import {Animated, Button, ImageBackground, Text, View} from "react-native";
+import {Button, Text, View} from "react-native";
 import {WalkMap} from '../components/Map/WalkMap.js';
-import {Path} from '../components/Routes/Path.js';
-import {Location} from '../components/Routes/Location.js';
 import Geolocation from "react-native-geolocation-service";
-import {Polyline} from "../components/Routes/PolylineRequest";
-import {decode} from "@googlemaps/polyline-codec";
 import {WalkTracker} from "../components/Walking/WalkTracker.js";
 import CompassModal from "../components/Walking/CompassModal.js";
 import {Dialog, Portal} from "react-native-paper";
 import Pedometer from "../components/Walking/Pedometer.jsx";
+import {sendNotification} from "../components/Elements/Notification";
 
 
 export default function Walk({route, navigation}) {
@@ -38,7 +35,7 @@ export default function Walk({route, navigation}) {
 			}
 			changeOnLine(tracker.onLine());
 			if(tracker.checkTime()){
-
+				sendNotification("headBack", "Running out of time", "Your pace is slower than we expected so you may wish to head back now/start walking back now", null);
 			}
 		}
 	}, [currLoc]);

@@ -5,7 +5,7 @@ export function renderEndWalk(coord, pushNewLine, changePos){
 
 
     let animateCoord = setInterval(function(){
-        let newNode = coord.pop()
+        let newNode = coord.shift()
 
         if(coord.length === 0){
             clearInterval(animateCoord);
@@ -14,5 +14,5 @@ export function renderEndWalk(coord, pushNewLine, changePos){
         pushNewLine(newNode);
 
         changePos(newNode);
-    }, 5000);
+    }, 500);
 }

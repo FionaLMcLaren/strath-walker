@@ -1,6 +1,7 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Text, View} from "react-native";
-import {changeTime} from '../components/Time/TimeDifference.js';
+import {changeTime, timeDiff} from '../components/Time/TimeDifference.js';
+import {startNotification} from "../components/Elements/Notification";
 
 export default function StartWalk({route, navigation}) {
 
@@ -10,8 +11,12 @@ export default function StartWalk({route, navigation}) {
 
 	const start = route.params.startingTime;
 
-	const [time, setTime] = useState("--");
+	const [time, setTime] = useState(timeDiff(start));
 	changeTime(start, setTime);
+
+	useEffect(() => {
+		startNotification(start);
+	}, [])
 
 	if(time>0 || time === "--"){
 		return (

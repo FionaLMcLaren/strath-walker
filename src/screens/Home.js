@@ -1,17 +1,21 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {View} from "react-native";
 import HomeBtn from "../components/Elements/HomeBtn";
 import Text from "../components/Elements/Text";
+import {MakeChannels} from "../components/Elements/Notification";
 
 export default function Home({ navigation }) {
     const styles = {
         wrapper: "flex-1 items-center justify-center gap-2",
     };
 
+    useEffect(() => {
+        MakeChannels()  //Makes the notification channel
+    }, [])
+
     return (
         <View className={styles.wrapper}>
             <Text>Welcome!</Text>
-
             <HomeBtn
                 action={() => navigation.navigate("StartPoint")}
                 title={"Start new walk"}
