@@ -59,10 +59,10 @@ export const RouteChoiceMap = ({polyline}) => {
                 style={StyleSheet.absoluteFillObject, {height:"80%"}}
                 customMapStyle={mapStyle}
                 initialRegion={{
-                    latitude: 55.861873,
-                    longitude: -4.244115,
-                    latitudeDelta: 0.002,
-                    longitudeDelta: 0.002,
+                    latitude: 55.851873,
+                    longitude: -4.244155,
+                    latitudeDelta: 0.025,
+                    longitudeDelta: 0.025,
                 }}
             >
                 {
