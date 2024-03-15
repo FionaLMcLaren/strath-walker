@@ -81,7 +81,7 @@ export class WalkTracker {
 
             let between = (lineStartLong <= nodeLong && nodeLong <= lineEndLong) || (lineStartLong >= nodeLong && nodeLong >= lineEndLong) || (lineStartLat <= nodeLat && nodeLat <= lineEndLat) || (lineStartLat >= nodeLat && nodeLat >= lineEndLat)
 
-            if ((total <= (actualDist + (0.1 * actualDist))) && between){
+            if ((total <= (actualDist + (0.3 * actualDist))) && between){
                 let newLine = [node];
                 let newCoord = this.poly.getCoordinates().slice(i+1);
                 newLine = newLine.concat(newCoord);
@@ -165,7 +165,7 @@ export class WalkTracker {
 
         let currLocation = this.locationHistory[this.locationHistory.length -1];
         let pathArr = [new Location("User Location", currLocation["latitude"], currLocation["longitude"])]
-        pathArr.concat(this.checkpoints);
+        pathArr = pathArr.concat(this.checkpoints);
         let path = new Path(pathArr);
         let route = await getPolyline(path);
         this.poly = route.getPath().getPath();
