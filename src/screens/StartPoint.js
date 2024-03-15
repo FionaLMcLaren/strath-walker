@@ -10,6 +10,8 @@ import Label from "../components/Elements/Label";
 
 import {Location} from '../components/Routes/Location.js';
 
+
+
 export default function StartPoint({ navigation }) {
     const [start, setStart] = useState(new Location("",0,0));
     const [startTime, setStartTime] = React.useState(new Date(new Date().setHours(8,0,0,0)));
@@ -56,6 +58,7 @@ export default function StartPoint({ navigation }) {
                 <Button
                     colour="tq"
                     title={"set end point"}
+                    arrow="true"
                     action={() =>
                         {
                             if (start.getName()) {

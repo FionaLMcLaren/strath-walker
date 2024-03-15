@@ -25,7 +25,7 @@ export default function App() {
         <PaperProvider theme={theme}>
             <NavigationContainer>
               <Stack.Navigator
-                  initialRouteName="Routes"
+                  initialRouteName="StartWalk"
                   screenOptions={{
                       header: NavHead
                   }}
