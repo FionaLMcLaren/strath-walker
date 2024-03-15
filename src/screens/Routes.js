@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
-import { View, ScrollView, SafeAreaView, TouchableHighlight} from "react-native";
+import {View, ScrollView, Pressable} from "react-native";
+import {Icon} from "react-native-paper";
 import {PathGenerator} from '../components/Routes/GeneratePoints.js';
 import {Location} from '../components/Routes/Location.js';
 import {RouteChoiceMap} from '../components/Map/RouteChoiceMap.js';
@@ -9,11 +10,29 @@ import Text from "../components/Elements/Text";
 import Button from "../components/Elements/NextBtn";
 import Title from "../components/Elements/Title";
 import Label from "../components/Elements/Label";
+import classNames from "classnames";
 
-const RouteOption=({ route, onPress })=> {
-    return(
-        <TouchableHighlight onPress={() => onPress(route)} className="scale-90 bg-red-400">
-            <View className="bg-teal-100 border-2 rounded-lg p-1 flex flex-1">
+function RouteOption({ route, onPress, currentSel }) {
+    const isSelected = route == currentSel;
+
+    return (
+        <Pressable onPress={() => onPress(route)} className=" w-[26rem] px-4 py-1 active:scale-95 transition-all ">
+
+
+            <View className={classNames(
+                " border-2 rounded-lg p-2 flex flex-1 gap-2",
+                isSelected && "bg-teal-200",
+                !isSelected && "bg-teal-100"
+                )}>
+                {
+                    isSelected ?
+                        <View className="absolute z-40 px-1 rounded-sm border-black border-b-4 border-2 -rotate-2 bg-pink-300 -translate-y-2 scale-90 ">
+                            <Text bold={true}>SELECTED</Text>
+                        </View>
+                        :
+                        null
+                }
+
                 <Label title={"Name"} colour="yl"/>
                 <Text>{route.path.getReadableName()}</Text>
                 <Label title={"Duration"} colour="yl">
@@ -25,19 +44,29 @@ const RouteOption=({ route, onPress })=> {
 
 
             </View>
-        </TouchableHighlight>
+        </Pressable>
     );
 }
+
+function SwipeArrow() {
+    return (
+        <View className="absolute flex flex-row gap-96 justify-center items-center h-full ml-2 -translate-y-2 ">
+            <View className="z-50 animate-pulse ">
+                <Icon source="menu-left" size={35} color="black"/>
+            </View>
+
+            <View className="z-50 animate-pulse ">
+                <Icon source="menu-right" size={35} color="black" />
+            </View>
+        </View>
+    )
+}
 export default function Routes({route, navigation}) {
-
-    const styles = { container: "" };
-
     /*
     const startTime = route.params.startingTime;
     const start = route.params.startingLoc;
     const endTime = route.params.endingTime;
     const end = route.params.endingLoc;
-
      */
 
 
@@ -69,30 +98,37 @@ export default function Routes({route, navigation}) {
         <View className="flex flex-1 justify-center">
             <RouteChoiceMap polyline={selectedRoute} />
 
-            <View className="absolute bottom-0 z-40 bg-teal-400 w-full rounded-md h-1/3 border-2 border-t-4 " ></View>
-            <View className="absolute bottom-0 z-50 bg-white p-4 rounded-md mx-2 border-2 -translate-y-2 ">
+            <View className="absolute bottom-0 z-30 bg-teal-400 w-full rounded-md h-[25rem] border-2 border-t-4 " ></View>
+            <View className="absolute bottom-0 z-40 bg-white p-4 rounded-md mx-2 border-2 -translate-y-2 ">
+                <SwipeArrow />
+                <ScrollView horizontal={true}>
+                    {
+                        routes
+                        ?   routes.map((route) => { return(
+                                    <RouteOption key={route.getKey()}
+                                                 route={route}
+                                                 onPress={(route) => { setSelectedRoute(route) }}
+                                                 currentSel={selectedRoute}
+                                    />) })
+                        :   <Text>Loading...</Text>
+                    }
+                </ScrollView>
 
-            <ScrollView horizontal={true}>
-                {
-                    routes
-                    ?   routes.map((route) => { return (<RouteOption key={route.getKey()} route={route} onPress={(route) => { setSelectedRoute(route) }} />) })
-                    :   <Text>Loading...</Text>
-                }
-            </ScrollView>
 
                 <Button
-                    title="Select Route"
-                    onPress={() => navigation.navigate("StartWalk",
-                        {
-                            startingTime: startTime,
-                            startingLoc: start,
-                            endingTime: endTime,
-                            endingLoc: end,
-                            selectedRoute: selectedRoute,
-                        })
-                    }
-                    colour="tq"
-                />
+
+                        title="Select Route"
+                        action={() => navigation.navigate("StartWalk",
+                            {
+                                startingTime: startTime,
+                                startingLoc: start,
+                                endingTime: endTime,
+                                endingLoc: end,
+                                selectedRoute: selectedRoute,
+                            })
+                        }
+                        colour="tq"
+                    />
             </View>
         </View>
     );
