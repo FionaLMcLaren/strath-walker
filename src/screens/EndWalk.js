@@ -17,13 +17,11 @@ export default function EndWalk({route, navigation}) {
 
     const distance = walkTracker.getDistance();
     const duration = walkTracker.getDuration();
-    let pace = 0;
-    if (duration > 0){
-        pace = distance/duration;
-    }
+    const pace = walkTracker.calculatePace(duration);
 
     const points = walkTracker.getPoints();
     const history = walkTracker.getLocationHistory();
+    const steps = route.params.steps;
 
 
     function pushNewLine(newNode) {
@@ -42,7 +40,7 @@ export default function EndWalk({route, navigation}) {
             <ResultMap current={currLoc} coordinates={coordinates} points = {points} start={route.params.startingLoc}/>
             <Text>Distance: {distance}m</Text>
             <Text>Duration: {duration}s</Text>
-            <Text>Pace: {pace}</Text>
+            <Text>Pace: {pace}m/s</Text>
 
             <Button
                 title="Start New Walk"

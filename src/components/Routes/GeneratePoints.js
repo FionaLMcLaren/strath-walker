@@ -1,4 +1,5 @@
 import {Path} from './Path.js';
+import {calculateDistance} from "./Distance.js";
 
 export class PathGenerator{
 
@@ -10,7 +11,7 @@ export class PathGenerator{
 
          points.forEach((p)=>{
             let visited = new Path(p);
-            let distSoFar = this.calculateDistance(start, p);
+            let distSoFar = calculateDistance(start.getLongitude(), start.getLatitude(), p.getLongitude(), p.getLatitude());
             this.possPaths(visited, points, distSoFar, end);
          });
 
@@ -30,7 +31,7 @@ export class PathGenerator{
          if(!(this.sortedPaths.includes(sortedV))){
             this.sortedPaths.push(sortedV);
             this.paths.push(v);
-            distSoFar += this.calculateDistance(visited.getLast(), end);
+            distSoFar += calculateDistance(visited.getLast().getLongitude(), visited.getLast().getLatitude(), end.getLongitude());
             this.distDict[Math.round(distSoFar)]=v;
          }
 
@@ -44,12 +45,12 @@ export class PathGenerator{
 
 
     closestPos(startingPos, positions, visited){
-        min_dist = 1.797693134862315E+308;
-        closest = "";
+        let min_dist = 1.797693134862315E+308;
+        let closest = "";
 
         positions.forEach((pos)=>{
             if(!(visited.includes(pos.getName()))){
-                dist = this.calculateDistance(startingPos, pos)
+                let dist = calculateDistance(startingPos.getLongitude(), startingPos.getLatitude(), pos.getLongitude(), pos.getLatitude())
                 if(dist < min_dist){
                     closest = pos;
                     min_dist = dist;
@@ -61,45 +62,9 @@ export class PathGenerator{
     }
 
 
-    calculateDistance(start, end){
-        let r = 6371000;
-
-        let prevLat = this.convertRadians(start.getLatitude());
-        let currLat = this.convertRadians(end.getLatitude());
-
-        let prevLong = this.convertRadians(start.getLongitude());
-        let currLong = this.convertRadians(end.getLongitude());
-
-        return  2 * r * Math.asin(Math.sqrt(
-            Math.pow(Math.sin((currLat-prevLat)/2), 2) +
-            Math.cos(prevLat) *
-            Math.cos(currLat) *
-            Math.pow(Math.sin((currLong-prevLong)/2), 2)));
-    }
-
-    sortPaths(){
-        let dictPaths = [];
-        this.paths.forEach((path)=>{
-            let previous = this.start;
-            let distance = 0;
-            path.forEach((node)=>{
-                distance += this.calculateDistance(previous, node);
-            });
-            distance += this.calculateDistance(previous, this.end);
-            distance = Math.round(distance);
-            dictPaths[distance]=path;
-        });
 
 
 
-        this.paths = Object.values(dictPaths);
-
-
-    }
-
-    convertRadians(deg){  //simple conversion from degrees to radians
-        return deg * Math.PI/180;
-    }
 
 
     getPaths(){
