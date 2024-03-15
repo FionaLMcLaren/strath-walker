@@ -1,6 +1,6 @@
 import {Text, View, StyleSheet} from "react-native";
 import MapView, {Polyline} from "react-native-maps";
-import {Marker} from "react-native-maps";
+import {PosMarker} from "./UserMarker";
 import React from "react";
 
 
@@ -35,18 +35,4 @@ const styles = {
     map: "items-center justify-center h-4/5 bg-neutral-950",
 };
 
-const PosMarker = ({currentPos}) => {
-    if(currentPos){
-        return(
-            <Marker
-                coordinate={currentPos}
-            >
-                <View style={{backgroundColor: "yellow", padding: 10}}>
-                    <Text>Me</Text>
-                </View>
 
-            </Marker>
-        );
-    }
-
-}

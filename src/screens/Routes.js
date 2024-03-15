@@ -5,6 +5,7 @@ import {PathGenerator} from '../components/Routes/GeneratePoints.js';
 import {Location} from '../components/Routes/Location.js';
 import {RouteChoiceMap} from '../components/Map/RouteChoiceMap.js';
 import {getSuitablePolylines} from "../components/Routes/PolylineRequest";
+import {loadPaths, savePath} from "../components/Routes/PathStorage";
 
 import Text from "../components/Elements/Text";
 import Button from "../components/Elements/NextBtn";
