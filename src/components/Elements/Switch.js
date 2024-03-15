@@ -26,7 +26,9 @@ export default function SwitchBtn({ switchDefault, switchText, switchAction, swi
         }
         else {
             //if does not pass the verifier, show the snackbar with the verification error
-            toggleToastVisible(true)
+
+            console.log("outwith uni hours so cant use")
+            //code to toggle popup here
         }
     }
 

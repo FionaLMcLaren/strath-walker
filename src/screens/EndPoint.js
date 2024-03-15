@@ -34,10 +34,11 @@ export default function EndPoint({ route, navigation }) {
 					/>
 
 					<Label
-						title={"End Point"}
-						text={end.getName()? end.getName() : "Not Set"}
-						colour={"yl"}
-					/>
+						title={"Start Point"}
+						colour={"yl"}>
+						{end.getName()? end.getName() : "Not Set"}
+					</Label>
+
 
 					<MapPicker loc={end} changeLoc={setEnd}/>
 
@@ -72,7 +73,8 @@ export default function EndPoint({ route, navigation }) {
 									}
 								)
 							} else {
-								toggleSnackbarVisible(true);
+								console.log("No end point")
+								//code to toggle popup here
 							}
 						}
 					}

@@ -15,7 +15,6 @@ function BackButton ({navigation, back}) {
                     iconColor={"black"}
                     size={30}
                     onPress={() => {
-                        console.log("pressed")
                         navigation.goBack()
                         }
                     }

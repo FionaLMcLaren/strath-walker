@@ -33,9 +33,9 @@ export default function StartPoint({ navigation }) {
 
                 <Label
                     title={"Start Point"}
-                    text={start.getName()? start.getName() : "Not Set"}
-                    colour={"yl"}
-                />
+                    colour={"yl"}>
+                    {start.getName()? start.getName() : "Not Set"}
+                </Label>
 
 
                 <MapPicker loc={start} changeLoc={setStart}/>
@@ -68,7 +68,8 @@ export default function StartPoint({ navigation }) {
                                     startingLoc: start
                                 })
                             } else {
-                                toggleSnackbarVisible(true);
+                                console.log("No start point")
+                                //code to toggle popup here
                             }
                         }
                     }
