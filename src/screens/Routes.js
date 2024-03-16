@@ -9,7 +9,7 @@ import {loadPaths, savePath} from "../components/Routes/PathStorage";
 
 import Text from "../components/Elements/Text";
 import Button from "../components/Elements/NextBtn";
-import Title from "../components/Elements/Title";
+import MapTab from "../components/Elements/MapTab";
 import Label from "../components/Elements/Label";
 import classNames from "classnames";
 
@@ -63,18 +63,19 @@ function SwipeArrow() {
     )
 }
 export default function Routes({route, navigation}) {
+    /*
     const startTime = route.params.startingTime;
     const start = route.params.startingLoc;
     const endTime = route.params.endingTime;
     const end = route.params.endingLoc;
+    */
 
 
-    /*
-    const startTime = new Date(new Date().setHours(9,0,0,0));
-    const endTime = new Date(new Date().setHours(10,15,0,0));
+    const startTime = new Date(new Date().setHours(10,30,0,0));
+    const endTime = new Date(new Date().setHours(10,30,0,0));
     const start = new Location("Rottenrow", 55.861873, -4.244115);
     const end = new Location("Royal College", 55.8612, -4.2464);
-    */
+
 
     const middlePoints = [new Location("George Square", 55.8612, -4.2502), new Location("Glasgow Green", 55.8491, -4.2353), new Location("Buchanan Galleries", 55.8638, -4.2524)];
 
@@ -98,18 +99,19 @@ export default function Routes({route, navigation}) {
         <View className="flex flex-1 justify-center">
             <RouteChoiceMap polyline={selectedRoute} />
 
-            <View className="absolute bottom-0 z-30 bg-teal-400 w-full rounded-md h-[25rem] border-2 border-t-4 " ></View>
-            <View className="absolute bottom-0 z-40 bg-white p-4 rounded-md mx-2 border-2 -translate-y-2 ">
-                <SwipeArrow />
+            <MapTab routePage={true}>
+                {routes>1 ? <SwipeArrow /> : null}
                 <ScrollView horizontal={true}>
                     {
-                        routes
-                        ?   routes.map((route) => { return(
+                        routes ?
+                            routes.map((route) => {
+                            return(
                                     <RouteOption key={route.getKey()}
                                                  route={route}
                                                  onPress={(route) => { setSelectedRoute(route) }}
                                                  currentSel={selectedRoute}
-                                    />) })
+                                    />)
+                            })
                         :   <Text>Loading...</Text>
                     }
                 </ScrollView>
@@ -118,7 +120,7 @@ export default function Routes({route, navigation}) {
                 <Button
 
                         title="Select Route"
-                        action={() => navigation.navigate("StartWalk",
+                        action={() => navigation.navigate("Walk",
                             {
                                 startingTime: startTime,
                                 startingLoc: start,
@@ -130,7 +132,7 @@ export default function Routes({route, navigation}) {
                         colour="tq"
                         arrow="true"
                     />
-            </View>
+            </MapTab>
         </View>
     );
 }
