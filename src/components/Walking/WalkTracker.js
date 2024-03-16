@@ -35,16 +35,30 @@ export class WalkTracker {
     }
 
     checkAtCheckPoint(node){
-        let rangeMaxLat = this.checkpoints[0]["latitude"] + 0.0001;
-        let rangeMaxLong = this.checkpoints[0]["longitude"] + 0.0001;
-        let rangeMinLat = this.checkpoints[0]["latitude"] - 0.0001;
-        let rangeMinLong = this.checkpoints[0]["longitude"] - 0.0001;
-
-        if(node["latitude"]<rangeMaxLat && node["longitude"]<rangeMaxLong && node["latitude"]>rangeMinLat && node["longitude"]>rangeMinLong){
+        if(this.atPosition(node["latitude"], node["longitude"], this.checkpoints[0]["latitude"], this.checkpoints[0]["longitude"])){
             this.checkpoints.slice(1)
             if(this.checkpoints.length === 0){
                 return true;
             }
+        }
+
+        return false;
+
+    }
+
+    checkAtStartPoint(){
+        let node = this.locationHistory[this.locationHistory.length-1];
+        let nodeLong = node["longitude"];
+        let nodeLat = node["latitude"];
+
+
+        if(this.atPosition(nodeLat, nodeLong, this.poly.getLeg()[0]["latitude"], this.poly.getLeg()[0]["longitude"])){
+            let lineEndLong = this.poly.getLeg()[1]["longitude"];
+            let lineEndLat = this.poly.getLeg()[1]["latitude"];
+            let dist = calculateDistance(nodeLong, nodeLat, lineEndLong, lineEndLat);
+            this.setDistance(dist);
+            this.setAngle(nodeLong, nodeLat, lineEndLong, lineEndLat);
+            return true;
         }
 
         return false;
@@ -57,17 +71,13 @@ export class WalkTracker {
         let nodeLong = node["longitude"];
         let nodeLat = node["latitude"];
 
-        for(let i =0; i<this.poly.getCoordinates().length-1; i++){
-            let lineStart = this.poly.getCoordinates()[i];
-
-            if(lineStart === this.checkpoints[0].getPos()){
-                return false;
-            }
+        for(let i =0; i<this.poly.getLeg().length-1; i++){
+            let lineStart = this.poly.getLeg()[i];
 
             let lineStartLong = lineStart["longitude"];
             let lineStartLat = lineStart["latitude"];
 
-            let lineEnd = this.poly.getCoordinates()[i+1];
+            let lineEnd = this.poly.getLeg()[i+1];
             let lineEndLong = lineEnd["longitude"];
             let lineEndLat = lineEnd["latitude"];
 
@@ -81,17 +91,12 @@ export class WalkTracker {
 
             let between = (lineStartLong <= nodeLong && nodeLong <= lineEndLong) || (lineStartLong >= nodeLong && nodeLong >= lineEndLong) || (lineStartLat <= nodeLat && nodeLat <= lineEndLat) || (lineStartLat >= nodeLat && nodeLat >= lineEndLat)
 
-            if ((total <= (actualDist + (0.3 * actualDist))) && between){
+            if ((total <= (actualDist + (0.1 * actualDist))) && between){
                 let newLine = [node];
-                let newCoord = this.poly.getCoordinates().slice(i+1);
+                let newCoord = this.poly.getLeg().slice(i+1);
                 newLine = newLine.concat(newCoord);
                 this.poly.setCoords(newLine);
-                let roundedDist = Math.floor(dist2/10) * 10;
-                if((dist2%10) > 5){
-                    roundedDist += 10;
-                }
-
-                this.changeDist(roundedDist);
+                this.setDistance(dist2);
                 this.setAngle(nodeLong, nodeLat, lineEndLong, lineEndLat);
                 return true;
             }
@@ -99,6 +104,14 @@ export class WalkTracker {
         return false;
     }
 
+    setDistance(dist){
+        let roundedDist = Math.floor(dist/10) * 10;
+        if((dist%10) > 5){
+            roundedDist += 10;
+        }
+
+        this.changeDist(roundedDist);
+    }
 
     getLocationHistory(){
         return this.locationHistory;
@@ -191,6 +204,15 @@ export class WalkTracker {
             pace = this.distance/duration;
         }
         return pace;
+    }
+
+    atPosition(currLat, currLong, goalLat, goalLong){
+        let rangeMaxLat = goalLat + 0.0001;
+        let rangeMaxLong = goalLong + 0.0001;
+        let rangeMinLat = goalLat - 0.0001;
+        let rangeMinLong = goalLong - 0.0001;
+
+        return(currLat<rangeMaxLat && currLong<rangeMaxLong && currLat>rangeMinLat && currLong>rangeMinLong);
     }
 
 
