@@ -1,8 +1,11 @@
-import {Button, Dialog, Portal} from "react-native-paper";
-import {Text, View, Image, ImageBackground, Animated} from "react-native";
+import {Dialog, Icon, Portal} from "react-native-paper";
+import { View, Image, ImageBackground, Animated} from "react-native";
 import CompassHeading from "react-native-compass-heading";
 import React, {useState, useRef} from "react";
-
+import Label from "../Elements/Label";
+import Text from "../Elements/Text";
+import Modal from "../Elements/Modal"
+import Button from "../Elements/NextBtn"
 
 export default function CompassModal({destination}){
 
@@ -10,11 +13,13 @@ export default function CompassModal({destination}){
     const [angle, setAngle] = useState(0);
     const animationDegree = useRef(new Animated.Value(0)).current;
 
-
     return (
         <View>
             <Button
-                onPress={() => {toggleModalVisible(true);
+                title={"Compass"}
+                colour="tq"
+                outline={true}
+                action={() => {toggleModalVisible(true);
                     const degree_rate = 5;
 
                     CompassHeading.start(degree_rate, ({heading}) => {
@@ -26,46 +31,48 @@ export default function CompassModal({destination}){
                             duration: 200,
                         }).start();
                     });}}
-            >Compass</Button>
+            />
 
-            <Portal>
-                <Dialog
-                    visible={modalVisible}
-                    onDismiss={() => {toggleModalVisible(false); CompassHeading.stop();}}
+                <Modal
+                    title={"Compass"}
+                    modalVisible={modalVisible}
+                    toggleModalVisible={toggleModalVisible}
+                    confirmAction={() => {toggleModalVisible(false); CompassHeading.stop();}}
                 >
-                    <Dialog.Title>
-                        Compass
-                    </Dialog.Title>
+                    <View className="py-4 items-center">
+                        <Label title={"Your Direction"} colour="tq"/>
+                        <Text>{angle} deg</Text>
 
-                    <ImageBackground
-                        style={{
-                            width: 200,
-                            height: 200,
-                            justifyContent:"center",
-                        }}
-                        source={require('../../../images/compass.jpg')}
-                    >
-                        <Animated.Image
+                        <ImageBackground
                             style={{
-                                width: 100,
-                                height: 100,
-                                borderColor: 'red',
-                                borderWidth: 5,
-                                transform: [{rotate: `${angle}deg`}],
+                                width: 200,
+                                height: 200,
+                                justifyContent:"center",
                             }}
-                            source={require('../../../images/arrow.png')}
-                        />
+                            source={require('../../../images/compassCenter.png')}
+                        >
+                            <View className>
+                            </View>
+                                <Animated.Image
+                                    style={{
+                                        width: 200,
+                                        height: 200,
+                                        transform: [{rotate: `${angle}deg`}],
+                                    }}
+                                    source={require('../../../images/compass.png')}
+                                />
 
-                        <DestinationArrow destination = {destination}/>
+                                <DestinationArrow destination = {destination}/>
 
-                    </ImageBackground>
+                            </ImageBackground>
+                    </View>
 
 
 
-                    <Text>Compass {angle} deg</Text>
 
-                </Dialog>
-            </Portal>
+
+                </Modal>
+
 
         </View>
 
@@ -75,16 +82,18 @@ export default function CompassModal({destination}){
 const DestinationArrow = ({destination}) => {
     if(destination){
         return(
-        <Image
-            style={{
-                width: 100,
-                height: 100,
-                borderColor: 'green',
-                borderWidth: 5,
-                transform: [{rotate: `${destination}deg`}],
-            }}
-            source={require('../../../images/arrow.png')}
-        />
+            <View className="flex items-center ">
+                <Label title={"To Head"} colour="tq"/>
+                <Image
+                    style={{
+                        width: 100,
+                        height: 100,
+                        transform: [{rotate: `${destination}deg`}],
+                    }}
+                    source={require('../../../images/arrow.png')}
+                />
+                <Text>{destination} deg</Text>
+            </View>
         );
     }
 }

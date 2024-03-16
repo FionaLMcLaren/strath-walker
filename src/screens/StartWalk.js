@@ -1,12 +1,8 @@
 import React, {useState} from "react";
 import {View} from "react-native";
-import {Icon} from "react-native-paper";
 import {changeTime} from '../components/Time/TimeDifference.js';
 import Text from "../components/Elements/Text";
 import Button from "../components/Elements/NextBtn";
-import Title from "../components/Elements/Title";
-import Label from "../components/Elements/Label";
-import classNames from "classnames";
 
 function TitleBlock() {
 	return (
