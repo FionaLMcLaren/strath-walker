@@ -24,6 +24,14 @@ export class Polyline {
         return this.path;
     }
 
+    getLeg(){
+        return this.path[0];
+    }
+
+    changeLeg(){
+        this.path.shift();
+    }
+
     getDistance() {
         return this.distance;
     }

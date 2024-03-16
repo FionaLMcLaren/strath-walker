@@ -33,7 +33,10 @@ export default function Walk({route, navigation}) {
 				toggleModalVisible(false);
 
 			}
-			changeOnLine(tracker.onLine());
+			if(tracker.onLine()){
+				changeOnLine(tracker.checkAtStartPoint());
+			}
+
 			if(tracker.checkTime()){
 				sendNotification("headBack", "Running out of time", "Your pace is slower than we expected so you may wish to head back now/start walking back now");
 			}

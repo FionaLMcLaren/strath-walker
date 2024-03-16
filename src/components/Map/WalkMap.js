@@ -5,7 +5,7 @@ import React from "react";
 
 
 export function WalkMap(props) {
-    const coordinates = props.polyline ? props.polyline.getCoordinates() : [];
+    const coordinates = props.polyline ? props.polyline.getLeg() : [];
     return (
         <MapView
             className={styles.map}
