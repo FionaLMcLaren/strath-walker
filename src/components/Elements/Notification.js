@@ -1,4 +1,4 @@
-import notifee, {TimestampTrigger, TriggerType} from '@notifee/react-native';
+import notifee, {TriggerType, cancelTriggerNotifications} from '@notifee/react-native';
 
 
 export async function MakeChannels() {
@@ -18,23 +18,40 @@ export async function MakeChannels() {
 
 }
 
-export async function startNotification(start) {
-    if(start>1000) {
-        const trigger = {
+export async function startNotification(start, diff) {
+    console.log(start);
+    console.log(diff);
+    if(diff>2) {
+
+        const trigger= {
             type: TriggerType.TIMESTAMP,
-            timestamp: start
+            timestamp: start.getTime(),
         };
 
-        await sendNotification("wTime", "Time to get moving!", "Your walk is meant to start now", trigger);
+
+        await notifee.createTriggerNotification(
+            {
+                id:"walkTimer",
+                title: 'Time to get moving!',
+                body: 'Your walk is meant to start now',
+                android: {
+                    channelId: 'wTime',
+                },
+            },
+            trigger,
+        );
     }
 }
 
+export async function stopNotification(){
+    await notifee.cancelNotification("walkTimer");
+}
 
-export async function sendNotification(channelId, title, body, trigger) {
+
+export async function sendNotification(channelId, title, body) {
     await notifee.displayNotification({
         title,
         body,
-        android:{channelId},
-        trigger
+        android:{channelId}
     });
 }

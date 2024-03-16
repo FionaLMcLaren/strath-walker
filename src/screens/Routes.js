@@ -4,7 +4,7 @@ import {PathGenerator} from '../components/Routes/GeneratePoints.js';
 import {Location} from '../components/Routes/Location.js';
 import {RouteChoiceMap} from '../components/Map/RouteChoiceMap.js';
 import {getSuitablePolylines} from "../components/Routes/PolylineRequest";
-import {loadPaths, savePath} from "../components/Routes/PathStorage";
+import {locationPoints} from "../components/Routes/Points";
 
 export default function Routes({route, navigation}) {
 
@@ -15,9 +15,7 @@ export default function Routes({route, navigation}) {
     const endTime = route.params.endingTime;
     const end = route.params.endingLoc;
 
-    //const start = new Location("Rottenrow", 55.861873, -4.244115);
-    //const end = new Location("Royal College", 55.8612, -4.2464);
-    const middlePoints = [new Location("George Square", 55.8612, -4.2502), new Location("Glasgow Green", 55.8491, -4.2353), new Location("Buchanan Galleries", 55.8638, -4.2524)];
+
 
 
 
@@ -26,7 +24,7 @@ export default function Routes({route, navigation}) {
 
     useEffect(() => {
         // Get the potential destination order
-        const pathGenerator = new PathGenerator(start, end, middlePoints);
+        const pathGenerator = new PathGenerator(start, end, locationPoints);
         const potentialPaths = pathGenerator.getPaths();
 
         getSuitablePolylines(potentialPaths, startTime, endTime).then(routes => setRoutes(routes));
@@ -39,7 +37,7 @@ export default function Routes({route, navigation}) {
 
     return (
         <View className={styles.container}>
-            <RouteChoiceMap polyline={selectedRoute} />
+            <RouteChoiceMap polylines={selectedRoute} />
 
             <ScrollView>
                 {

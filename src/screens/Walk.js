@@ -35,7 +35,7 @@ export default function Walk({route, navigation}) {
 			}
 			changeOnLine(tracker.onLine());
 			if(tracker.checkTime()){
-				sendNotification("headBack", "Running out of time", "Your pace is slower than we expected so you may wish to head back now/start walking back now", null);
+				sendNotification("headBack", "Running out of time", "Your pace is slower than we expected so you may wish to head back now/start walking back now");
 			}
 		}
 	}, [currLoc]);
