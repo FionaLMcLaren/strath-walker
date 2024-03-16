@@ -3,8 +3,7 @@ import MapView, {Polyline} from "react-native-maps";
 import {Marker} from "react-native-maps";
 
 
-export const RouteChoiceMap = ({polyline}) => {
-    const coordinates = polyline ? polyline.getCoordinates() : [];
+export const RouteChoiceMap = ({polylines}) => {
     return (
         <MapView
             className={styles.map}
@@ -17,18 +16,69 @@ export const RouteChoiceMap = ({polyline}) => {
                 longitudeDelta: 0.002,
             }}
         >
-            {
-                polyline &&
-                <Polyline
-                    key={polyline.getKey()}
-                    coordinates={coordinates}
-                    strokeColor="#4285F4"
-                    strokeWidth={6}
-                />
-            }
+        <RenderPolylines polylines={polylines} />
+        <CheckPoints points={polylines}/>
+
         </MapView>
 
     )
+}
+
+
+
+const RenderPolylines=({polylines})=>{
+    if(polylines){
+        return polylines.getCoordinates().map((coordinates, index)=>{
+            if(index%2===0){
+                return(<EvenLine coord={coordinates} index={index}/>);
+            }else{
+                return(<OddLine coord={coordinates} index={index}/>);
+            }
+
+        });
+    }
+
+}
+
+const OddLine=({coord, index})=>{
+    return(
+        <Polyline
+            index={index}
+            coordinates={coord}
+            strokeColor="#4285F4"
+            strokeWidth={6}
+        />
+
+    );
+}
+
+const EvenLine=({coord, index})=>{
+    return(
+        <Polyline
+            index={index}
+            coordinates={coord}
+            strokeColor="#eb4034"
+            strokeWidth={6}
+        />
+
+    );
+}
+
+
+const CheckPoints=({points})=>{
+    if(points){
+        return points.getPath().getPath().map((marker)=>{
+            return(
+                <Marker
+                    coordinate={marker.getPos()}
+                    key={marker.getName()}
+                >
+                    <Text>{marker.getName()}</Text>
+                </Marker>
+            );
+        });
+    }
+
 }
 
 const styles = {

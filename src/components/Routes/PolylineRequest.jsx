@@ -2,11 +2,11 @@ import {GOOGLE_CLOUD_API_KEY} from '@env';
 import {decode} from "@googlemaps/polyline-codec";
 
 export class Polyline {
-    constructor(key, coordinates, path, distance, duration) {
+    constructor(key, polylines, path, distance, duration) {
         this.key = key;
         // decode is supposed to give LatLng tuple to match what the rendering would want,
         // but it doesn't like it! remap coordinates to this format instead
-        this.coordinates = coordinates.map(coord => ({latitude: coord[0], longitude: coord[1]}));
+        this.coordinates = polylines.map(coordinates => coordinates.map(coord => ({latitude: coord[0], longitude: coord[1]})));
         this.path = path;
         this.distance = distance; // in meters
         this.duration = parseInt(duration.slice(0, -1)); // in seconds
@@ -53,7 +53,7 @@ export const getPolyline = async (path) => {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
                 'X-Goog-Api-Key': GOOGLE_CLOUD_API_KEY,
-                'X-Goog-FieldMask': 'routes.duration,routes.distanceMeters,routes.polyline',
+                'X-Goog-FieldMask': 'routes.duration,routes.distanceMeters,routes.legs.polyline',
             },
             body: JSON.stringify({
                 origin: {
@@ -93,8 +93,8 @@ export const getPolyline = async (path) => {
         if (Object.keys(data).length === 0) return undefined; // routing impossible: ie from america to uk
 
         const route = data.routes[0];
-        const polyline = route.polyline.encodedPolyline;
-        const decodedPolyline = decode(polyline);
+        const legs = route.legs;
+        const polylines = legs.map(leg=> decode(leg.polyline.encodedPolyline));
         const distance = route.distanceMeters;
         const duration = route.duration;
 
@@ -102,7 +102,7 @@ export const getPolyline = async (path) => {
 
         return new Polyline(
             path.getNamePath().join(" -> "),
-            decodedPolyline,
+            polylines,
             path,
             distance,
             duration
@@ -114,7 +114,7 @@ export const getPolyline = async (path) => {
 
 export const getSuitablePolylines = async (sortedPaths, startTime, endTime) => {
     const UPPER_LEEWAY = 120; // 2 minutes of leeway for the maximum duration
-    const LOWER_LEEWAY = 600; // 10 minutes of leeway for the minimum duration
+    const LOWER_LEEWAY = 1000; // 10 minutes of leeway for the minimum duration
     const freeTimeinSeconds = (endTime.getTime() - startTime.getTime()) / 1000;
     const freeTimeUpperBound = freeTimeinSeconds + UPPER_LEEWAY;
     const freeTimeLowerBound = freeTimeinSeconds - LOWER_LEEWAY;
