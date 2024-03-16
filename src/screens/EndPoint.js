@@ -1,8 +1,8 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {View} from "react-native";
 import MapPicker from "../components/Map/MapLocationPicker";
 import TimeSetter from "../components/Time/TimeSetter";
-import Toast from "../components/Elements/Toast";
+import Popup from "../components/Elements/Popup";
 import Text from "../components/Elements/Text";
 import Button from "../components/Elements/NextBtn";
 import Title from "../components/Elements/Title";
@@ -14,19 +14,12 @@ export default function EndPoint({ route, navigation }) {
 	const startTime = route.params.startingTime;
 	const start = route.params.startingLoc;
 
-	const [endTime, setEndTime] = React.useState(
-		new Date(
-			new Date(
-				new Date(
-					startTime.getTime()
-				).setHours(startTime.getHours() + 1)
-			).setMilliseconds(0)
-		)
-	)
+	const [endTime, setEndTime] = React.useState(new Date(new Date().setHours(9,0,0,0)));
+
     const [end, setEnd] = useState(new Location("",0,0));
 
 	const [modalVisible, toggleModalVisible] = React.useState(false);
-	const [snackbarVisible, toggleSnackbarVisible] = React.useState(false);
+
 
 
 	return (
@@ -41,10 +34,11 @@ export default function EndPoint({ route, navigation }) {
 					/>
 
 					<Label
-						title={"End Point"}
-						text={end.getName()? end.getName() : "Not Set"}
-						colour={"yl"}
-					/>
+						title={"Start Point"}
+						colour={"yl"}>
+						{end.getName()? end.getName() : "Not Set"}
+					</Label>
+
 
 					<MapPicker loc={end} changeLoc={setEnd}/>
 
@@ -67,6 +61,7 @@ export default function EndPoint({ route, navigation }) {
 				<Button
 					colour="tq"
 					title={"Get routes"}
+					arrow="true"
 					action={() =>
 						{
 							if (end.getName()) {
@@ -78,17 +73,16 @@ export default function EndPoint({ route, navigation }) {
 									}
 								)
 							} else {
-								toggleSnackbarVisible(true);
+								console.log("No end point")
+								//code to toggle popup here
 							}
 						}
 					}
 				/>
 			</View>
 
-			<Toast
+			<Popup
 				text={"You must have an end point set "}
-				snackbarVisible={snackbarVisible}
-				toggleSnackbarVisible={toggleSnackbarVisible}
 			/>
 		</View>
 	);
