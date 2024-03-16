@@ -16,7 +16,7 @@ export default function Home({ navigation }) {
             />
 
             <HomeBtn
-                action={() => navigation.navigate("")}
+                action={() => navigation.navigate("PastWalk")}
                 title={"See past walks"}
                 colour={"pk"}
                 icon={"navigation-variant"}

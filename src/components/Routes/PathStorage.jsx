@@ -54,7 +54,9 @@ export const savePath = async (path) => {
 
 // Loads the Paths from the device's storage
 export const loadPaths = async () => {
+    await AsyncStorage.removeItem('savedPaths')
     const pathJSON = await AsyncStorage.getItem('savedPaths');
+    console.log(pathJSON);
     if (pathJSON === null) return [];
     const savedPathArraysObject = JSON.parse(pathJSON);
     return savedPathArraysObject.map(pathArray => new Path(pathArray.map(location => new Location(location.name, location.latitude, location.longitude))));
