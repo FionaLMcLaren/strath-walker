@@ -48,7 +48,7 @@ export default function StartWalk({route, navigation}) {
 			<View className="flex ">
 				<Button
 					title={(time<0 || time== "--") ? "Start anyway" : "Start"}
-					onPress={() => navigation.navigate("Walk",
+					action={() => navigation.navigate("Walk",
 						{
 							startingTime: route.params.startingTime,
 							startingLoc: route.params.startingLoc,
@@ -61,7 +61,7 @@ export default function StartWalk({route, navigation}) {
 				/>
 				<Button
 					title="Save for later"
-					onPress={() => {
+					action={() => {
 						console.log("save for later code here!")
 						}
 					}

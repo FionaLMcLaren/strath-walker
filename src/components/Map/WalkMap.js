@@ -73,7 +73,7 @@ export function WalkMap(props) {
                     <Polyline
                         key={props.polyline.getKey()}
                         coordinates={coordinates}
-                        strokeColor="#4285F4"
+                        strokeColor="#2dd4bf"
                         strokeWidth={6}
                     />
                 }

@@ -70,7 +70,7 @@ export const RouteChoiceMap = ({polyline}) => {
                     <Polyline
                         key={polyline.getKey()}
                         coordinates={coordinates}
-                        strokeColor="#4285F4"
+                        strokeColor="#2dd4bf"
                         strokeWidth={6}
                     />
                 }

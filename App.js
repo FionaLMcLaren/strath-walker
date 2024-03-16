@@ -25,18 +25,18 @@ export default function App() {
         <PaperProvider theme={theme}>
             <NavigationContainer>
               <Stack.Navigator
-                  initialRouteName="Routes"
+                  initialRouteName="Home"
                   screenOptions={{
                       header: NavHead
                   }}
               >
-                <Stack.Screen name="Home" component={Home} />
-                <Stack.Screen name="StartPoint" component={StartPoint} />
-                <Stack.Screen name="EndPoint" component={EndPoint} />
-                <Stack.Screen name="StartWalk" component={StartWalk} />
-                <Stack.Screen name="Walk" component={Walk} />
-                <Stack.Screen name="EndWalk" component={EndWalk} />
-                <Stack.Screen name="Routes" component={Routes} />
+                <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}/>
+                <Stack.Screen name="StartPoint" component={StartPoint} options={{ title: 'Set Start Point' }}/>
+                <Stack.Screen name="EndPoint" component={EndPoint} options={{ title: 'Set End Point' }}/>
+                <Stack.Screen name="StartWalk" component={StartWalk} options={{ title: 'Start your Walk' }}/>
+                <Stack.Screen name="Walk" component={Walk} options={{ headerShown: false }} />
+                <Stack.Screen name="EndWalk" component={EndWalk} options={{ title: 'End your Walk' }}/>
+                <Stack.Screen name="Routes" component={Routes} options={{ title: 'Select your Route' }}/>
               </Stack.Navigator>
             </NavigationContainer>
         </PaperProvider>

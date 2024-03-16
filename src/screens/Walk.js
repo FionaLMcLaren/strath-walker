@@ -104,12 +104,12 @@ export default function Walk({route, navigation}) {
 						<Pedometer steps={steps} setSteps={setSteps}/>
 						</View>
 
-						<View>
+						<View className="-translate-y-2 py-2 ">
 							<CompassModal destination={directionAngle}/>
 							<Button
 								colour="tq"
 								action={() => {toggleModalVisible(true)}}
-								title="EndWalk">
+								title="End Walk">
 								End Walk
 							</Button>
 						</View>

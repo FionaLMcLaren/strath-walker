@@ -4,21 +4,19 @@ import {View} from "react-native";
 import Text from "./Text"
 import classNames from "classnames";
 
-export default function Popup({text}) {
-    const [snackbarVisible, toggleSnackbarVisible] = React.useState(false);
+export default function Popup({snackbarVisible, toggleSnackbarVisible, text}) {
 
     useEffect(() => {
-        const timeout = setTimeout(() => {
-            console.log("timeout!")
-            toggleSnackbarVisible(false)
-        }, 5000);
+        if (snackbarVisible) {
+            const timeout = setTimeout(() => {
+                console.log("timeout!")
+                toggleSnackbarVisible(false)
+            }, 5000);
 
-        return () => clearTimeout(timeout);
+            return () => clearTimeout(timeout);
+        }
     }, [snackbarVisible]);
 
-    const hidePopup = () => {
-        toggleSnackbarVisible(false)
-    }
 
     return (
         <Portal>
@@ -35,13 +33,13 @@ export default function Popup({text}) {
                     )}
             >
                 <View className="w-3/4">
-                <Text>{text}</Text>
+                    <Text>{text}</Text>
                 </View>
                 <IconButton
                     icon="close"
                     iconColor={"white"}
                     size={20}
-                    onPress={hidePopup}
+                    onPress={() => toggleSnackbarVisible(false)}
                     className="flex items-center bg-black rounded-full border-2 z-[1000] "
                 />
             </View>
