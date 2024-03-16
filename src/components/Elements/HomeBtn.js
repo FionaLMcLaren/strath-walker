@@ -1,7 +1,8 @@
 import React from "react";
 import { View, Pressable } from "react-native";
-import {Icon, Text } from "react-native-paper";
+import {Icon } from "react-native-paper";
 import classNames from 'classnames';
+import Text from './Text';
 
 export default function HomeBtn({title, icon, colour, action}) {
 
@@ -25,12 +26,11 @@ export default function HomeBtn({title, icon, colour, action}) {
                 </View>
 
                 <View className="flex flex-row gap-1 self-end ">
-                    <Text
-                        className="text-xl translate-y-0.5 antialiased "
-                        style={{fontFamily: "MPLUSRounded1c-ExtraBold"}}
-                    >
-                        {title}
-                    </Text>
+                    <View className="scale-95">
+                        <Text bold={true} >
+                            {title}
+                        </Text>
+                    </View>
 
                     <Icon
                         source="arrow-right"

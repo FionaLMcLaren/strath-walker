@@ -19,7 +19,7 @@ export default function EndPoint({ route, navigation }) {
     const [end, setEnd] = useState(new Location("",0,0));
 
 	const [modalVisible, toggleModalVisible] = React.useState(false);
-
+	const [popupVisible, togglePopupVisible] = React.useState(false);
 
 
 	return (
@@ -65,6 +65,7 @@ export default function EndPoint({ route, navigation }) {
 					action={() =>
 						{
 							if (end.getName()) {
+								togglePopupVisible(false)
 								navigation.navigate("Routes", {
 										startingTime: startTime,
 										startingLoc: start,
@@ -73,16 +74,16 @@ export default function EndPoint({ route, navigation }) {
 									}
 								)
 							} else {
-								console.log("No end point")
-								//code to toggle popup here
+								togglePopupVisible(true)
 							}
 						}
 					}
 				/>
 			</View>
 
-			<Popup
-				text={"You must have an end point set "}
+			<Popup snackbarVisible={popupVisible}
+				   toggleSnackbarVisible={togglePopupVisible}
+				   text={"You must have a end point set!"}
 			/>
 		</View>
 	);

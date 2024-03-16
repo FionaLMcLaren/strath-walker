@@ -12,6 +12,7 @@ import Button from "../components/Elements/NextBtn";
 import MapTab from "../components/Elements/MapTab";
 import Label from "../components/Elements/Label";
 import classNames from "classnames";
+import CompassModal from "../components/Walking/CompassModal";
 
 function RouteOption({ route, onPress, currentSel }) {
     const isSelected = route == currentSel;
@@ -62,20 +63,57 @@ function SwipeArrow() {
         </View>
     )
 }
+
+function NoRouteNotice ({navigation, startTime, startPoint}) {
+    return (
+        <View className="flex flex-1 justify-center items-center ">
+            <View className="flex items-center justify-center w-56 p-2 m-6 scale-150 ">
+                <Text xlTitle={true} black={true} >No Routes</Text>
+                <Text xlTitle={true} black={true} >Found!</Text>
+            </View>
+            <View className="flex flex-row">
+                <Text>Try adjusting your</Text>
+                <Text colour={true}> start/end </Text>
+                <Text>points</Text>
+            </View>
+
+            <Button
+                title={"Change Start Point"}
+                action={() =>
+                    navigation.navigate("StartPoint")
+                }
+                colour="tq"
+            />
+            <Button
+                title={"Change End Point"}
+                action={() =>
+                    navigation.navigate("EndPoint",
+                    {
+                        startingTime: startTime,
+                        startingLoc: startPoint
+                    })
+                }
+                colour="tq"
+                outline={true}
+            />
+
+        </View>
+    )
+}
 export default function Routes({route, navigation}) {
-    /*
+
     const startTime = route.params.startingTime;
     const start = route.params.startingLoc;
     const endTime = route.params.endingTime;
     const end = route.params.endingLoc;
-    */
 
 
+    /*
     const startTime = new Date(new Date().setHours(10,30,0,0));
-    const endTime = new Date(new Date().setHours(10,30,0,0));
+    const endTime = new Date(new Date().setHours(11,0,0,0));
     const start = new Location("Rottenrow", 55.861873, -4.244115);
     const end = new Location("Royal College", 55.8612, -4.2464);
-
+    */
 
     const middlePoints = [new Location("George Square", 55.8612, -4.2502), new Location("Glasgow Green", 55.8491, -4.2353), new Location("Buchanan Galleries", 55.8638, -4.2524)];
 
@@ -90,51 +128,56 @@ export default function Routes({route, navigation}) {
         const potentialPaths = pathGenerator.getPaths();
 
         getSuitablePolylines(potentialPaths, startTime, endTime).then(routes => setRoutes(routes));
+        console.log(routes);
     }, []);
 
     const [selectedRoute, setSelectedRoute] = useState(null);
-
-
-    return (
-        <View className="flex flex-1 justify-center">
-            <RouteChoiceMap polyline={selectedRoute} />
-
-            <MapTab routePage={true}>
-                {routes>1 ? <SwipeArrow /> : null}
-                <ScrollView horizontal={true}>
-                    {
-                        routes ?
-                            routes.map((route) => {
-                            return(
-                                    <RouteOption key={route.getKey()}
-                                                 route={route}
-                                                 onPress={(route) => { setSelectedRoute(route) }}
-                                                 currentSel={selectedRoute}
-                                    />)
-                            })
-                        :   <Text>Loading...</Text>
-                    }
-                </ScrollView>
-
-
-                <Button
-
-                        title="Select Route"
-                        action={() => navigation.navigate("Walk",
-                            {
-                                startingTime: startTime,
-                                startingLoc: start,
-                                endingTime: endTime,
-                                endingLoc: end,
-                                selectedRoute: selectedRoute,
-                            })
+    if (routes.length > 0) {
+        return (
+            <View className="flex flex-1 justify-center">
+                <RouteChoiceMap polyline={selectedRoute} />
+                <MapTab routePage={true}>
+                    {routes>1 ? <SwipeArrow /> : null}
+                    <ScrollView horizontal={true}>
+                        {
+                            routes ?
+                                routes.map((route) => {
+                                    return(
+                                        <RouteOption key={route.getKey()}
+                                                     route={route}
+                                                     onPress={(route) => { setSelectedRoute(route) }}
+                                                     currentSel={selectedRoute}
+                                        />)
+                                })
+                                :   <Text>Loading...</Text>
                         }
-                        colour="tq"
-                        arrow="true"
-                    />
-            </MapTab>
-        </View>
-    );
+                    </ScrollView>
+
+                    <View className="-translate-y-2 py-2 ">
+                        <Button
+                            colour="tq"
+                            action={() => {
+                                console.log("pressed")
+                                navigation.navigate("StartWalk",
+                                    {
+                                        startingTime: startTime,
+                                        startingLoc: start,
+                                        endingTime: endTime,
+                                        endingLoc: end,
+                                        selectedRoute: selectedRoute,
+                                    })
+                            }}
+                            title="Select Route"/>
+                    </View>
+                </MapTab>
+            </View>
+        )
+    } else {
+        return (
+            <NoRouteNotice navigation={navigation} startTime={startTime} startPoint={start} />
+        )
+    }
+
 }
 
 
