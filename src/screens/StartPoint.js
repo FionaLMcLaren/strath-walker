@@ -5,9 +5,9 @@ import MapPicker from "../components/Map/MapLocationPicker";
 import TimeSetter from "../components/Time/TimeSetter";
 import Toast from "../components/Elements/Toast";
 import {Location} from '../components/Routes/Location.js';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function StartPoint({ navigation }) {
-
     const styles = {
         container: "justify-center h-4/5",
     };
@@ -50,6 +50,13 @@ export default function StartPoint({ navigation }) {
                 >
                     Set end point
                 </Button>
+
+                <Button
+                  onPress={() => {navigation.navigate("WalkDataView")}}
+                >
+                    View past walk data
+                </Button>
+
             </View>
 
             <Toast
