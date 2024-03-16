@@ -23,7 +23,7 @@ export default function Home({ navigation }) {
             />
 
             <HomeBtn
-                action={() => navigation.navigate("")}
+                action={() => navigation.navigate("SavedRoute")}
                 title={"See saved routes"}
                 colour={"yl"}
                 icon={"book-marker"}
