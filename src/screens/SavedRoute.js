@@ -9,6 +9,8 @@ import MapTab from "../components/Elements/MapTab";
 import Label from "../components/Elements/Label";
 import NoWalkNotice from "../components/Elements/NoWalksNotice";
 import classNames from "classnames";
+import RouteItem from "../components/Elements/WalkListItem"
+
 
 
 export default function Routes({route, navigation}) {
@@ -21,14 +23,18 @@ export default function Routes({route, navigation}) {
 
     if (savedRoutes.length > 0) {
         return (
-            <View className="flex flex-1 justify-center">
-                <ScrollView >
+            <View className="flex flex-1 ">
+                <ScrollView className="flex flex-1 p-2 mt-6 " >
                     {
                         savedRoutes ?
                             savedRoutes.map((route) => {
-                                console.log(route)
                                 return(
-                                    <Text> {route} </Text>)
+                                    <RouteItem key={route.getKey()}
+                                                 route={route}
+                                                 onPress={(route) => { console.log(route) }}
+                                                 colour="yl"
+
+                                    />)
                             })
                             :   <Text>Loading...</Text>
                     }

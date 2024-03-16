@@ -54,7 +54,7 @@ export const savePath = async (path) => {
 
 // Loads the Paths from the device's storage
 export const loadPaths = async () => {
-    await AsyncStorage.removeItem('savedPaths')
+    //await AsyncStorage.removeItem('savedPaths')
     const pathJSON = await AsyncStorage.getItem('savedPaths');
     console.log(pathJSON);
     if (pathJSON === null) return [];

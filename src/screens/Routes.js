@@ -128,7 +128,6 @@ export default function Routes({route, navigation}) {
         const potentialPaths = pathGenerator.getPaths();
 
         getSuitablePolylines(potentialPaths, startTime, endTime).then(routes => setRoutes(routes));
-        console.log(routes);
     }, []);
 
     const [selectedRoute, setSelectedRoute] = useState(null);
