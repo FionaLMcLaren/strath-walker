@@ -24,7 +24,7 @@ function RerouteBtn (rerouteFunction) {
 			-translate-y-2.5 right-0 -translate-x-16" />
 			<Pressable
 				className="absolute -translate-y-10  right-0 bg-pink-200 border-2 px-1 rounded-lg scale-110 "
-				onPress={rerouteFunction}>
+				onPress={()=>rerouteFunction}>
 				<View className="animate-pulse ">
 					<Text>Click to Reroute!</Text>
 				</View>
