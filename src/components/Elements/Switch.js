@@ -1,7 +1,7 @@
 import React, { useState} from "react";
 import {View, Pressable, Switch} from "react-native";
 import {Button} from "react-native-paper";
-import Toast from "./Toast";
+import Popup from "./Popup";
 import classNames from 'classnames';
 import Text from "./Text";
 
@@ -26,7 +26,9 @@ export default function SwitchBtn({ switchDefault, switchText, switchAction, swi
         }
         else {
             //if does not pass the verifier, show the snackbar with the verification error
-            toggleToastVisible(true)
+
+            console.log("outwith uni hours so cant use")
+            //code to toggle popup here
         }
     }
 
@@ -52,10 +54,8 @@ export default function SwitchBtn({ switchDefault, switchText, switchAction, swi
                 </Pressable>
             </View>
 
-            <Toast
+            <Popup
                 text={verifyFailMsg}
-                snackbarVisible={toastVisible}
-                toggleSnackbarVisible={toggleToastVisible}
             />
         </>
     );

@@ -1,8 +1,8 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {View} from "react-native";
 import MapPicker from "../components/Map/MapLocationPicker";
 import TimeSetter from "../components/Time/TimeSetter";
-import Toast from "../components/Elements/Toast";
+import Popup from "../components/Elements/Popup";
 import Text from "../components/Elements/Text";
 import Button from "../components/Elements/NextBtn";
 import Title from "../components/Elements/Title";
@@ -10,12 +10,14 @@ import Label from "../components/Elements/Label";
 
 import {Location} from '../components/Routes/Location.js';
 
+
+
 export default function StartPoint({ navigation }) {
     const [start, setStart] = useState(new Location("",0,0));
-    const [startTime, setStartTime] = React.useState(new Date(new Date(Date.now()).setSeconds(0, 0)));
+    const [startTime, setStartTime] = React.useState(new Date(new Date().setHours(8,0,0,0)));
 
-    const [snackbarVisible, toggleSnackbarVisible] = React.useState(true);
     const [modalVisible, toggleModalVisible] = React.useState(false);
+
 
     return (
         <View className="mt-4">
@@ -31,9 +33,9 @@ export default function StartPoint({ navigation }) {
 
                 <Label
                     title={"Start Point"}
-                    text={start.getName()? start.getName() : "Not Set"}
-                    colour={"yl"}
-                />
+                    colour={"yl"}>
+                    {start.getName()? start.getName() : "Not Set"}
+                </Label>
 
 
                 <MapPicker loc={start} changeLoc={setStart}/>
@@ -56,6 +58,7 @@ export default function StartPoint({ navigation }) {
                 <Button
                     colour="tq"
                     title={"set end point"}
+                    arrow="true"
                     action={() =>
                         {
                             if (start.getName()) {
@@ -65,17 +68,16 @@ export default function StartPoint({ navigation }) {
                                     startingLoc: start
                                 })
                             } else {
-                                toggleSnackbarVisible(true);
+                                console.log("No start point")
+                                //code to toggle popup here
                             }
                         }
                     }
                 />
             </View>
 
-            <Toast
+            <Popup
                 text={"You must have a start point set!"}
-                snackbarVisible={snackbarVisible}
-                toggleSnackbarVisible={toggleSnackbarVisible}
             />
 
         </View>
