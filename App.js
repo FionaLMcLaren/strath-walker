@@ -6,6 +6,7 @@ import Routes from './src/screens/Routes';
 import Walk from './src/screens/Walk';
 import StartWalk from './src/screens/StartWalk';
 import EndWalk from './src/screens/EndWalk';
+import SavedRoute from './src/screens/SavedRoute';
 
 import NavHead from './src/components/Elements/NavHead';
 
@@ -25,7 +26,7 @@ export default function App() {
         <PaperProvider theme={theme}>
             <NavigationContainer>
               <Stack.Navigator
-                  initialRouteName="Home"
+                  initialRouteName="Routes"
                   screenOptions={{
                       header: NavHead
                   }}
@@ -37,6 +38,7 @@ export default function App() {
                 <Stack.Screen name="Walk" component={Walk} options={{ headerShown: false }} />
                 <Stack.Screen name="EndWalk" component={EndWalk} options={{ title: 'End your Walk' }}/>
                 <Stack.Screen name="Routes" component={Routes} options={{ title: 'Select your Route' }}/>
+                <Stack.Screen name="SavedRoute" component={SavedRoute} options={{ title: 'Select Saved Routes' }}/>
               </Stack.Navigator>
             </NavigationContainer>
         </PaperProvider>

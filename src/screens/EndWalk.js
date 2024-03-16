@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import { View} from "react-native";
 import {ResultMap} from '../components/Map/ResultMap.js';
 import {renderEndWalk} from "../components/Walking/EndWalkRenderer";
+import {savePath} from "../components/Routes/PathStorage";
 
 import Text from "../components/Elements/Text";
 import Button from "../components/Elements/NextBtn";
