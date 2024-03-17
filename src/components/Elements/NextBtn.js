@@ -41,7 +41,6 @@ export default function NextBtn({title, colour, action, arrow, outline}) {
                 colour==="pk" && outline && "bg-pink-300 border-2 border-black",
                 colour==="yl" && outline && "bg-yellow-300 border-2 border-black"
             )}>
-                <BtnContent />
             </View>
 
             <Pressable

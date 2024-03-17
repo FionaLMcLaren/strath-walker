@@ -1,5 +1,7 @@
 import {GOOGLE_CLOUD_API_KEY} from '@env';
 import {decode} from "@googlemaps/polyline-codec";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, {useState} from "react";
 
 export class Polyline {
     constructor(key, coordinates, path, distance, duration) {
@@ -187,4 +189,19 @@ export const getSuitablePolylines = async (sortedPaths, startTime, endTime) => {
     console.log("Time taken: " + (new Date().getTime() - debugTime) + "ms");
 
     return suitablePolylines;
+}
+
+// code for reading in average pace, move/use as needed
+export const getAvgPace = async () => {
+    try {
+        const pace = await AsyncStorage.getItem('AveragePace');
+        if(pace === null){
+            return null;
+        }
+        else{
+            return JSON.parse(pace);
+        }
+    } catch (error) {
+        console.log(error);
+    }
 }
