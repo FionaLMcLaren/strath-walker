@@ -34,10 +34,18 @@ export default function EndWalk({route, navigation}) {
         setCoordinates(c=>([...c, newNode]));
     }
 
+    const [prevData, setPrevData] = React.useState(null);
+
     useEffect(() => {
         renderEndWalk(walkTracker.getLocationHistory().slice(), pushNewLine, setLoc);
-        getPreviousWalkData();
+        void getPreviousWalkData()
     }, []);
+
+    useEffect(() => {
+        if(prevData !== null){
+            void verifyWalkData()
+        }
+    }, [prevData])
 
   // save walk data functions //
   const storageLimit = 5; // change to modify max number of values
@@ -50,8 +58,6 @@ export default function EndWalk({route, navigation}) {
     walkedCoords: history,
     pace: pace
   }
-
-  const [prevData, setPrevData] = React.useState([]);
 
   const saveWalkData = async (overLimit) => {
     let finalData = prevData;
@@ -83,32 +89,6 @@ export default function EndWalk({route, navigation}) {
       return false;
     }
   }
-  const createOverwriteAlert = () => new Promise((resolve) => {
-    Alert.alert('Limit Reached', 'Saving this walk will overwrite your oldest saved walk. Is this okay?', [
-      {
-        text: 'Cancel',
-        onPress: () => {
-          console.log('Cancelled');
-          resolve(false);
-        },
-      },
-      {
-        text: 'Confirm',
-        onPress: () => {
-          console.log('Confirmed');
-          resolve(saveWalkData( true))
-        }
-      },
-    ]);
-  });
-
-  const createSavedAlert = (msg) =>
-    Alert.alert('Save Walk', msg, [
-      {
-        text: 'Close',
-        onPress: () => {console.log('Closed');}},
-    ]);
-
   const getPreviousWalkData = async () => {
     try {
       const value = await AsyncStorage.getItem('WalkData');
@@ -119,14 +99,11 @@ export default function EndWalk({route, navigation}) {
   }
   const verifyWalkData = async () => {
     try {
-      console.log("prev data: " + prevData);
-      console.log(typeof prevData)
-      if(prevData.length === storageLimit){
-        return await createOverwriteAlert();
-      }
-      else{
-        return saveWalkData(false);
-      }
+        if(prevData.length === storageLimit){
+            return saveWalkData(true);
+        } else{
+            return saveWalkData(false);
+        }
     } catch (error) {
       console.log(error)
       return false;
@@ -152,13 +129,8 @@ export default function EndWalk({route, navigation}) {
                         colour={"tq"}
                     />
                     <Button
-                        title="Save Walk Data"
-                        action={async () => {
-                            let success = await verifyWalkData();
-                            let msg;
-                            success ? msg = "Successfully saved walk data." : msg = "Failed to save walk data.";
-                            createSavedAlert(msg);
-                        }}
+                        title="Save This Route"
+                        action={() => navigation.navigate("")}
                         colour={"pk"}
                         outline={true}
                     />

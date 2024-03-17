@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {View} from "react-native";
 import HomeBtn from "../components/Elements/HomeBtn";
 import Text from "../components/Elements/Text";
+import Button from "../components/Elements/NextBtn";
 
 export default function Home({ navigation }) {
     return (
@@ -16,7 +17,7 @@ export default function Home({ navigation }) {
             />
 
             <HomeBtn
-                action={() => navigation.navigate("")}
+                action={() => navigation.navigate("WalkDataView")}
                 title={"See past walks"}
                 colour={"pk"}
                 icon={"navigation-variant"}
@@ -28,7 +29,6 @@ export default function Home({ navigation }) {
                 colour={"yl"}
                 icon={"book-marker"}
             />
-
 
         </View>
     )
