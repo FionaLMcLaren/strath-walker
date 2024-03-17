@@ -5,19 +5,21 @@ import {Path} from "../Routes/Path.js"
 
 export class WalkTracker {
 
-    constructor(poly, changeDist, changeAngle, changeHeading, changePoly) {
+    constructor(poly, changeDist, changeAngle, changeHeading, changePoly, changeGoingHome) {
         this.locationHistory = [];
         this.sentNotif = false;
         this.poly = poly;
         this.points = this.poly.getPath().getPath();
         this.pathDist = this.poly.getDistance();
         this.checkpoints = this.poly.getPath().getPath();
+        this.checkpoints.shift(); //removes start as a checkpoint
         this.initialTime = new Date();
         this.distance = 0;
         this.changeDist = changeDist;
         this.changeAngle = changeAngle;
         this.changeHeading = changeHeading;
         this.changePoly = changePoly;
+        this.changeGoingHome =  changeGoingHome;
     }
 
     addNode(node){
@@ -40,6 +42,8 @@ export class WalkTracker {
             this.poly.changeLeg();
             if(this.checkpoints.length === 0){
                 return true;
+            }else if(this.checkpoints.length === 1){
+                this.changeGoingHome(true);
             }
         }
 
@@ -71,8 +75,6 @@ export class WalkTracker {
         let node = this.locationHistory[this.locationHistory.length-1];
         let nodeLong = node["longitude"];
         let nodeLat = node["latitude"];
-        console.log(this.poly.getPath());
-        console.log(this.poly.getLeg());
         for(let i =0; i<this.poly.getLeg().length-1; i++){
             let lineStart = this.poly.getLeg()[i];
 
@@ -170,9 +172,9 @@ export class WalkTracker {
         let pathArr = [new Location("User Location", currLocation["latitude"], currLocation["longitude"]), this.checkpoints[0]]
         let path = new Path(pathArr);
         let route = await getPolyline(path);
-        this.poly = route.getPath().getPath();
+        this.poly = route;
         this.changePoly(route);
-
+        this.changeGoingHome(true);
     }
 
     async reroute(){
@@ -184,14 +186,15 @@ export class WalkTracker {
         pathArr = pathArr.concat(this.checkpoints);
         let path = new Path(pathArr);
         let route = await getPolyline(path);
-        this.poly = route.getPath().getPath();
+        this.poly = route;
         this.changePoly(route);
 
     }
 
     checkTime(){
-        if(!this.sentNotif){
-            let timeDiff = new Date() - this.initialTime
+        const currTime = new Date();
+        if(!this.sentNotif && (currTime> (this.initialTime + 300000))){
+            let timeDiff = currTime - this.initialTime
             let pace = this.calculatePace(timeDiff);
             let roughRemainingDist = this.pathDist - this.distance;
             if((roughRemainingDist/pace)>timeDiff){
@@ -211,10 +214,11 @@ export class WalkTracker {
     }
 
     atPosition(currLat, currLong, goalLat, goalLong){
-        let rangeMaxLat = goalLat + 0.0001;
-        let rangeMaxLong = goalLong + 0.0001;
-        let rangeMinLat = goalLat - 0.0001;
-        let rangeMinLong = goalLong - 0.0001;
+        const range = 0.0002
+        let rangeMaxLat = goalLat + range;
+        let rangeMaxLong = goalLong + range;
+        let rangeMinLat = goalLat - range;
+        let rangeMinLong = goalLong - range;
 
         return(currLat<rangeMaxLat && currLong<rangeMaxLong && currLat>rangeMinLat && currLong>rangeMinLong);
     }
