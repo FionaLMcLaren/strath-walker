@@ -22,7 +22,7 @@ export default function EndWalk({route, navigation}) {
     const [coordinates, setCoordinates] = useState([]);
 
     const distance = walkTracker.getDistance();
-    const duration = walkTracker.getDuration();
+    const duration = walkTracker.getReadableDuration();
     const pace = walkTracker.calculatePace(duration);
 
     const points = walkTracker.getPoints();
@@ -49,7 +49,7 @@ export default function EndWalk({route, navigation}) {
                 <View className="w-[26rem]  " >
                     <View className="flex gap-2 ">
                         <Label title={"Distance"} colour={"tq"}>{distance}m</Label>
-                        <Label title={"Duration"} colour={"tq"}>{duration}s</Label>
+                        <Label title={"Duration"} colour={"tq"}>{duration}</Label>
                         <Label title={"Pace"} colour={"tq"}>{pace}m/s</Label>
                     </View>
                     <View className="-translate-y-2 py-2 ">

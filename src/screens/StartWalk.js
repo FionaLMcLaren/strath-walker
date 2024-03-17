@@ -26,7 +26,7 @@ export default function StartWalk({route, navigation}) {
 
 	const start = route.params.startingTime;
 	const selRoute = route.params.selectedRoute;
-	console.log(selRoute);
+	const isSavedRoute = route.params.savedRoute;
 
 	const [time, setTime] = useState("--");
 	changeTime(start, setTime);
@@ -62,6 +62,7 @@ export default function StartWalk({route, navigation}) {
 					}
 					colour="tq"
 				/>
+				{(!isSavedRoute) ?
 				<Button
 					title="Save for later"
 					action={() => {
@@ -70,7 +71,8 @@ export default function StartWalk({route, navigation}) {
 					}
 					colour="tq"
 					outline={true}
-				/>
+				/> : null
+				}
 			</View>
 		</View>
 	)

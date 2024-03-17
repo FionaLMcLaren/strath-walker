@@ -66,11 +66,6 @@ export default function CompassModal({destination}){
 
                             </ImageBackground>
                     </View>
-
-
-
-
-
                 </Modal>
 
 

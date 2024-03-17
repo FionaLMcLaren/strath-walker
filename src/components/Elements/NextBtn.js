@@ -33,7 +33,7 @@ export default function NextBtn({title, colour, action, arrow, outline}) {
     return (
         <View>
             <View className={classNames(
-                "-z-10 flex mx-4 rounded-3xl translate-y-16",
+                "-z-10 flex mx-4 rounded-3xl translate-y-16 h-12",
                 arrow && "scale-95 ",
                 !arrow && "scale-90 ",
                 !outline &&  "bg-black",

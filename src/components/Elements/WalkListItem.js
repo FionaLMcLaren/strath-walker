@@ -31,7 +31,7 @@ export default function WalkListItem({ route, onPress, colour }) {
                     <Label title={"Name"} colour="yl"/>
                     <Text>{route.path.getReadableName()}</Text>
                     <Label title={"Duration"} colour="yl">
-                        <Text>{route.getDuration()}s</Text>
+                        <Text>{route.getReadableDuration()}</Text>
                     </Label>
                     <Label title={"Distance"} colour="yl">
                         <Text>{route.getDistance()}m</Text>
