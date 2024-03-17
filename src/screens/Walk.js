@@ -16,6 +16,27 @@ export default function Walk({route, navigation}) {
    	};
 
 	const [currLoc, setLoc] = useState();
+
+	useEffect(()=>{
+
+
+		   Geolocation.watchPosition(
+			   loc => {
+				   console.log(loc);
+				   setLoc({"latitude": loc["coords"]["latitude"], "longitude": loc["coords"]["longitude"] });
+
+			   },
+			   error => {
+				   console.log(error.code, error.message);
+			   },
+			   {
+				   enableHighAccuracy: true, interval: 2000
+			   },
+		   );
+
+	   },[]);
+
+
 	const [polyline, changePoly] = useState(route.params.selectedRoute);
 	const [directionDist, changeDist] = useState();
 	const [directionAngle, changeAngle] = useState();
@@ -33,8 +54,11 @@ export default function Walk({route, navigation}) {
 				toggleModalVisible(false);
 
 			}
-			if(tracker.onLine()){
+
+			if(!tracker.onLine()){
 				changeOnLine(tracker.checkAtStartPoint());
+			}else{
+				changeOnLine(true);
 			}
 
 			if(tracker.checkTime()){
@@ -43,25 +67,13 @@ export default function Walk({route, navigation}) {
 		}
 	}, [currLoc]);
 
-	Geolocation.watchPosition(
-		loc => {
-			console.log(loc);
-			setLoc({"latitude": loc["coords"]["latitude"], "longitude": loc["coords"]["longitude"] });
 
-		},
-		error => {
-			console.log(error.code, error.message);
-		},
-		{
-			enableHighAccuracy: true, interval: 2000
-		},
-	);
 
    	return (
             <View className={styles.container}>
                <Text>Walk page</Text>
 				<WalkMap current={currLoc} polyline={polyline} start={route.params.startingLoc}/>
-				<DirectionTab onLine={onLine} walkTracker={tracker} dist={directionDist} angle={directionAngle} header={directionHeading}/>
+				<DirectionTab onLine={onLine} walkTracker={tracker} dist={directionDist} angle={directionAngle} header={directionHeading} changeOnLine={changeOnLine}/>
 				<CompassModal destination={directionAngle}/>
 				<Pedometer steps={steps} setSteps={setSteps}/>
 				<Button
@@ -95,6 +107,7 @@ export default function Walk({route, navigation}) {
 						<Button
 							onPress={() => {
 								tracker.goHome();
+								changeOnLine(tracker.onLine);
 								toggleModalVisible(false);
 							}}
 							title="Lead Me Back"
@@ -109,13 +122,15 @@ export default function Walk({route, navigation}) {
 
 
 
-const DirectionTab = ({onLine, walkTracker, dist, angle, header}) =>{
+const DirectionTab = ({onLine, walkTracker, dist, angle, header, changeOnLine}) =>{
 	if(!onLine){
 		return(
 			<View>
 				<Text>Not on the route</Text>
 				<Button
-					onPress={() => {walkTracker.reroute();}}
+					onPress={() => {
+						walkTracker.reroute();
+						changeOnLine(walkTracker.onLine);}}
 					title="Reroute"
 				>
 					Would you like to reroute?

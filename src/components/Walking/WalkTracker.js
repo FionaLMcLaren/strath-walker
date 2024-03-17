@@ -36,7 +36,8 @@ export class WalkTracker {
 
     checkAtCheckPoint(node){
         if(this.atPosition(node["latitude"], node["longitude"], this.checkpoints[0]["latitude"], this.checkpoints[0]["longitude"])){
-            this.checkpoints.slice(1)
+            this.checkpoints.slice(1);
+            this.poly.changeLeg();
             if(this.checkpoints.length === 0){
                 return true;
             }
@@ -70,7 +71,8 @@ export class WalkTracker {
         let node = this.locationHistory[this.locationHistory.length-1];
         let nodeLong = node["longitude"];
         let nodeLat = node["latitude"];
-
+        console.log(this.poly.getPath());
+        console.log(this.poly.getLeg());
         for(let i =0; i<this.poly.getLeg().length-1; i++){
             let lineStart = this.poly.getLeg()[i];
 
@@ -170,6 +172,7 @@ export class WalkTracker {
         let route = await getPolyline(path);
         this.poly = route.getPath().getPath();
         this.changePoly(route);
+
     }
 
     async reroute(){
@@ -183,6 +186,7 @@ export class WalkTracker {
         let route = await getPolyline(path);
         this.poly = route.getPath().getPath();
         this.changePoly(route);
+
     }
 
     checkTime(){

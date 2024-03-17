@@ -25,11 +25,11 @@ export class Polyline {
     }
 
     getLeg(){
-        return this.path[0];
+        return this.coordinates[0];
     }
 
     changeLeg(){
-        this.path.shift();
+        this.coordinates.shift();
     }
 
     getDistance() {
