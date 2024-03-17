@@ -43,7 +43,8 @@ export default function EndWalk({route, navigation}) {
     selectedRoute: points,
     distance: distance,
     steps: 0, // TODO: change to real steps
-    walkedCoords: history
+    walkedCoords: history,
+    pace: pace
   }
 
   const [prevData, setPrevData] = React.useState([]);
