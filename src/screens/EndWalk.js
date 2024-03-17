@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { Alert, Button, Text, View } from "react-native";
+import { Alert, View } from "react-native";
 import {ResultMap} from '../components/Map/ResultMap.js';
 import {renderEndWalk} from "../components/Walking/EndWalkRenderer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
