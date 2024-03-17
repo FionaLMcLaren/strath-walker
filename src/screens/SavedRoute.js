@@ -4,14 +4,8 @@ import {Icon} from "react-native-paper";
 import { loadRoutes} from "../components/Routes/PathStorage";
 
 import Text from "../components/Elements/Text";
-import Button from "../components/Elements/NextBtn";
-import MapTab from "../components/Elements/MapTab";
-import Label from "../components/Elements/Label";
 import NoWalkNotice from "../components/Elements/NoWalksNotice";
-import classNames from "classnames";
 import RouteItem from "../components/Elements/WalkListItem"
-
-
 
 export default function Routes({route, navigation}) {
     const [savedRoutes, setSavedRoutes] = useState([]);
@@ -31,9 +25,12 @@ export default function Routes({route, navigation}) {
                                 return(
                                     <RouteItem key={route.getKey()}
                                                  route={route}
-                                                 onPress={(route) => { console.log(route) }}
+                                                 onPress={(route) => navigation.navigate("SelectedRoute",
+                                                     {
+                                                         chosenRoute: route,
+                                                     })
+                                                 }
                                                  colour="yl"
-
                                     />)
                             })
                             :   <Text>Loading...</Text>
