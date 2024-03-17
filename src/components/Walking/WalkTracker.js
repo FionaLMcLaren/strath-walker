@@ -127,7 +127,13 @@ export class WalkTracker {
     getReadableDuration() {
         let time = this.getDuration();
         let minsVal = Math.floor(time / 60);
-        let secsVal = time - (minsVal * 60);
+        let secsVal;
+        if (minsVal > 1) {
+            secsVal = time - (minsVal * 60);
+        } else {
+            minsVal = 0;
+            secsVal=time;
+        }
 
         let mins = minsVal.toString();
         let secs = secsVal.toString();

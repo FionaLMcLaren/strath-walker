@@ -62,7 +62,7 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
         console.log(timeToSet.toString())
         console.log(timeToSet.toString() == curTime.toString())
 
-        return time.toString() == curTime.toString()
+        return timeToSet.toString() == curTime.toString()
     }
 
     const setAsCurrTime = () => {

@@ -75,12 +75,6 @@ export default function StartPoint({ navigation }) {
                         }
                     }
                 />
-
-                <Button
-                  onPress={() => {navigation.navigate("WalkDataView")}}
-                >
-                    View past walk data
-                </Button>
             </View>
 
             <Popup snackbarVisible={popupVisible}
