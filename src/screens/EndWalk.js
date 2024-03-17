@@ -51,7 +51,6 @@ export default function EndWalk({route, navigation}) {
 
   const saveWalkData = async (overLimit) => {
     let finalData = prevData;
-    console.log("prev while saving: " + finalData);
     try {
       if(!Array.isArray(prevData)){
         finalData = [prevData];
@@ -62,6 +61,18 @@ export default function EndWalk({route, navigation}) {
       }
       finalData.push(walkData);
       await AsyncStorage.setItem('WalkData', JSON.stringify(finalData))
+
+      // saving average pace
+      let accumulatedPace = 0;
+      let count = 0;
+
+      finalData.forEach((walk) => {
+            accumulatedPace = accumulatedPace + walk.pace
+            count++
+        });
+      let averagePace = (accumulatedPace / count);
+      await AsyncStorage.setItem('AveragePace', JSON.stringify(averagePace))
+
       return true;
     } catch (error) {
       console.log(error)
@@ -117,7 +128,6 @@ export default function EndWalk({route, navigation}) {
       return false;
     }
   }
-
 
   return (
         <View className={styles.container}>

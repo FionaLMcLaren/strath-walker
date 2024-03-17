@@ -9,12 +9,16 @@ import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 export default function WalkDataView({navigation}) {
 
   const styles = { container: "flex flex-1 justify-center" };
-  const [walkData, setWalkData] = React.useState([])
+  const [walkData, setWalkData] = React.useState([]);
+  const [avgPace, setAvgPace] = React.useState(null);
 
   const getWalkData = async () => {
     try {
-      const value = await AsyncStorage.getItem('WalkData');
-      value !== null ? setWalkData(JSON.parse(value)) : setWalkData([]);
+      const walks = await AsyncStorage.getItem('WalkData');
+      walks !== null ? setWalkData(JSON.parse(walks)) : setWalkData([]);
+
+      const pace = await AsyncStorage.getItem('AveragePace');
+      pace !== null ? setAvgPace(+(JSON.parse(pace).toFixed(2))) : setAvgPace(null);
     } catch (error) {
       console.log(error);
     }
@@ -24,33 +28,7 @@ export default function WalkDataView({navigation}) {
     void getWalkData()
   }, []);
 
-  useEffect(() => {
-    calcAvgPace()
-  }, [walkData])
-
   const [selectedWalk, setSelectedWalk] = useState(null);
-  const [avgPace, setAvgPace] = useState(null);
-
-  const calcAvgPace = () => {
-    console.log("averaging");
-
-    let totalPace = 0;
-    let counter = 0;
-
-    console.log(walkData);
-
-    walkData.forEach(nextWalkData => {
-      if (nextWalkData.pace !== undefined) {
-        totalPace += nextWalkData.pace;
-        counter++;
-      }
-    });
-
-    if (counter > 0) {
-      const averagePace = +((totalPace / counter).toFixed(2));
-      setAvgPace(averagePace);
-    }
-  }
 
   if(walkData.length > 0){
     return (
