@@ -8,6 +8,7 @@ import StartWalk from './src/screens/StartWalk';
 import EndWalk from './src/screens/EndWalk';
 import SavedRoute from './src/screens/SavedRoute';
 import SelectedRoute from './src/screens/SelectedRoute';
+import WalkDataView from './src/screens/WalkDataView';
 
 import NavHead from './src/components/Elements/NavHead';
 
@@ -42,6 +43,7 @@ export default function App() {
                 <Stack.Screen name="SavedRoute" component={SavedRoute} options={{ title: 'Select Saved Routes' }}/>
                 <Stack.Screen name="SelectedRoute" component={SelectedRoute}
                               options={{ title: 'See your Selected Route' }}/>
+                  <Stack.Screen name="WalkDataView" component={WalkDataView} options={{ title: 'View Past Data'}}/>
               </Stack.Navigator>
             </NavigationContainer>
         </PaperProvider>
