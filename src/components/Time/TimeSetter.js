@@ -4,9 +4,11 @@ import {Button, Icon} from "react-native-paper";
 import TimeSelect from "./TimeSelect";
 import SwitchBtn from "../Elements/Switch";
 import Text from "../Elements/Text";
+import Popup from "../Elements/Popup";
 
 export default function TimeSetter({ time, timeSetter, prevTime }) {
     const [modalVisible, toggleModalVisible] = React.useState(false);
+    const [popupVisible, togglePopupVisible] = React.useState(false);
 
     const showTime = () => {
         let minutes = time.getMinutes();
@@ -47,6 +49,11 @@ export default function TimeSetter({ time, timeSetter, prevTime }) {
                 prevTime={prevTime}
                 modalVisible={modalVisible}
                 toggleModalVisible={toggleModalVisible}
+            />
+
+            <Popup snackbarVisible={popupVisible}
+                   toggleSnackbarVisible={togglePopupVisible}
+                   text={"Your current time is outwith University time!"}
             />
 
         </View>

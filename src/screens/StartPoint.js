@@ -17,6 +17,7 @@ export default function StartPoint({ navigation }) {
     const [startTime, setStartTime] = React.useState(new Date(new Date().setHours(8,0,0,0)));
 
     const [modalVisible, toggleModalVisible] = React.useState(false);
+    const [popupVisible, togglePopupVisible] = React.useState(false);
 
 
     return (
@@ -62,22 +63,23 @@ export default function StartPoint({ navigation }) {
                     action={() =>
                         {
                             if (start.getName()) {
+                                togglePopupVisible(false)
                                 navigation.navigate("EndPoint",
                                 {
                                     startingTime: startTime,
                                     startingLoc: start
                                 })
                             } else {
-                                console.log("No start point")
-                                //code to toggle popup here
+                                togglePopupVisible(true)
                             }
                         }
                     }
                 />
             </View>
 
-            <Popup
-                text={"You must have a start point set!"}
+            <Popup snackbarVisible={popupVisible}
+                   toggleSnackbarVisible={togglePopupVisible}
+                   text={"You must have a start point set!"}
             />
 
         </View>

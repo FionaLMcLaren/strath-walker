@@ -33,7 +33,7 @@ export default function NextBtn({title, colour, action, arrow, outline}) {
     return (
         <View>
             <View className={classNames(
-                "-z-10 flex p-1.5 mx-4 rounded-3xl translate-y-16",
+                "-z-10 flex mx-4 rounded-3xl translate-y-16",
                 arrow && "scale-95 ",
                 !arrow && "scale-90 ",
                 !outline &&  "bg-black",
@@ -41,7 +41,6 @@ export default function NextBtn({title, colour, action, arrow, outline}) {
                 colour==="pk" && outline && "bg-pink-300 border-2 border-black",
                 colour==="yl" && outline && "bg-yellow-300 border-2 border-black"
             )}>
-                <BtnContent />
             </View>
 
             <Pressable

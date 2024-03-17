@@ -4,13 +4,9 @@ import HomeBtn from "../components/Elements/HomeBtn";
 import Text from "../components/Elements/Text";
 
 export default function Home({ navigation }) {
-    const styles = {
-        wrapper: "flex-1 items-center justify-center gap-2",
-    };
-
     return (
-        <View className={styles.wrapper}>
-            <Text>Welcome!</Text>
+        <View className="flex-1 items-center justify-center gap-2">
+            <Text title={true} bold={true} >Welcome!</Text>
 
             <HomeBtn
                 action={() => navigation.navigate("StartPoint")}
@@ -28,7 +24,7 @@ export default function Home({ navigation }) {
 
             <HomeBtn
                 action={() => navigation.navigate("")}
-                title={"See saved walks"}
+                title={"See saved routes"}
                 colour={"yl"}
                 icon={"book-marker"}
             />

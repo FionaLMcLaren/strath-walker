@@ -8,9 +8,8 @@ export const PosMarker = ({currentPos}) => {
             <Marker
                 coordinate={currentPos}
             >
-                <View style={{backgroundColor: "yellow", padding: 10}}>
-                    <Text>Me</Text>
-                </View>
+
+                <View className="rounded-full h-12 w-12 bg-pink-300 border-2 border-white z-10 " />
 
             </Marker>
         );

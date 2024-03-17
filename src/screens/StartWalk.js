@@ -1,12 +1,8 @@
 import React, {useState} from "react";
 import {View} from "react-native";
-import {Icon} from "react-native-paper";
 import {changeTime} from '../components/Time/TimeDifference.js';
 import Text from "../components/Elements/Text";
 import Button from "../components/Elements/NextBtn";
-import Title from "../components/Elements/Title";
-import Label from "../components/Elements/Label";
-import classNames from "classnames";
 
 function TitleBlock() {
 	return (
@@ -52,7 +48,7 @@ export default function StartWalk({route, navigation}) {
 			<View className="flex ">
 				<Button
 					title={(time<0 || time== "--") ? "Start anyway" : "Start"}
-					onPress={() => navigation.navigate("Walk",
+					action={() => navigation.navigate("Walk",
 						{
 							startingTime: route.params.startingTime,
 							startingLoc: route.params.startingLoc,
@@ -65,7 +61,7 @@ export default function StartWalk({route, navigation}) {
 				/>
 				<Button
 					title="Save for later"
-					onPress={() => {
+					action={() => {
 						console.log("save for later code here!")
 						}
 					}
