@@ -8,6 +8,7 @@ import {Location} from '../components/Routes/Location.js';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function StartPoint({ navigation }) {
+    //AsyncStorage.clear()
     const styles = {
         container: "justify-center h-4/5",
     };
