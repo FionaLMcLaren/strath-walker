@@ -13,6 +13,7 @@ import MapTab from "../components/Elements/MapTab";
 import Label from "../components/Elements/Label";
 import classNames from "classnames";
 import CompassModal from "../components/Walking/CompassModal";
+import Popup from "../components/Elements/Popup";
 
 function RouteOption({ route, onPress, currentSel }) {
     const isSelected = route == currentSel;
@@ -101,15 +102,18 @@ function NoRouteNotice ({navigation, startTime, startPoint}) {
     )
 }
 export default function Routes({route, navigation}) {
+    /*
     const startTime = route.params.startingTime;
     const start = route.params.startingLoc;
     const endTime = route.params.endingTime;
     const end = route.params.endingLoc;
-
+    */
+    const startTime = new Date(new Date().setHours(10,30,0,0));
+    const endTime = new Date(new Date().setHours(11,0,0,0));
+    const start = new Location("Rottenrow", 55.861873, -4.244115);
+    const end = new Location("Royal College", 55.8612, -4.2464);
 
     const middlePoints = [new Location("George Square", 55.8612, -4.2502), new Location("Glasgow Green", 55.8491, -4.2353), new Location("Buchanan Galleries", 55.8638, -4.2524)];
-
-
 
     // Use the Google Routes API to get the actual routes
     const [routes, setRoutes] = useState([]);
@@ -123,6 +127,9 @@ export default function Routes({route, navigation}) {
     }, []);
 
     const [selectedRoute, setSelectedRoute] = useState(null);
+
+    const [popupVisible, togglePopupVisible] = React.useState(false);
+
     if (routes.length > 0) {
         return (
             <View className="flex flex-1 justify-center">
@@ -148,20 +155,28 @@ export default function Routes({route, navigation}) {
                         <Button
                             colour="tq"
                             action={() => {
-                                console.log("pressed")
-                                navigation.navigate("StartWalk",
-                                    {
-                                        startingTime: startTime,
-                                        startingLoc: start,
-                                        endingTime: endTime,
-                                        endingLoc: end,
-                                        selectedRoute: selectedRoute,
-                                        savedRoute: false
-                                    })
+                                if (selectedRoute) {
+                                    navigation.navigate("StartWalk",
+                                        {
+                                            startingTime: startTime,
+                                            startingLoc: start,
+                                            endingTime: endTime,
+                                            endingLoc: end,
+                                            selectedRoute: selectedRoute,
+                                            savedRoute: false
+                                        })
+                                } else {
+                                    toggleSnackbarVisible(true)
+                                }
                             }}
                             title="Select Route"/>
                     </View>
                 </MapTab>
+
+                <Popup snackbarVisible={popupVisible}
+                       toggleSnackbarVisible={togglePopupVisible}
+                       text={"Can't start a walk outside of University hours!"}
+                />
             </View>
         )
     } else {
