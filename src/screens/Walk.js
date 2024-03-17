@@ -16,9 +16,18 @@ export default function Walk({route, navigation}) {
    	};
 
 	const [currLoc, setLoc] = useState();
+	const [polyline, changePoly] = useState(route.params.selectedRoute);
+	const [directionDist, changeDist] = useState();
+	const [directionAngle, changeAngle] = useState();
+	const [directionHeading, changeHeading] = useState();
+	const [tracker, setTracker] = useState();
+	const [modalVisible, toggleModalVisible] = React.useState(false);
+	const [steps, setSteps] = useState(-2);
+	const [onLine, changeOnLine] = useState(true);
+	const [goingHome, changeGoingHome] = useState(false);
 
 	useEffect(()=>{
-
+		setTracker(new WalkTracker(route.params.selectedRoute, changeDist, changeAngle, changeHeading, changePoly, changeGoingHome));
 
 		   Geolocation.watchPosition(
 			   loc => {
@@ -37,14 +46,7 @@ export default function Walk({route, navigation}) {
 	   },[]);
 
 
-	const [polyline, changePoly] = useState(route.params.selectedRoute);
-	const [directionDist, changeDist] = useState();
-	const [directionAngle, changeAngle] = useState();
-	const [directionHeading, changeHeading] = useState();
-	const [tracker] = useState(new WalkTracker(route.params.selectedRoute, changeDist, changeAngle, changeHeading, changePoly));
-	const [modalVisible, toggleModalVisible] = React.useState(false);
-	const [steps, setSteps] = useState(-2);
-	const [onLine, changeOnLine] = useState(true);
+
 
 
 	useEffect(() => {
@@ -73,7 +75,7 @@ export default function Walk({route, navigation}) {
             <View className={styles.container}>
                <Text>Walk page</Text>
 				<WalkMap current={currLoc} polyline={polyline} start={route.params.startingLoc}/>
-				<DirectionTab onLine={onLine} walkTracker={tracker} dist={directionDist} angle={directionAngle} header={directionHeading} changeOnLine={changeOnLine}/>
+				<DirectionTab onLine={onLine} walkTracker={tracker} dist={directionDist} angle={directionAngle} header={directionHeading} changeOnLine={changeOnLine} goingHome={goingHome}/>
 				<CompassModal destination={directionAngle}/>
 				<Pedometer steps={steps} setSteps={setSteps}/>
 				<Button
@@ -103,15 +105,7 @@ export default function Walk({route, navigation}) {
 									})
 							}}
 						/>
-
-						<Button
-							onPress={() => {
-								tracker.goHome();
-								changeOnLine(tracker.onLine);
-								toggleModalVisible(false);
-							}}
-							title="Lead Me Back"
-						/>
+						<GoHomeButton tracker ={tracker} goingHome={goingHome} changeOnLine={changeOnLine} toggleModalVisible={toggleModalVisible}/>
 
 					</Dialog>
 				</Portal>
@@ -129,8 +123,8 @@ const DirectionTab = ({onLine, walkTracker, dist, angle, header, changeOnLine}) 
 				<Text>Not on the route</Text>
 				<Button
 					onPress={() => {
-						walkTracker.reroute();
-						changeOnLine(walkTracker.onLine);}}
+						walkTracker.reroute().then(()=>changeOnLine(walkTracker.checkAtStartPoint()));
+					}}
 					title="Reroute"
 				>
 					Would you like to reroute?
@@ -141,6 +135,20 @@ const DirectionTab = ({onLine, walkTracker, dist, angle, header, changeOnLine}) 
 		return(<Text>Head {dist}m at {angle}° {header}</Text>);
 	}else{
 		return(<Text>--m --°</Text>);
+	}
+}
+
+const GoHomeButton = ({tracker, goingHome, changeOnLine, toggleModalVisible}) =>{
+	if(!goingHome){
+		return(
+			<Button
+				onPress={() => {
+					tracker.goHome().then(()=>changeOnLine(tracker.checkAtStartPoint()));
+					toggleModalVisible(false);
+				}}
+				title="Lead Me Back"
+			/>
+		);
 	}
 }
 
