@@ -47,7 +47,7 @@ export default function WalkDataView({navigation}) {
     });
 
     if (counter > 0) {
-      const averagePace = totalPace / counter;
+      const averagePace = +((totalPace / counter).toFixed(2));
       setAvgPace(averagePace);
     }
   }
