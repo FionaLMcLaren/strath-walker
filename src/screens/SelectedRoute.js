@@ -16,9 +16,12 @@ import RouteOption from "../components/Elements/RouteOption";
 import classNames from "classnames";
 import CompassModal from "../components/Walking/CompassModal";
 import {PrevWalkMap} from "../components/Map/PrevWalkMap";
-import {readableDuration} from "../components/Time/TimeFunctions";
+import {checkInRange, getCurrTime, readableDuration} from "../components/Time/TimeFunctions";
+import Popup from "../components/Elements/Popup";
 
 function SelectedRouteTab({pastWalk, navigation, selectedRoute, endTime, setEndTime, startTime, modalVisible, toggleModalVisible, start, end}) {
+    const [popupVisible, togglePopupVisible] = useState(false);
+
     let routeName
     let distance
     let duration
@@ -47,16 +50,20 @@ function SelectedRouteTab({pastWalk, navigation, selectedRoute, endTime, setEndT
                 <Button
                     colour="tq"
                     action={() => {
-                        console.log("pressed");
-                        navigation.navigate("StartWalk",
-                            {
-                                startingTime: startTime,
-                                startingLoc: start,
-                                endingTime: endTime,
-                                endingLoc: end,
-                                selectedRoute: selectedRoute,
-                                savedRoute: true
-                            });
+                        if (checkInRange(getCurrTime(), 8, 17)) {
+                            toggleModalVisible(true)
+                            navigation.navigate("StartWalk",
+                                {
+                                    startingTime: startTime,
+                                    startingLoc: start,
+                                    endingTime: endTime,
+                                    endingLoc: end,
+                                    selectedRoute: selectedRoute,
+                                    savedRoute: true
+                                });
+                        } else {
+                                togglePopupVisible(true)
+                        }
                     }}
                     title="Select Route"/>
             </View>
@@ -69,6 +76,11 @@ function SelectedRouteTab({pastWalk, navigation, selectedRoute, endTime, setEndT
             modalVisible={modalVisible}
             toggleModalVisible={toggleModalVisible}
             selectedRoute={true}/>
+
+            <Popup snackbarVisible={popupVisible}
+                   toggleSnackbarVisible={togglePopupVisible}
+                   text={"Can't start a walk outside of University hours!"}
+            />
         </>
     )
 }
@@ -80,10 +92,12 @@ export default function SelectedRoute({route, navigation}) {
     const startTime = new Date();
     const [endTime, setEndTime] = useState(new Date(new Date().setHours(startTime.getHours() + 1)));
 
-    const [modalVisible, toggleModalVisible] = useState(true);
-
+    const [modalVisible, toggleModalVisible] = useState(false);
 
     if (pastWalk) {
+        const start = selectedRoute['selectedRoute'][0]
+        const end = selectedRoute['selectedRoute'][selectedRoute['selectedRoute'].length - 1]
+
         return (
             <View className="flex flex-1 justify-center">
                 <PrevWalkMap walk={selectedRoute}/>
@@ -95,8 +109,11 @@ export default function SelectedRoute({route, navigation}) {
                                   setEndTime={setEndTime}
                                   modalVisible={modalVisible}
                                   toggleModalVisible={toggleModalVisible}
+                                  start={start}
+                                  end={end}
                 />
             </View>
+
         )
     } else {
         const start = selectedRoute.path.getFirst();

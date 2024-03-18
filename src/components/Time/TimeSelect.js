@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { Pressable, View} from "react-native";
 import {Portal, Modal} from "react-native-paper";
 import ScrollPicker from "react-native-wheel-scrollview-picker";
@@ -8,6 +8,8 @@ import SwitchBtn from "../Elements/Switch";
 import Popup from "../Elements/Popup";
 
 import {getCurrTime, checkInRange} from "./TimeFunctions"
+import {PathGenerator} from "../Routes/GeneratePoints";
+import {getSuitablePolylines} from "../Routes/PolylineRequest";
 
 /*TODO
 disallow end times being greater than start times
@@ -31,12 +33,7 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
     const minRef = useRef();
 
     const [showingErrorPopUp, setShowingErrorPopUp] = useState(false);
-
-    const setSwitchValue = () => {
-        let curTime = getCurrTime()
-
-        return timeToSet.toString() == curTime.toString()
-    }
+    const [switchValue, switchSetter] = React.useState(false);
 
     const setAsCurrTime = () => {
 
@@ -72,6 +69,14 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
         }
     }
 
+    useEffect(() => {
+        let curTime = getCurrTime()
+
+        switchSetter(timeToSet.toString() == curTime.toString());
+    }, []);
+
+
+
     return (
         <>
             <AppModal
@@ -82,7 +87,8 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
             >
                 { (selectedRoute) ? null :
                 <SwitchBtn
-                    switchDefault={setSwitchValue()}
+                    switchValue={switchValue}
+                    switchSetter={switchSetter}
                     switchText={"Use current time"}
                     switchVerifier={(checkInRange(getCurrTime(), 8, 18))}
                     verifyFailMsg={"Current time is outwith University hours"}
