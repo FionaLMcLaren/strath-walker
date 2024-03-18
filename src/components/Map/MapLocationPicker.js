@@ -7,6 +7,7 @@ import SwitchBtn from "../Elements/Switch";
 import {MarkerStyle} from "./LocationMarker";
 import Geolocation from "@react-native-community/geolocation";
 import {universityPoints} from "../Routes/Points";
+import Text from "../Elements/Text";
 
 
 
@@ -107,7 +108,7 @@ export default function MapLocationPicker(props) {
                     longitudeDelta: 0.002,
                   }}
                 >
-                {universityPoints.map((marker) => (
+                {universityPoints.map((marker, index) => (
                     <Marker
                       coordinate={marker.getPos()}
                       onPress = {e=> {
@@ -118,7 +119,7 @@ export default function MapLocationPicker(props) {
                     }
                       key={index}
                     >
-                    <MarkerStyle loc={props.loc} name={marker.getName()}/>
+                    <LocationMarkerStyle loc={props.loc} name={marker.getName()}/>
 
                     </Marker>
                   ))}
@@ -133,42 +134,25 @@ export default function MapLocationPicker(props) {
 
 }
 
-const MarkerStyle=(props)=>{
-    if(props.loc.getName() === props.name){
-        return(
+const LocationMarkerStyle =(props)=>{
+    if(props.loc.getName() === props.name) {
+        return (
             <View className=" p-1 ">
                 <View className="border-black border-2 border-b-4 rounded-md bg-teal-100 p-1 scale-105  ">
                     <Text className="z-30 text-black ">{props.name}</Text>
                 </View>
-                <View className="absolute bg-teal-100 border-4 border-t-transparent border-l-transparent w-4 h-4 left-10 bottom-2 rotate-45 -translate-y-2 z-20 " />
-                <View className="rounded-full h-4 w-4 bg-yellow-400 border-2 border-white translate-x-9 translate-y-0.5 z-10 " />
-                <View className=" absolute rounded-full h-5 w-5 bg-black border-8 translate-x-9 translate-y-0.5 left-0.5 bottom-0.5 " />
+                <View
+                    className="absolute bg-teal-100 border-4 border-t-transparent border-l-transparent w-4 h-4 left-10 bottom-2 rotate-45 -translate-y-2 z-20 "/>
+                <View
+                    className="rounded-full h-4 w-4 bg-yellow-400 border-2 border-white translate-x-9 translate-y-0.5 z-10 "/>
+                <View
+                    className=" absolute rounded-full h-5 w-5 bg-black border-8 translate-x-9 translate-y-0.5 left-0.5 bottom-0.5 "/>
             </View>
         );
-
     }else{
-        return(
-            <View className=" p-1 ">
-                <View className="border-black border-2 border-b-4 rounded-md bg-white p-1 ">
-                    <Text className="z-30 text-black">{props.name}</Text>
-                </View>
-                <View className="absolute bg-white border-4 border-t-transparent border-l-transparent w-4 h-4 left-10 bottom-2 rotate-45 -translate-y-2 z-20 " />
-                <View className="rounded-full h-4 w-4 bg-yellow-200 border-2 border-white translate-x-9 translate-y-0.5 z-10 " />
-                <View className=" absolute rounded-full h-5 w-5 bg-black border-8 translate-x-9 translate-y-0.5 left-0.5 bottom-0.5 " />
-            </View>
-        );
-
-
-
+        return(<MarkerStyle name={props.name}/>);
+    }
 }
-
-
-
-
-const styles = {
-   		map: "items-center justify-center h-4/5 ",
-   	};
-
 
 
 

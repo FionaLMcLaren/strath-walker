@@ -119,7 +119,7 @@ const CheckPoints=({points})=>{
                     coordinate={marker.getPos()}
                     key={marker.getName()}
                 >
-                    <MarkerStyle loc={marker.getPos()} name={marker.getName()}/>
+                    <MarkerStyle name={marker.getName()}/>
                 </Marker>
             );
         });

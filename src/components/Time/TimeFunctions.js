@@ -23,7 +23,7 @@ export const checkInRange = (time, low, high) => {
 export function readableDuration(time) {
     let minsVal = Math.floor(time / 60);
     let secsVal;
-    if (minsVal > 1) {
+    if (minsVal > 0) {
         secsVal = Math.round(time - (minsVal * 60));
     } else {
         minsVal = 0;
