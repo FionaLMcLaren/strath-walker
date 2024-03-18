@@ -43,29 +43,28 @@ export default function CompassModal({destination}){
                         <Label title={"Your Direction"} colour="tq"/>
                         <Text>{angle} deg</Text>
 
-                        <ImageBackground
-                            style={{
-                                width: 200,
-                                height: 200,
-                                justifyContent:"center",
-                            }}
-                            source={require('../../../images/compassCenter.png')}
-                        >
-                            <View className>
-                            </View>
-                                <Animated.Image
+
+
+                                <ImageBackground
                                     style={{
-                                        width: 200,
-                                        height: 200,
-                                        transform: [{rotate: `${angle}deg`}],
+                                        width: 40,
+                                        height: 40,
+                                        transform: [{rotate: `${(angle+destination)%360}deg`}],
                                     }}
-                                    source={require('../../../images/compass.png')}
-                                />
+                                    source={require('../../../images/arrow.png')}
+                                >
 
+                                        <Animated.Image
+                                            style={{
+                                                width: 200,
+                                                height: 200,
+                                                transform: [{rotate: `${angle}deg`}],
+                                            }}
+                                            source={require('../../../images/compass.png')}
+                                        />
+                                </ImageBackground>
 
-
-                            </ImageBackground>
-                        <DestinationArrow destination = {destination}/>
+                        <DestinationHeading destination = {destination}/>
                     </View>
                 </Modal>
 
@@ -79,7 +78,6 @@ const DestinationArrow = ({destination}) => {
     if(destination || destination ===0){
         return(
             <View className="flex items-center ">
-                <Label title={"To Head"} colour="tq"/>
                 <Image
                     style={{
                         width: 20,
@@ -88,8 +86,18 @@ const DestinationArrow = ({destination}) => {
                     }}
                     source={require('../../../images/arrow.png')}
                 />
-                <Text>{destination} deg</Text>
             </View>
         );
+    }
+}
+
+const DestinationHeading=({destination})=>{
+    if(destination || destination ===0) {
+        return(
+            <View className="flex items-center ">
+                <Label title={"Destination"} colour="tq"/>
+                <Text>{destination} deg</Text>
+            </View>
+        )
     }
 }
