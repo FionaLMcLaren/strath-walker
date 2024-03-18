@@ -5,7 +5,7 @@ import {Path} from "../Routes/Path.js"
 
 export class WalkTracker {
 
-    constructor(changeDist, changeAngle, changeHeading, changePoly, changeGoingHome) {
+    constructor(changeDist, changeAngle, changeHeading, changePoly, changeGoingHome, changeDestination) {
         this.locationHistory = [];
         this.sentNotif = false;
         this.initialTime = new Date();
@@ -14,7 +14,8 @@ export class WalkTracker {
         this.changeAngle = changeAngle;
         this.changeHeading = changeHeading;
         this.changePoly = changePoly;
-        this.changeGoingHome =  changeGoingHome;
+        this.changeGoingHome = changeGoingHome;
+        this.changeDestination = changeDestination;
     }
 
     setRoute(poly){
@@ -23,6 +24,7 @@ export class WalkTracker {
         this.pathDist = this.poly.getDistance();
         this.checkpoints = this.poly.getPath().getPath();
         this.checkpoints.shift(); //removes start as a checkpoint
+        this.changeDestination(this.checkpoints[0]);
     }
 
     addNode(node){
@@ -42,6 +44,7 @@ export class WalkTracker {
     checkAtCheckPoint(node){
         if(this.atPosition(node["latitude"], node["longitude"], this.checkpoints[0]["latitude"], this.checkpoints[0]["longitude"])){
             this.checkpoints.slice(1);
+            this.changeDestination(this.checkpoints[0]);
             this.poly.changeLeg();
             if(this.checkpoints.length === 0){
                 return true;
@@ -137,18 +140,18 @@ export class WalkTracker {
     }
 
     getDistance(){
-        return this.distance;
+        return Math.round(this.distance);
     }
 
     getDuration(){
-        return (this.endTime - this.initialTime)/1000;
+        return Math.round((this.endTime - this.initialTime)/1000);
     }
 
     getReadableDuration() {
         let time = this.getDuration();
         let minsVal = Math.floor(time / 60);
         let secsVal;
-        if (minsVal > 1) {
+        if (minsVal > 0) {
             secsVal = time - (minsVal * 60);
         } else {
             minsVal = 0;
@@ -195,6 +198,7 @@ export class WalkTracker {
         this.poly = route;
         this.changePoly(route);
         this.changeGoingHome(true);
+        this.changeDestination(this.checkpoints[0]);
     }
 
     async reroute(){

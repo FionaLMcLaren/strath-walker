@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {Animated, ImageBackground, View, Pressable, PermissionsAndroid} from "react-native";
+import {View, Pressable, PermissionsAndroid} from "react-native";
 import {WalkMap} from '../components/Map/WalkMap.js';
 import Geolocation, {clearWatch} from "react-native-geolocation-service";
 import {WalkTracker} from "../components/Walking/WalkTracker.js";
@@ -10,7 +10,10 @@ import Button from "../components/Elements/NextBtn";
 import MapTab from "../components/Elements/MapTab";
 import Label from "../components/Elements/Label";
 import TwoBtnModal from "../components/Elements/TwoBtnModal";
+import Modal from "../components/Elements/Modal";
 import {sendNotification} from "../components/Elements/Notification";
+
+
 function RerouteBtn (rerouteFunction) {
 	return (
 		<View >
@@ -28,15 +31,15 @@ function RerouteBtn (rerouteFunction) {
 		</View>
 	)
 }
-const DirectionTab = ({onLine, walkTracker, dist, angle, header}) =>{
+const DirectionTab = ({onLine, walkTracker, dist, angle, header, changeOnLine}) =>{
 	return (
 		<View>
-			{(!onLine ) ? <RerouteBtn rerouteFunction={() => {walkTracker.then(()=>changeOnLine(walkTracker.checkAtStartPoint()));}} /> : null}
+			{(!onLine ) ? <RerouteBtn rerouteFunction={() => {walkTracker.reroute().then(()=>changeOnLine(walkTracker.checkAtStartPoint()));}} /> : null}
 			<Label title={"Directions"} colour={"yl"} >
 				{
 					(!onLine) ?
 						<View>
-							<Pressable onPress={() => {walkTracker.reroute()}}>
+							<Pressable onPress={() => {walkTracker.reroute().then(()=>changeOnLine(walkTracker.checkAtStartPoint()));}}>
 								<Text colour={true} >Not on route </Text>
 							</Pressable>
 						</View>
@@ -46,6 +49,70 @@ const DirectionTab = ({onLine, walkTracker, dist, angle, header}) =>{
 			</Label>
 		</View>
 	)
+}
+
+
+const EndWalkModal = ({tracker, goingHome, changeOnLine, toggleModalVisible, modalVisible, startingLoc, steps, navigation}) =>{
+	if(!goingHome){
+		return(
+			<TwoBtnModal
+				actionOne={() =>{
+					tracker.stopWalk();
+					toggleModalVisible(false);
+					navigation.navigate("EndWalk",
+						{
+							walkTracker: tracker,
+							startingLoc: startingLoc,
+							steps: steps,
+						})
+				}}
+				actionOneText={"End walk here"}
+
+				actionTwo={() =>{
+					tracker.goHome().then(()=>changeOnLine(tracker.checkAtStartPoint()));
+					toggleModalVisible(false);
+				}}
+				actionTwoText={"Lead Me Back"}
+
+				modalVisible={modalVisible}
+				toggleModalVisible={toggleModalVisible}
+				title={"End walk?"}
+			>
+				<View className="p-4 ">
+					<Text>Do you need lead back to your end point or do you just want to end your walk here? </Text>
+				</View>
+			</TwoBtnModal>
+		)
+	}else{
+		return(
+			<Modal
+				action={() =>{
+					tracker.stopWalk();
+					toggleModalVisible(false);
+					navigation.navigate("EndWalk",
+						{
+							walkTracker: tracker,
+							startingLoc: startingLoc,
+							steps: steps,
+						})
+				}}
+
+				modalVisible={modalVisible}
+				toggleModalVisible={toggleModalVisible}
+				title={"End walk?"}
+			>
+				<View className="p-4 ">
+					<Text>Do you want to end your walk here? </Text>
+				</View>
+			</Modal>
+		)
+	}
+}
+
+async function getPermission(){
+	await PermissionsAndroid.request(
+		PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+	);
 }
 
 
@@ -61,8 +128,9 @@ export default function Walk({route, navigation}) {
 	const [steps, setSteps] = useState(-2);
 	const [onLine, changeOnLine] = useState(true);
 	const [goingHome, changeGoingHome] = useState(false);
+	const [destination, changeDestination] = useState();
 
-	const [tracker] = useState(new WalkTracker(changeDist, changeAngle, changeHeading, changePoly, changeGoingHome));
+	const [tracker] = useState(new WalkTracker(changeDist, changeAngle, changeHeading, changePoly, changeGoingHome, changeDestination));
 	useEffect(()=>{
 		tracker.setRoute(route.params.selectedRoute);
 		getPermission().then();
@@ -132,9 +200,11 @@ export default function Walk({route, navigation}) {
 				<MapTab walkPage={true} >
 					<View className="w-[26rem]  " >
 						<View className="flex gap-2 ">
-						<DirectionTab onLine={onLine} walkTracker={tracker} dist={directionDist} angle={directionAngle} header={directionHeading}/>
+						<DirectionTab onLine={onLine} walkTracker={tracker} dist={directionDist} angle={directionAngle} header={directionHeading} changeOnLine={changeOnLine}/>
 						<Pedometer steps={steps} setSteps={setSteps}/>
 						</View>
+
+						<EndWalkModal tracker ={tracker} goingHome={goingHome} changeOnLine={changeOnLine} toggleModalVisible={toggleModalVisible} modalVisible={modalVisible} startingLoc={route.params.startingLoc} steps={steps} navigation={navigation}/>
 
 						<View className="-translate-y-2 py-2 ">
 							<CompassModal destination={directionAngle}/>
@@ -148,28 +218,7 @@ export default function Walk({route, navigation}) {
 					</View>
 				</MapTab>
 
-				<TwoBtnModal
-					actionOne={() =>{
-						tracker.stopWalk();
-						toggleModalVisible(false);
-						navigation.navigate("EndWalk",
-							{
-								walkTracker: tracker,
-								startingLoc: route.params.startingLoc,
-								steps: steps,
-							})
-					}}
-					actionOneText={"End walk here"}
 
-					modalVisible={modalVisible}
-					toggleModalVisible={toggleModalVisible}
-					title={"End walk?"}
-				>
-					<View className="p-4 ">
-						<Text>Do you need lead back to your end point or do you just want to end your walk here? </Text>
-						<GoHomeButton tracker ={tracker} goingHome={goingHome} changeOnLine={changeOnLine} toggleModalVisible={toggleModalVisible}/>
-					</View>
-            </TwoBtnModal>
 </View >
 );
 
@@ -180,25 +229,7 @@ export default function Walk({route, navigation}) {
 
 
 
-const GoHomeButton = ({tracker, goingHome, changeOnLine, toggleModalVisible}) =>{
-	if(!goingHome){
-		return(
-			<Button
-				onPress={() => {
-					tracker.goHome().then(()=>changeOnLine(tracker.checkAtStartPoint()));
-					toggleModalVisible(false);
-				}}
-				title="Lead Me Back"
-			/>
-		);
-	}
-}
 
 
-async function getPermission(){
-	await PermissionsAndroid.request(
-		PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-	);
-}
 
 

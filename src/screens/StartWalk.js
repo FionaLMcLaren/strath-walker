@@ -1,10 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {Button, Text, View} from "react-native";
+import {View} from "react-native";
 import {changeTime, timeDiff} from '../components/Time/TimeDifference.js';
 import {startNotification, stopNotification} from "../components/Elements/Notification";
-import React, {useState} from "react";
-import {View} from "react-native";
-import {changeTime} from '../components/Time/TimeDifference.js';
 import Text from "../components/Elements/Text";
 import Button from "../components/Elements/NextBtn";
 import {saveRoute, savePath} from "../components/Routes/PathStorage";
@@ -36,9 +33,9 @@ export default function StartWalk({route, navigation}) {
 	changeTime(start, setTime);
 
     useEffect(() => {
-        startNotification(start, time);
+        startNotification(start, time).then();
         return()=>{
-            stopNotification();
+            stopNotification().then();
         }
     }, [])
 
@@ -47,7 +44,7 @@ export default function StartWalk({route, navigation}) {
 		<View className="flex flex-1 items-center justify-center">
 			<TitleBlock />
 			{
-				(time<0 || time== "--") ?
+				(time>0 && time!== "--") ?
 					<View className="flex flex-row ">
 						<Text>Your walk starts in </Text>
 						<Text colour={true}>{time}</Text>
@@ -62,7 +59,7 @@ export default function StartWalk({route, navigation}) {
 
 			<View className="flex ">
 				<Button
-					title={(time<0 || time== "--") ? "Start anyway" : "Start"}
+					title={(time<0 || time=== "--") ? "Start anyway" : "Start"}
 					action={() => navigation.navigate("Walk",
 						{
 							startingTime: route.params.startingTime,

@@ -48,7 +48,7 @@ export default function EndWalk({route, navigation}) {
         endTime: walkTracker.getEnd(),
         selectedRoute: points,
         distance: distance,
-        steps: 0, // TODO: change to real steps
+        steps: steps,
         walkedCoords: history,
         pace: pace
     }

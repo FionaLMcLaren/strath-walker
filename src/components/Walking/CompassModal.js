@@ -75,7 +75,7 @@ export default function CompassModal({destination}){
 }
 
 const DestinationArrow = ({destination}) => {
-    if(destination){
+    if(destination || destination ===0){
         return(
             <View className="flex items-center ">
                 <Label title={"To Head"} colour="tq"/>

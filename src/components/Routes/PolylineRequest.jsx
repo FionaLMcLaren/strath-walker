@@ -124,7 +124,18 @@ export const getPolyline = async (path) => {
         const legs = route.legs;
         const polylines = legs.map(leg=> decode(leg.polyline.encodedPolyline));
         const distance = route.distanceMeters;
-        const duration = route.duration;
+
+        let pace = await AsyncStorage.getItem('AveragePace');
+        let duration;
+        if(pace !== null && pace !== "0"){
+            pace = JSON.parse(pace).toFixed(2);  //uses average pace to calculate time it would take for user
+            //google takes average pace to be around 1.33m/s so we use this number as well as the time taken to get the distance if slopes were not taken into account
+            let equivalentDist = 1.33*route.duration;
+            duration = equivalentDist/pace;
+        }else{
+            duration = route.duration;
+        }
+
 
         console.log("Finished fetching route from " + path.getReadableName() + "!");
 
