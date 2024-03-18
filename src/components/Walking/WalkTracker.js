@@ -2,6 +2,7 @@ import {getPolyline} from "../Routes/PolylineRequest.jsx"
 import {Location} from "../Routes/Location.js"
 import {calculateDistance, convertRadians} from "../Routes/Distance.js"
 import {Path} from "../Routes/Path.js"
+import {readableDuration} from "../Time/TimeFunctions";
 
 export class WalkTracker {
 
@@ -149,19 +150,7 @@ export class WalkTracker {
 
     getReadableDuration() {
         let time = this.getDuration();
-        let minsVal = Math.floor(time / 60);
-        let secsVal;
-        if (minsVal > 0) {
-            secsVal = time - (minsVal * 60);
-        } else {
-            minsVal = 0;
-            secsVal=time;
-        }
-
-        let mins = minsVal.toString();
-        let secs = secsVal.toString();
-
-        return (mins + " min " + secs + " sec");
+        readableDuration(time);
     }
 
 

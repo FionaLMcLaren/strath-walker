@@ -40,9 +40,9 @@ export default function App() {
                 <Stack.Screen name="Walk" component={Walk} options={{ headerShown: false }} />
                 <Stack.Screen name="EndWalk" component={EndWalk} options={{ title: 'End your Walk' }}/>
                 <Stack.Screen name="Routes" component={Routes} options={{ title: 'Select your Route' }}/>
-                <Stack.Screen name="SavedRoute" component={SavedRoute} options={{ title: 'Select Saved Routes' }}/>
-                <Stack.Screen name="SelectedRoute" component={SelectedRoute} options={{ title: 'See your Selected Route' }}/>
-                <Stack.Screen name="WalkDataView" component={WalkDataView} options={{ title: 'View Past Data'}}/>
+                <Stack.Screen name="SavedRoute" component={SavedRoute} options={{ title: 'View Saved Routes' }}/>
+                <Stack.Screen name="SelectedRoute" component={SelectedRoute} options={{ title: 'See Selected Route' }}/>
+                <Stack.Screen name="WalkDataView" component={WalkDataView} options={{ title: 'View Past Walks'}}/>
               </Stack.Navigator>
             </NavigationContainer>
         </PaperProvider>

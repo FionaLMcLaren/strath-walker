@@ -4,7 +4,8 @@ import Text from "./Text";
 import Label from "./Label";
 import React from "react";
 
-function RouteOptionContent ({route, isSelected}) {
+function RouteOptionContent ({route, isSelected, routeName, routeDuration, routeDistance}) {
+
     return (
         <View className={classNames(
             " border-2 rounded-lg p-2 flex flex-1 gap-2",
@@ -21,29 +22,29 @@ function RouteOptionContent ({route, isSelected}) {
             }
 
             <Label title={"Name"} colour="yl"/>
-            <Text>{route.path.getReadableName()}</Text>
+            <Text>{routeName}</Text>
             <Label title={"Duration"} colour="yl">
-                <Text>{route.getReadableDuration()}</Text>
+                <Text>{routeDuration}</Text>
             </Label>
             <Label title={"Distance"} colour="yl">
-                <Text>{route.getDistance()}m</Text>
+                <Text>{routeDistance}m</Text>
             </Label>
 
         </View>
     )
 }
-export default function RouteOption({ route, onPress, currentSel }) {
+export default function RouteOption({ route, onPress, currentSel, routeName, routeDuration, routeDistance }) {
     if (onPress && currentSel) {
         const isSelected = route == currentSel;
         return (
             <Pressable onPress={() => onPress(route)} className=" w-[26rem] px-4 py-1 active:scale-95 transition-all ">
-                <RouteOptionContent route={route} isSelected={isSelected} />
+                <RouteOptionContent route={route} isSelected={isSelected} routeName={routeName} routeDuration={routeDuration} routeDistance={routeDistance} />
             </Pressable>
         );
     } else {
         return (
             <View className="w-[26rem] px-4 py-1 ">
-                <RouteOptionContent route={route} isSelected={true} />
+                <RouteOptionContent route={route} isSelected={true} routeName={routeName} routeDuration={routeDuration} routeDistance={routeDistance} />
             </View>
         );
     }

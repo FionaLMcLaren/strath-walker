@@ -17,6 +17,7 @@ export default function MapLocationPicker(props) {
             loc => {
                 props.changeLoc(new Location("User Location", loc.coords.latitude, loc.coords.longitude))
                 setUsingCurLoc(true);
+                switchSetter(true);
             },
             error => {
                 console.log(error.code, error.message);
@@ -29,9 +30,11 @@ export default function MapLocationPicker(props) {
     const resetLoc = () => {
         props.changeLoc(new Location("",0,0))
         setUsingCurLoc(false);
+        switchSetter(false);
     }
 
     const [usingCurLoc, setUsingCurLoc] = useState(false);
+    const [switchValue, switchSetter] = React.useState(false);
 
     const mapStyle = [
         {
@@ -83,7 +86,8 @@ export default function MapLocationPicker(props) {
 
                <View className="absolute z-40 px-1 rounded-sm border-black border-b-4 border-2 -rotate-2 bg-white left-1 ">
                    <SwitchBtn
-                       switchDefault={usingCurLoc}
+                       switchValue={switchValue}
+                       switchSetter={switchSetter}
                        switchText={"Use current location"}
                        switchAction={setToCurLoc}
                        switchOffAction={resetLoc}
@@ -106,8 +110,13 @@ export default function MapLocationPicker(props) {
                 {universityPoints.map((marker) => (
                     <Marker
                       coordinate={marker.getPos()}
-                      onPress = {e=>props.changeLoc(marker)}
-                      key={marker.getName()}
+                      onPress = {e=> {
+                          props.changeLoc(marker)
+                          setUsingCurLoc(false);
+                          switchSetter(false)
+                      }
+                    }
+                      key={index}
                     >
                     <MarkerStyle loc={props.loc} name={marker.getName()}/>
 
@@ -119,6 +128,35 @@ export default function MapLocationPicker(props) {
 
            </View>
    	);
+
+
+
+}
+
+const MarkerStyle=(props)=>{
+    if(props.loc.getName() === props.name){
+        return(
+            <View className=" p-1 ">
+                <View className="border-black border-2 border-b-4 rounded-md bg-teal-100 p-1 scale-105  ">
+                    <Text className="z-30 text-black ">{props.name}</Text>
+                </View>
+                <View className="absolute bg-teal-100 border-4 border-t-transparent border-l-transparent w-4 h-4 left-10 bottom-2 rotate-45 -translate-y-2 z-20 " />
+                <View className="rounded-full h-4 w-4 bg-yellow-400 border-2 border-white translate-x-9 translate-y-0.5 z-10 " />
+                <View className=" absolute rounded-full h-5 w-5 bg-black border-8 translate-x-9 translate-y-0.5 left-0.5 bottom-0.5 " />
+            </View>
+        );
+
+    }else{
+        return(
+            <View className=" p-1 ">
+                <View className="border-black border-2 border-b-4 rounded-md bg-white p-1 ">
+                    <Text className="z-30 text-black">{props.name}</Text>
+                </View>
+                <View className="absolute bg-white border-4 border-t-transparent border-l-transparent w-4 h-4 left-10 bottom-2 rotate-45 -translate-y-2 z-20 " />
+                <View className="rounded-full h-4 w-4 bg-yellow-200 border-2 border-white translate-x-9 translate-y-0.5 z-10 " />
+                <View className=" absolute rounded-full h-5 w-5 bg-black border-8 translate-x-9 translate-y-0.5 left-0.5 bottom-0.5 " />
+            </View>
+        );
 
 
 
