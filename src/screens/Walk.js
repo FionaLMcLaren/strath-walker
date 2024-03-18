@@ -34,13 +34,13 @@ function RerouteBtn (rerouteFunction) {
 }
 const DirectionTab = ({onLine, walkTracker, dist, angle, header}) =>{
 	return (
-		<View>
+		<View >
 			{(!onLine ) ? <RerouteBtn rerouteFunction={() => {walkTracker.reroute()}} /> : null}
 			<Label title={"Directions"} colour={"yl"} >
 				{
 					(!onLine) ?
 						<View>
-							<Pressable onPress={() => {walkTracker.reroute()}}>
+							<Pressable onPress={() => {walkTracker.reroute()}} className=" px-2 ">
 								<Text colour={true} >Not on route </Text>
 							</Pressable>
 						</View>

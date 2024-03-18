@@ -48,8 +48,8 @@ export default function WalkListItem({ route, data, onPress, colour }) {
     return (
         <Pressable onPress={onPress}
                    className={classNames(
-                       "border-b-4 border-r-4 border-2 rounded-lg mt-6 ",
-                       "flex active:scale-95 transition-all",
+                       "flex border-b-4 border-r-4 border-2 rounded-lg mt-6 scale-95 ",
+                       "active:border-r-2 active:border-b-2 active:scale-90 transition-all",
                        colour==="tq" && "bg-teal-100",
                        colour==="pk" && "bg-pink-100",
                        colour==="yl" && "bg-yellow-100")}>

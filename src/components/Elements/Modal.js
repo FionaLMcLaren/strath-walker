@@ -1,6 +1,6 @@
 import React, { useState} from "react";
 import { Pressable, View} from "react-native";
-import {Portal, Modal, Icon} from "react-native-paper";
+import {Portal, Modal, Icon, IconButton} from "react-native-paper";
 import Text from "../Elements/Text";
 
 export default function appModal(props) {
@@ -12,7 +12,14 @@ export default function appModal(props) {
                     visible={props.modalVisible}
                     onDismiss={() => props.toggleModalVisible(false)}
                 >
-                    <View className="absolute bg-teal-100 w-full h-full scale-95 translate-y-1.5 rounded-lg border-2 border-b-4 " />
+                    <View className="absolute bg-teal-100 w-full h-full scale-95 translate-y-5 rounded-lg border-2 border-b-4 " />
+                    <IconButton
+                        icon={"close"}
+                        size={25}
+                        colour={"black"}
+                        className="rounded-full bg-teal-400 border-2 border-b-4 border-r-4 bg-black "
+                        onPress={() => props.toggleModalVisible(false)}
+                    />
                     <View className="flex items-center m-6 justify-center
                          bg-white
                          border-2 rounded-lg z-10 ">
@@ -28,7 +35,7 @@ export default function appModal(props) {
                         <View className="w-full ">
                             <Pressable
                                 onPress={props.confirmAction}
-                                className="p-2 rounded-b-md border-y-2 bg-teal-400 px-12">
+                                className="p-2 rounded-b-md border-y-2 bg-teal-400 px-12 active:bg-teal-500 transition-all ">
                                 <Text bold={true} >Confirm</Text>
                                 <View className="absolute right-0 flex items-center
                                 pr-1 h-8 w-8 rounded-full bg-teal-200 border-2 border-b-4 border-r-4
