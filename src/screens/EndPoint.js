@@ -8,6 +8,7 @@ import Button from "../components/Elements/NextBtn";
 import Title from "../components/Elements/Title";
 import {Location} from '../components/Routes/Location.js';
 import Label from "../components/Elements/Label";
+import {checkInRange, getCurrTime} from "../components/Time/TimeFunctions";
 
 export default function EndPoint({ route, navigation }) {
 
@@ -21,6 +22,12 @@ export default function EndPoint({ route, navigation }) {
 	const [modalVisible, toggleModalVisible] = React.useState(false);
 	const [popupVisible, togglePopupVisible] = React.useState(false);
 
+	useEffect(() => {
+		let nextHour = new Date(new Date(getCurrTime()).setHours(getCurrTime().getHours() + 1))
+		if (checkInRange(nextHour, 8, 18)) {
+			setEndTime(nextHour)
+		}
+	}, []);
 
 	return (
 		<View className="mt-4">

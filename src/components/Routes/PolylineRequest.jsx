@@ -2,6 +2,7 @@ import {GOOGLE_CLOUD_API_KEY} from '@env';
 import {decode} from "@googlemaps/polyline-codec";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, {useState} from "react";
+import {readableDuration} from "../Time/TimeFunctions";
 
 export class Polyline {
     constructor(key, coordinates, path, distance, duration) {
@@ -36,20 +37,7 @@ export class Polyline {
 
     getReadableDuration() {
         let time = this.duration;
-        let minsVal = Math.floor(time / 60);
-        let secsVal;
-        if (minsVal > 1) {
-            secsVal = time - (minsVal * 60);
-        } else {
-            minsVal = 0;
-            secsVal=time;
-        }
-
-
-        let mins = minsVal.toString();
-        let secs = secsVal.toString();
-
-        return (mins + " min " + secs + " sec");
+        return readableDuration(time);
     }
 
     setCoords(c){

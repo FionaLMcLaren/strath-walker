@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {View} from "react-native";
-import {changeTime} from '../components/Time/TimeDifference.js';
+import {changeTime} from '../components/Time/TimeFunctions.js';
 import Text from "../components/Elements/Text";
 import Button from "../components/Elements/NextBtn";
 import {saveRoute, savePath} from "../components/Routes/PathStorage";
