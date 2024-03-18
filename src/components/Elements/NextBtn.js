@@ -31,23 +31,21 @@ function BtnContent ({title, arrow}) {
 export default function NextBtn({title, colour, action, arrow, outline}) {
 
     return (
-        <View>
+        <Pressable onPress={action} className="active:scale-95 transition-all">
             <View className={classNames(
-                "-z-10 flex mx-4 rounded-3xl translate-y-16 h-12",
+                "-z-10 flex mx-4 rounded-3xl translate-y-16 h-14",
                 arrow && "scale-95 ",
                 !arrow && "scale-90 ",
                 !outline &&  "bg-black",
                 colour==="tq" && outline && "bg-teal-400 border-2 border-black",
                 colour==="pk" && outline && "bg-pink-300 border-2 border-black",
                 colour==="yl" && outline && "bg-yellow-300 border-2 border-black"
-            )}>
-            </View>
+            )} />
 
-            <Pressable
+            <View
                 onPress={action}
                 className={classNames(
-                    " rounded-3xl border-2 p-1.5 mx-6 flex justify-center overflow-hidden" +
-                    " active:scale-95 transition-all",
+                    " rounded-3xl border-2 p-1.5 mx-6 flex justify-center overflow-hidden",
                     colour==="tq" && !outline && "bg-teal-400 border-white",
                     colour==="pk" && !outline && "bg-pink-300 border-white ",
                     colour==="yl" && !outline && "bg-yellow-300 border-white",
@@ -56,7 +54,7 @@ export default function NextBtn({title, colour, action, arrow, outline}) {
 
                 <BtnContent arrow={arrow} title={title} />
 
-            </Pressable>
-        </View>
+            </View>
+        </Pressable>
     )
 }

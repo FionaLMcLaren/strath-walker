@@ -12,7 +12,7 @@ import MapTab from "../components/Elements/MapTab";
 import Label from "../components/Elements/Label";
 import classNames from "classnames";
 import Popup from "../components/Elements/Popup";
-
+import LoadScreen from "../components/Elements/LoadingScreen"
 function RouteOption({ route, onPress, currentSel }) {
     const isSelected = route == currentSel;
 
@@ -111,12 +111,19 @@ export default function Routes({route, navigation}) {
     // Use the Google Routes API to get the actual routes
     const [routes, setRoutes] = useState([]);
 
+    const [loadScreenVisible, setLoadScreenVisible] = useState(true)
+
     useEffect(() => {
         // Get the potential destination order
         const pathGenerator = new PathGenerator(start, end, middlePoints);
         const potentialPaths = pathGenerator.getPaths();
 
-        getSuitablePolylines(potentialPaths, startTime, endTime).then(routes => setRoutes(routes));
+        getSuitablePolylines(potentialPaths, startTime, endTime).then(
+            routes => {
+                setRoutes(routes)
+                setLoadScreenVisible(false)
+                }
+            );
     }, []);
 
     const [selectedRoute, setSelectedRoute] = useState(null);
@@ -125,56 +132,62 @@ export default function Routes({route, navigation}) {
 
     if (routes.length > 0) {
         return (
-            <View className="flex flex-1 justify-center">
-                <RouteChoiceMap polylines={selectedRoute}/>
-                <MapTab routePage={true}>
-                    {routes>1 ? <SwipeArrow /> : null}
-                    <ScrollView horizontal={true}>
-                        {
-                            routes ?
-                                routes.map((route) => {
-                                    return(
-                                        <RouteOption key={route.getKey()}
-                                                     route={route}
-                                                     onPress={(route) => { setSelectedRoute(route) }}
-                                                     currentSel={selectedRoute}
-                                        />)
-                                })
-                                :   <Text>Loading...</Text>
-                        }
-                    </ScrollView>
+            <>
+                { (loadScreenVisible) ? <LoadScreen  /> : null }
+                <View className="flex flex-1 justify-center">
+                    <RouteChoiceMap polyline={selectedRoute} />
+                    <MapTab routePage={true}>
+                        {routes>1 ? <SwipeArrow /> : null}
+                        <ScrollView horizontal={true}>
+                            {
+                                routes ?
+                                    routes.map((route) => {
+                                        return(
+                                            <RouteOption key={route.getKey()}
+                                                         route={route}
+                                                         onPress={(route) => { setSelectedRoute(route) }}
+                                                         currentSel={selectedRoute}
+                                            />)
+                                    })
+                                    :   <Text>Loading...</Text>
+                            }
+                        </ScrollView>
 
-                    <View className="-translate-y-2 py-2 ">
-                        <Button
-                            colour="tq"
-                            action={() => {
-                                if (selectedRoute) {
-                                    navigation.navigate("StartWalk",
-                                        {
-                                            startingTime: startTime,
-                                            startingLoc: start,
-                                            endingTime: endTime,
-                                            endingLoc: end,
-                                            selectedRoute: selectedRoute,
-                                            savedRoute: false
-                                        })
-                                } else {
-                                    toggleSnackbarVisible(true)
-                                }
-                            }}
-                            title="Select Route"/>
-                    </View>
-                </MapTab>
+                        <View className="-translate-y-2 py-2 ">
+                            <Button
+                                colour="tq"
+                                action={() => {
+                                    if (selectedRoute) {
+                                        navigation.navigate("StartWalk",
+                                            {
+                                                startingTime: startTime,
+                                                startingLoc: start,
+                                                endingTime: endTime,
+                                                endingLoc: end,
+                                                selectedRoute: selectedRoute,
+                                                savedRoute: false
+                                            })
+                                    } else {
+                                        togglePopupVisible(true)
+                                    }
+                                }}
+                                title="Select Route"/>
+                        </View>
+                    </MapTab>
 
-                <Popup snackbarVisible={popupVisible}
-                       toggleSnackbarVisible={togglePopupVisible}
-                       text={"Can't start a walk outside of University hours!"}
-                />
-            </View>
+                    <Popup snackbarVisible={popupVisible}
+                           toggleSnackbarVisible={togglePopupVisible}
+                           text={"Can't start a walk outside of University hours!"}
+                    />
+                </View>
+            </>
         )
     } else {
         return (
-            <NoRouteNotice navigation={navigation} startTime={startTime} startPoint={start} />
+            <>
+                { (loadScreenVisible) ? <LoadScreen  /> : null }
+                <NoRouteNotice navigation={navigation} startTime={startTime} startPoint={start} />
+            </>
         )
     }
 

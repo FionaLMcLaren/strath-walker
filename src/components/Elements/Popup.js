@@ -1,8 +1,9 @@
 import {IconButton, Portal} from "react-native-paper";
 import React, {useEffect} from "react";
-import {View} from "react-native";
+import {View, Animated} from "react-native";
 import Text from "./Text"
 import classNames from "classnames";
+import {FadeInUp, FadeOutDown} from "react-native-reanimated";
 
 export default function Popup({snackbarVisible, toggleSnackbarVisible, text}) {
 
@@ -20,10 +21,12 @@ export default function Popup({snackbarVisible, toggleSnackbarVisible, text}) {
 
     return (
         <Portal>
-            <View className={
-                classNames("absolute bottom-0 bg-pink-200 border-t-4 w-full mb-3 h-16 ",
+            <Animated.View
+                className={classNames("absolute bottom-0 bg-pink-200 border-t-4 w-full mb-3 h-16 ",
                     !snackbarVisible && "opacity-0"
                 )}
+                entering={FadeInUp}
+                exiting={FadeOutDown}
             />
             <View
                 className={
@@ -31,6 +34,8 @@ export default function Popup({snackbarVisible, toggleSnackbarVisible, text}) {
                         "flex flex-row items-center gap-8 absolute bottom-0 bg-white w-full border-t-2 px-6 h-16",
                         !snackbarVisible && "opacity-0"
                     )}
+                entering={FadeInUp}
+                exiting={FadeOutDown}
             >
                 <View className="w-3/4">
                     <Text>{text}</Text>

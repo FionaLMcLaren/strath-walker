@@ -39,7 +39,7 @@ export default function CompassModal({destination}){
                     toggleModalVisible={toggleModalVisible}
                     confirmAction={() => {toggleModalVisible(false); CompassHeading.stop();}}
                 >
-                    <View className="py-4 items-center">
+                    <View className="py-4 items-center gap-1">
                         <Label title={"Your Direction"} colour="tq"/>
                         <Text>{angle} deg</Text>
 
@@ -62,9 +62,10 @@ export default function CompassModal({destination}){
                                     source={require('../../../images/compass.png')}
                                 />
 
-                                <DestinationArrow destination = {destination}/>
+
 
                             </ImageBackground>
+                        <DestinationArrow destination = {destination}/>
                     </View>
                 </Modal>
 
@@ -81,8 +82,8 @@ const DestinationArrow = ({destination}) => {
                 <Label title={"To Head"} colour="tq"/>
                 <Image
                     style={{
-                        width: 100,
-                        height: 100,
+                        width: 20,
+                        height: 20,
                         transform: [{rotate: `${destination}deg`}],
                     }}
                     source={require('../../../images/arrow.png')}

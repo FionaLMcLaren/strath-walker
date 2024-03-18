@@ -6,13 +6,20 @@ import RouteItem from "../components/Elements/WalkListItem";
 import NoWalkNotice from "../components/Elements/NoWalksNotice";
 
 import Text from "../components/Elements/Text"
+import LoadScreen from "../components/Elements/LoadingScreen";
+import Label from "../components/Elements/Label";
+import Popup from "../components/Elements/Popup";
+import {checkInRange, getCurrTime} from "../components/Time/TimeFunctions";
 
 export default function WalkDataView({navigation}) {
 
+  const [loadScreenVisible, setLoadScreenVisible] = useState(true);
   const [popupVisible, togglePopupVisible] = React.useState(false);
 
   const [walkData, setWalkData] = React.useState([]);
   const [avgPace, setAvgPace] = React.useState(null);
+
+
 
   const getWalkData = async () => {
     try {
@@ -27,14 +34,20 @@ export default function WalkDataView({navigation}) {
   }
 
   useEffect( () => {
-    void getWalkData()
+     getWalkData().then(e => setLoadScreenVisible(false))
   }, []);
 
   if(walkData.length > 0){
     return (
+        <>
+          { (loadScreenVisible) ? <LoadScreen  /> : null }
         <View className="flex flex-1 ">
-          <Text>Hello world!</Text>
-          <ScrollView className="flex flex-1 p-2 mb-6 " >
+          <View className=" flex justify-center items-center py-4 border-b-2 bg-teal-100 ">
+            <Label title={"Your Average Pace"} colour="pk">
+              {avgPace ? (avgPace.toString()+"m/s") : "N/A"}
+            </Label>
+          </View>
+          <ScrollView className="flex flex-1 p-2 " >
             {
               walkData ?
                     walkData.map((nextWalkData, index) => {
@@ -42,23 +55,31 @@ export default function WalkDataView({navigation}) {
                           <RouteItem
                               key={index}
                               data={nextWalkData}
-                              onPress={() => navigation.navigate("SelectedRoute",
-                                  {
-                                    chosenRoute: nextWalkData,
-                                  })
-                              }
+                              onPress={() => {
+                                  navigation.navigate("SelectedRoute",
+                                      {
+                                        chosenRoute: nextWalkData,
+                                        pastWalk: true
+                                      })
+                              }}
                               colour="pk"
                           />)
                     })
                   :   <Text>Loading...</Text>
             }
           </ScrollView>
+
+
         </View>
+        </>
     );
   }
   else{
     return(
-        <NoWalkNotice navigation={navigation} />
+        <>
+          { (loadScreenVisible) ? <LoadScreen  /> : null }
+          <NoWalkNotice navigation={navigation} />
+        </>
     )
   }
 }

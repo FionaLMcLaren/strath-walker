@@ -9,8 +9,9 @@ import Title from "../components/Elements/Title";
 import Label from "../components/Elements/Label";
 
 import {Location} from '../components/Routes/Location.js';
-
-
+import {PathGenerator} from "../components/Routes/GeneratePoints";
+import {getSuitablePolylines} from "../components/Routes/PolylineRequest";
+import {getCurrTime, checkInRange} from "../components/Time/TimeFunctions";
 
 export default function StartPoint({ navigation }) {
     const [start, setStart] = useState(new Location("",0,0));
@@ -19,6 +20,12 @@ export default function StartPoint({ navigation }) {
     const [modalVisible, toggleModalVisible] = React.useState(false);
     const [popupVisible, togglePopupVisible] = React.useState(false);
 
+    useEffect(() => {
+        let currTime = getCurrTime()
+        if (checkInRange(currTime, 8, 17)) {
+            setStartTime(currTime)
+        }
+    }, []);
 
     return (
         <View className="mt-4">
