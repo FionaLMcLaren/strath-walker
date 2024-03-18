@@ -64,14 +64,14 @@ export const RouteChoiceMap = ({polyline}) => {
                     longitudeDelta: 0.025,
                 }}
             >
-                <RenderPolylines polylines={polylines} />
+                <RenderPolylines polylines={polylines}/>
                 <CheckPoints points={polylines}/>
             </MapView>
         </View>
     )
 }
 
-    const RenderPolylines=({polylines})=>{
+const RenderPolylines=({polylines})=>{
         if(polylines){
             return polylines.getCoordinates().map((coordinates, index)=>{
                 if(index%2===0){
