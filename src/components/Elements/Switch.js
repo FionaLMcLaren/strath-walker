@@ -5,9 +5,8 @@ import classNames from 'classnames';
 import Text from "./Text";
 
 
-export default function SwitchBtn({ switchDefault, switchText, switchAction, switchOffAction, switchVerifier, verifyFailMsg  }) {
+export default function SwitchBtn({ switchValue, switchSetter, switchText, switchAction, switchOffAction, switchVerifier, verifyFailMsg  }) {
 
-    const [switchValue, switchSetter] = React.useState(switchDefault);
     const [popupVisible, togglePopupVisible] = React.useState(false);
 
     const styles = {
@@ -53,7 +52,7 @@ export default function SwitchBtn({ switchDefault, switchText, switchAction, swi
 
             <Popup snackbarVisible={popupVisible}
                    toggleSnackbarVisible={togglePopupVisible}
-                   text={"Your current time is outwith University time!"}
+                   text={verifyFailMsg}
             />
         </>
     );

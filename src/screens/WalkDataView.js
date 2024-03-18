@@ -8,6 +8,8 @@ import NoWalkNotice from "../components/Elements/NoWalksNotice";
 import Text from "../components/Elements/Text"
 import LoadScreen from "../components/Elements/LoadingScreen";
 import Label from "../components/Elements/Label";
+import Popup from "../components/Elements/Popup";
+import {checkInRange, getCurrTime} from "../components/Time/TimeFunctions";
 
 export default function WalkDataView({navigation}) {
 
@@ -53,18 +55,21 @@ export default function WalkDataView({navigation}) {
                           <RouteItem
                               key={index}
                               data={nextWalkData}
-                              onPress={() => navigation.navigate("SelectedRoute",
-                                  {
-                                    chosenRoute: nextWalkData,
-                                    pastWalk: true
-                                  })
-                              }
+                              onPress={() => {
+                                  navigation.navigate("SelectedRoute",
+                                      {
+                                        chosenRoute: nextWalkData,
+                                        pastWalk: true
+                                      })
+                              }}
                               colour="pk"
                           />)
                     })
                   :   <Text>Loading...</Text>
             }
           </ScrollView>
+
+
         </View>
         </>
     );

@@ -41,14 +41,10 @@ export default function Routes({route, navigation}) {
                                         <RouteItem key={route.getKey()}
                                                      route={route}
                                                      onPress={() => {
-                                                         if (checkInRange(getCurrTime(), 8, 17)) {
                                                              navigation.navigate("SelectedRoute",
                                                              {
                                                                  chosenRoute: route,
                                                              })
-                                                         } else {
-                                                             togglePopupVisible(true)
-                                                         }
                                                      }}
                                                      colour="yl"
                                         />)
@@ -58,10 +54,6 @@ export default function Routes({route, navigation}) {
                         }
                     </ScrollView>
 
-                    <Popup snackbarVisible={popupVisible}
-                           toggleSnackbarVisible={togglePopupVisible}
-                           text={"Can't start a walk outside of University hours!"}
-                    />
                 </View>
             </>
         )

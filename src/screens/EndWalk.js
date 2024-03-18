@@ -121,7 +121,6 @@ export default function EndWalk({route, navigation}) {
 
   return (
         <View className="flex flex-1 justify-center">
-            <Text>Walk page</Text>
             <ResultMap current={currLoc} coordinates={coordinates} points = {points} start={route.params.startingLoc}/>
 
             <MapTab endPage={true}>

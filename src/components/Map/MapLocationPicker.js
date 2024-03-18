@@ -17,6 +17,7 @@ export default function MapLocationPicker(props) {
             loc => {
                 props.changeLoc(new Location("User Location", loc.coords.latitude, loc.coords.longitude))
                 setUsingCurLoc(true);
+                switchSetter(true);
             },
             error => {
                 console.log(error.code, error.message);
@@ -29,9 +30,11 @@ export default function MapLocationPicker(props) {
     const resetLoc = () => {
         props.changeLoc(new Location("",0,0))
         setUsingCurLoc(false);
+        switchSetter(false);
     }
 
     const [usingCurLoc, setUsingCurLoc] = useState(false);
+    const [switchValue, switchSetter] = React.useState(false);
 
     const mapStyle = [
         {
@@ -83,7 +86,8 @@ export default function MapLocationPicker(props) {
 
                <View className="absolute z-40 px-1 rounded-sm border-black border-b-4 border-2 -rotate-2 bg-white left-1 ">
                    <SwitchBtn
-                       switchDefault={usingCurLoc}
+                       switchValue={switchValue}
+                       switchSetter={switchSetter}
                        switchText={"Use current location"}
                        switchAction={setToCurLoc}
                        switchOffAction={resetLoc}
@@ -109,6 +113,7 @@ export default function MapLocationPicker(props) {
                       onPress = {e=> {
                           props.changeLoc(marker)
                           setUsingCurLoc(false);
+                          switchSetter(false)
                       }
                     }
                       key={index}
