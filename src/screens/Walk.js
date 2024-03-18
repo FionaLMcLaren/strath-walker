@@ -195,7 +195,7 @@ export default function Walk({route, navigation}) {
 
    	return (
             <View className="flex flex-1 justify-center">
-				<WalkMap current={currLoc} polyline={polyline} start={route.params.startingLoc}/>
+				<WalkMap current={currLoc} polyline={polyline} start={route.params.startingLoc} destination={destination}/>
 
 				<MapTab walkPage={true} >
 					<View className="w-[26rem]  " >

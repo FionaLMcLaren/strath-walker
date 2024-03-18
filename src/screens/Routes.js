@@ -135,7 +135,7 @@ export default function Routes({route, navigation}) {
             <>
                 { (loadScreenVisible) ? <LoadScreen  /> : null }
                 <View className="flex flex-1 justify-center">
-                    <RouteChoiceMap polyline={selectedRoute} />
+                    <RouteChoiceMap polylines={selectedRoute} />
                     <MapTab routePage={true}>
                         {routes>1 ? <SwipeArrow /> : null}
                         <ScrollView horizontal={true}>

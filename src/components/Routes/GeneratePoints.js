@@ -31,7 +31,8 @@ export class PathGenerator{
          if(!(this.sortedPaths.includes(sortedV))){
             this.sortedPaths.push(sortedV);
             this.paths.push(v);
-            distSoFar += calculateDistance(visited.getLast().getLongitude(), visited.getLast().getLatitude(), end.getLongitude());
+            console.log();
+            distSoFar += calculateDistance(visited.getLast().getLongitude(), visited.getLast().getLatitude(), end.getLongitude(), end.getLatitude());
             this.distDict[Math.round(distSoFar)]=v;
          }
 

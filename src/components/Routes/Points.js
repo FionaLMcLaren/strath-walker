@@ -4,17 +4,17 @@ export const middlePoints = [
     new Location("George Square", 55.8612, -4.2502),
     new Location("Glasgow Green", 55.8491, -4.2353),
     new Location("Buchanan Galleries", 55.8638, -4.2524),
-    new Location("St. Enochs", 55.8570131836733, -4.251632505957288),
+    /*new Location("St. Enochs", 55.8570131836733, -4.251632505957288),
     new Location("Princes Square", 55.85920340665156, -4.253794564424108),
     new Location("Clutha Bar", 55.85460995027569, -4.249991058501385),
     new Location("Necropolis", 55.86278905325927, -4.231164615387949),
     new Location("Glasgow Cathedral", 55.86309271097919, -4.2346466730665115),
     new Location("Theatre Royal", 55.866495885010956, -4.256186913541739),
-    new Location("Glasgow Bridge", 55.8554833876224, -4.257943628868851)
+    new Location("Glasgow Bridge", 55.8554833876224, -4.257943628868851)*/
 ];
 
 export const universityPoints = [
-    new Location("Barony Hall", 55.861931802718985, -4.237012290898721),
+    /*new Location("Barony Hall", 55.861931802718985, -4.237012290898721),
     new Location("Cathedral Wing", 55.862751373056106, -4.243255989866659),
     new Location("Collins Building", 55.86133482574451, -4.243890185035724),
     new Location("Curran Building", 55.863607347810344, -4.2404824865701),
@@ -41,5 +41,6 @@ export const universityPoints = [
     new Location("Technology and Innovation Centre", 55.860529911213085, -4.2429089723792766),
     new Location("Thomas Graham Building", 55.8627962384496, -4.246600190223927),
     new Location("University Centre", 55.86259349902095, -4.247994363837786),
-    new Location("Wolfson Building", 55.86208174157937, -4.241101024527364)
+    new Location("Wolfson Building", 55.86208174157937, -4.241101024527364),*/
+    new Location("Rottenrow", 55.861873, -4.244115)
 ]

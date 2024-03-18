@@ -69,13 +69,7 @@ export function WalkMap(props) {
             >
                 <PosMarker currentPos = {props.current}/>
 
-                <Marker
-                    coordinate={destination.getPos()}
-                    key={destination.getName()}
-                >
-                    <MarkerStyle loc={destination.loc} name={destination.getName()}/>
-
-                </Marker>
+                <DestinationMarker destination={props.destination}/>
 
                 {
                     props.polyline &&
@@ -90,6 +84,20 @@ export function WalkMap(props) {
         </View>
 
     )
+}
+
+const DestinationMarker = ({destination})=>{
+    if(destination){
+        return(
+            <Marker
+                coordinate={destination.getPos()}
+                key={destination.getName()}
+            >
+                <MarkerStyle name={destination.getName()}/>
+
+            </Marker>
+        );
+    }
 }
 
 const styles = {
