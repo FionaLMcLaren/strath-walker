@@ -1,14 +1,14 @@
 import React, { useState} from "react";
 import {View, Pressable, Switch} from "react-native";
-import {Button} from "react-native-paper";
 import Popup from "./Popup";
 import classNames from 'classnames';
 import Text from "./Text";
 
+
 export default function SwitchBtn({ switchDefault, switchText, switchAction, switchOffAction, switchVerifier, verifyFailMsg  }) {
 
     const [switchValue, switchSetter] = React.useState(switchDefault);
-    const [toastVisible, toggleToastVisible] = React.useState(false);
+    const [popupVisible, togglePopupVisible] = React.useState(false);
 
     const styles = {
         container: "flex items-center justify-center",
@@ -25,10 +25,7 @@ export default function SwitchBtn({ switchDefault, switchText, switchAction, swi
             }
         }
         else {
-            //if does not pass the verifier, show the snackbar with the verification error
-
-            console.log("outwith uni hours so cant use")
-            //code to toggle popup here
+            togglePopupVisible(true)
         }
     }
 
@@ -54,8 +51,9 @@ export default function SwitchBtn({ switchDefault, switchText, switchAction, swi
                 </Pressable>
             </View>
 
-            <Popup
-                text={verifyFailMsg}
+            <Popup snackbarVisible={popupVisible}
+                   toggleSnackbarVisible={togglePopupVisible}
+                   text={"Your current time is outwith University time!"}
             />
         </>
     );

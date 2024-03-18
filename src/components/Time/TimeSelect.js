@@ -5,6 +5,7 @@ import ScrollPicker from "react-native-wheel-scrollview-picker";
 import AppModal from "../Elements/Modal"
 import Text from "../Elements/Text";
 import SwitchBtn from "../Elements/Switch";
+import Popup from "../Elements/Popup";
 
 /*TODO
 disallow end times being greater than start times
@@ -25,6 +26,7 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
     const minRef = useRef();
 
     const [showingErrorPopUp, setShowingErrorPopUp] = useState(false);
+
 
     const verifyCurTime = () => {
         let curTime = new Date(Date.now())
@@ -60,7 +62,7 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
         console.log(timeToSet.toString())
         console.log(timeToSet.toString() == curTime.toString())
 
-        return time.toString() == curTime.toString()
+        return timeToSet.toString() == curTime.toString()
     }
 
     const setAsCurrTime = () => {
@@ -83,7 +85,6 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
     }
 
     const validateNewTime = () => {
-
         let lowTime = new Date(new Date(Date.now()).setHours(8, 0, 0, 0));
         let highTime = new Date(new Date(Date.now()).setHours(18, 0, 0, 0));
 
@@ -162,6 +163,8 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
                             setTimeToSet(new Date(new Date(timeToSet.setMinutes(selMin)).setSeconds(0,0)))
                         }}
                     />
+
+
                 </View>
             </AppModal>
 

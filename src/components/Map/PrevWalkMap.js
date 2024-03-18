@@ -2,17 +2,65 @@ import {Text, View, StyleSheet} from "react-native";
 import MapView, {Polyline} from "react-native-maps";
 import {Marker} from "react-native-maps";
 import React from "react";
+import {PosMarker} from "./UserMarker";
+
 export function PrevWalkMap(route) {
+    const mapStyle = [
+        {
+            "featureType": "administrative",
+            "elementType": "geometry",
+            "stylers": [
+                {
+                    "visibility": "off"
+                }
+            ]
+        },
+        {
+            "featureType": "poi",
+            "stylers": [
+                {
+                    "visibility": "simplified"
+                }
+            ]
+        },
+        {
+            "featureType": "poi.park",
+            "stylers": [
+                {
+                    "visibility": "simplified"
+                }
+            ]
+        },
+        {
+            "featureType": "road",
+            "elementType": "labels.icon",
+            "stylers": [
+                {
+                    "visibility": "off"
+                }
+            ]
+        },
+        {
+            "featureType": "transit",
+            "stylers": [
+                {
+                    "visibility": "simplified"
+                }
+            ]
+        }
+    ]
+
   return (
     <MapView
       className={styles.map}
       minZoomLevel={10}
-      style={StyleSheet.absoluteFillObject, {height:"30%"}}
+      style={StyleSheet.absoluteFillObject, {height:"80%"}}
+      customMapStyle={mapStyle}
       initialRegion={{
-        latitude: 55.861873,
-        longitude: -4.244115,
-        latitudeDelta: 0.002,
-        longitudeDelta: 0.002,
+          latitude: 55.851873,
+          longitude: -4.244155,
+          latitudeDelta: 0.025,
+          longitudeDelta: 0.025,
       }}
     >
 
@@ -21,7 +69,7 @@ export function PrevWalkMap(route) {
         <Polyline
           key="PrevWalkLine"
           coordinates={route.walk['walkedCoords']}
-          strokeColor="#4285F4"
+          strokeColor="#2dd4bf"
           strokeWidth={6}
         />
 
