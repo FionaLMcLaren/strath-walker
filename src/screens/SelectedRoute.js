@@ -81,7 +81,7 @@ export default function SelectedRoute({route, navigation, pastWalk}) {
 
         return (
             <View className="flex flex-1 justify-center">
-                <RouteChoiceMap polyline={selectedRoute}/>
+                <RouteChoiceMap polylines={selectedRoute}/>
                 <SelectedRouteTab startTime={startTime}
                                   selectedRoute={selectedRoute}
                                   endTime={endTime}

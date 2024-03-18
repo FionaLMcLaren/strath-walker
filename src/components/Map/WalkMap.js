@@ -1,7 +1,8 @@
 import {Text, View, StyleSheet} from "react-native";
-import MapView, {Polyline} from "react-native-maps";
+import MapView, {Marker, Polyline} from "react-native-maps";
 import {PosMarker} from "./UserMarker";
 import React from "react";
+import {MarkerStyle} from "./LocationMarker";
 
 
 export function WalkMap(props) {
@@ -67,6 +68,14 @@ export function WalkMap(props) {
                 }}
             >
                 <PosMarker currentPos = {props.current}/>
+
+                <Marker
+                    coordinate={destination.getPos()}
+                    key={destination.getName()}
+                >
+                    <MarkerStyle loc={destination.loc} name={destination.getName()}/>
+
+                </Marker>
 
                 {
                     props.polyline &&

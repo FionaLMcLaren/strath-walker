@@ -1,9 +1,10 @@
 import {Text, View, StyleSheet} from "react-native";
 import MapView, {Polyline} from "react-native-maps";
 import {Marker} from "react-native-maps";
+import {MarkerStyle} from "LocationMarker";
+import React from "react";
 
-
-export const RouteChoiceMap = ({polyline}) => {
+export const RouteChoiceMap = ({polylines}) => {
 
     const mapStyle = [
         {
@@ -118,7 +119,7 @@ const CheckPoints=({points})=>{
                     coordinate={marker.getPos()}
                     key={marker.getName()}
                 >
-                    <Text>{marker.getName()}</Text>
+                    <MarkerStyle loc={marker.getPos()} name={marker.getName()}/>
                 </Marker>
             );
         });

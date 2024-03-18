@@ -2,17 +2,15 @@ import React, {useEffect, useState} from "react";
 import {View, ScrollView, Pressable} from "react-native";
 import {Icon} from "react-native-paper";
 import {PathGenerator} from '../components/Routes/GeneratePoints.js';
-import {Location} from '../components/Routes/Location.js';
 import {RouteChoiceMap} from '../components/Map/RouteChoiceMap.js';
 import {getSuitablePolylines} from "../components/Routes/PolylineRequest";
-import {locationPoints} from "../components/Routes/Points";
+import {middlePoints} from "../components/Routes/Points";
 
 import Text from "../components/Elements/Text";
 import Button from "../components/Elements/NextBtn";
 import MapTab from "../components/Elements/MapTab";
 import Label from "../components/Elements/Label";
 import classNames from "classnames";
-import CompassModal from "../components/Walking/CompassModal";
 import Popup from "../components/Elements/Popup";
 
 function RouteOption({ route, onPress, currentSel }) {
@@ -115,7 +113,7 @@ export default function Routes({route, navigation}) {
 
     useEffect(() => {
         // Get the potential destination order
-        const pathGenerator = new PathGenerator(start, end, locationPoints);
+        const pathGenerator = new PathGenerator(start, end, middlePoints);
         const potentialPaths = pathGenerator.getPaths();
 
         getSuitablePolylines(potentialPaths, startTime, endTime).then(routes => setRoutes(routes));
@@ -128,7 +126,7 @@ export default function Routes({route, navigation}) {
     if (routes.length > 0) {
         return (
             <View className="flex flex-1 justify-center">
-                <RouteChoiceMap polyline={selectedRoute} />
+                <RouteChoiceMap polylines={selectedRoute}/>
                 <MapTab routePage={true}>
                     {routes>1 ? <SwipeArrow /> : null}
                     <ScrollView horizontal={true}>
