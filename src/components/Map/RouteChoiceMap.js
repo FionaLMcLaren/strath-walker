@@ -1,7 +1,7 @@
 import {Text, View, StyleSheet} from "react-native";
 import MapView, {Polyline} from "react-native-maps";
 import {Marker} from "react-native-maps";
-import {MarkerStyle} from "LocationMarker";
+import {MarkerStyle} from "./LocationMarker";
 import React from "react";
 
 export const RouteChoiceMap = ({polylines}) => {

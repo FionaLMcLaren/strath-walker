@@ -4,9 +4,9 @@ import MapView from "react-native-maps";
 import {Location} from '../Routes/Location.js';
 import {Marker} from "react-native-maps";
 import SwitchBtn from "../Elements/Switch";
-import {MarkerStyle} from "LocationMarker";
+import {MarkerStyle} from "./LocationMarker";
 import Geolocation from "@react-native-community/geolocation";
-import {universityPoints} from "../components/Routes/Points";
+import {universityPoints} from "../Routes/Points";
 
 
 
