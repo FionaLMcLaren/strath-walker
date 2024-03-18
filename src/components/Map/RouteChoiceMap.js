@@ -76,9 +76,9 @@ const RenderPolylines=({polylines})=>{
         if(polylines){
             return polylines.getCoordinates().map((coordinates, index)=>{
                 if(index%2===0){
-                    return(<EvenLine coord={coordinates} index={index}/>);
+                    return(<EvenLine key={"lineContainer"+index} coord={coordinates} index={index}/>);
                 }else{
-                    return(<OddLine coord={coordinates} index={index}/>);
+                    return(<OddLine key={"lineContainer"+index} coord={coordinates} index={index}/>);
                 }
 
             });
@@ -89,7 +89,7 @@ const RenderPolylines=({polylines})=>{
     const OddLine=({coord, index})=>{
         return(
             <Polyline
-                index={index}
+                key={"line"+index}
                 coordinates={coord}
                 strokeColor="#4285F4"
                 strokeWidth={6}
@@ -101,7 +101,7 @@ const RenderPolylines=({polylines})=>{
     const EvenLine=({coord, index})=>{
         return(
             <Polyline
-                index={index}
+                key={"line"+index}
                 coordinates={coord}
                 strokeColor="#eb4034"
                 strokeWidth={6}
@@ -113,11 +113,11 @@ const RenderPolylines=({polylines})=>{
 
 const CheckPoints=({points})=>{
     if(points){
-        return points.getPath().getPath().map((marker)=>{
+        return points.getPath().getPath().map((marker, index)=>{
             return(
                 <Marker
                     coordinate={marker.getPos()}
-                    key={marker.getName()}
+                    key={"point"+index}
                 >
                     <MarkerStyle name={marker.getName()}/>
                 </Marker>
