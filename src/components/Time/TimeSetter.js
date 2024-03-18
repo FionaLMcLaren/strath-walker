@@ -8,7 +8,6 @@ import Popup from "../Elements/Popup";
 
 export default function TimeSetter({ time, timeSetter, prevTime }) {
     const [modalVisible, toggleModalVisible] = React.useState(false);
-    const [popupVisible, togglePopupVisible] = React.useState(false);
 
     const showTime = () => {
         let minutes = time.getMinutes();
@@ -51,10 +50,7 @@ export default function TimeSetter({ time, timeSetter, prevTime }) {
                 toggleModalVisible={toggleModalVisible}
             />
 
-            <Popup snackbarVisible={popupVisible}
-                   toggleSnackbarVisible={togglePopupVisible}
-                   text={"Your current time is outwith University time!"}
-            />
+
 
         </View>
     );

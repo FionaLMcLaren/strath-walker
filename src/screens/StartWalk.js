@@ -3,6 +3,7 @@ import {View} from "react-native";
 import {changeTime} from '../components/Time/TimeDifference.js';
 import Text from "../components/Elements/Text";
 import Button from "../components/Elements/NextBtn";
+import {saveRoute, savePath} from "../components/Routes/PathStorage";
 
 function TitleBlock() {
 	return (
@@ -24,6 +25,8 @@ function TitleBlock() {
 export default function StartWalk({route, navigation}) {
 
 	const start = route.params.startingTime;
+	const selRoute = route.params.selectedRoute;
+	const isSavedRoute = route.params.savedRoute;
 
 	const [time, setTime] = useState("--");
 	changeTime(start, setTime);
@@ -59,15 +62,17 @@ export default function StartWalk({route, navigation}) {
 					}
 					colour="tq"
 				/>
+				{(!isSavedRoute) ?
 				<Button
 					title="Save for later"
 					action={() => {
-						console.log("save for later code here!")
+						saveRoute(selRoute).finally(navigation.navigate("SavedRoute"))
 						}
 					}
 					colour="tq"
 					outline={true}
-				/>
+				/> : null
+				}
 			</View>
 		</View>
 	)
