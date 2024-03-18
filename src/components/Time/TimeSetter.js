@@ -4,6 +4,7 @@ import {Button, Icon} from "react-native-paper";
 import TimeSelect from "./TimeSelect";
 import SwitchBtn from "../Elements/Switch";
 import Text from "../Elements/Text";
+import Popup from "../Elements/Popup";
 
 export default function TimeSetter({ time, timeSetter, prevTime }) {
     const [modalVisible, toggleModalVisible] = React.useState(false);
@@ -38,7 +39,7 @@ export default function TimeSetter({ time, timeSetter, prevTime }) {
                         </View>
                     </View>
 
-                    <View className="absolute w-60 h-full bg-pink-300 p-6 scale-105 scale-y-125 border-black border-2 border-b-4 rounded-lg" />
+                    <View className="absolute w-3/5 h-full bg-pink-300 p-6 scale-105 scale-y-125 border-black border-2 border-b-4 rounded-lg" />
                 </Pressable>
 
             <TimeSelect
@@ -48,6 +49,8 @@ export default function TimeSetter({ time, timeSetter, prevTime }) {
                 modalVisible={modalVisible}
                 toggleModalVisible={toggleModalVisible}
             />
+
+
 
         </View>
     );

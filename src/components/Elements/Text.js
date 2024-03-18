@@ -19,10 +19,12 @@ export default function Txt(props) {
             style={getTextStyle()}
             className={classNames(
                 "z-10",
-                !props.color && "text-black",
+                !props.colour && "text-black",
                 props.accent && "text-l",
                 !props.accent && !props.title && "text-xl",
-                props.title && "tracking-wide text-2xl"
+                props.title && "tracking-wide text-2xl",
+                props.xlTitle && "tracking-wide text-4xl",
+                props.colour && "text-pink-400 text-center tracking-widest "
             )}
         >
                 {props.children}
