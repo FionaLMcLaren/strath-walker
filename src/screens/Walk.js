@@ -31,7 +31,7 @@ function RerouteBtn (rerouteFunction) {
 const DirectionTab = ({onLine, walkTracker, dist, angle, header}) =>{
 	return (
 		<View>
-			{(!onLine ) ? <RerouteBtn rerouteFunction={() => {walkTracker.reroute()}} /> : null}
+			{(!onLine ) ? <RerouteBtn rerouteFunction={() => {walkTracker.then(()=>changeOnLine(walkTracker.checkAtStartPoint()));}} /> : null}
 			<Label title={"Directions"} colour={"yl"} >
 				{
 					(!onLine) ?
@@ -40,13 +40,15 @@ const DirectionTab = ({onLine, walkTracker, dist, angle, header}) =>{
 								<Text colour={true} >Not on route </Text>
 							</Pressable>
 						</View>
-						: ((dist && angle) ? <Text>Head {dist}m at {angle}° {header}</Text> : <Text>-- m  -- °</Text>)
+						: <Text>Head {dist}m at {angle}° {header}</Text>
 
 				}
 			</Label>
 		</View>
 	)
 }
+
+
 
 
 export default function Walk({route, navigation}) {
@@ -159,14 +161,13 @@ export default function Walk({route, navigation}) {
 					}}
 					actionOneText={"End walk here"}
 
-                <GoHomeButton tracker ={tracker} goingHome={goingHome} changeOnLine={changeOnLine} toggleModalVisible={toggleModalVisible}/>
-
 					modalVisible={modalVisible}
 					toggleModalVisible={toggleModalVisible}
 					title={"End walk?"}
 				>
 					<View className="p-4 ">
 						<Text>Do you need lead back to your end point or do you just want to end your walk here? </Text>
+						<GoHomeButton tracker ={tracker} goingHome={goingHome} changeOnLine={changeOnLine} toggleModalVisible={toggleModalVisible}/>
 					</View>
             </TwoBtnModal>
 </View >
@@ -176,25 +177,6 @@ export default function Walk({route, navigation}) {
 
 
 
-const DirectionTab = ({onLine, walkTracker, dist, angle, header, changeOnLine}) =>{
-	if(!onLine){
-		return(
-			<View>
-				<Text>Not on the route</Text>
-				<Button
-					onPress={() => {
-						walkTracker.reroute().then(()=>changeOnLine(walkTracker.checkAtStartPoint()));
-					}}
-					title="Reroute"
-				>
-					Would you like to reroute?
-				</Button>
-			</View>
-		);
-	}else{
-		return(<Text>Head {dist}m at {angle}° {header}</Text>);
-	}
-}
 
 
 
