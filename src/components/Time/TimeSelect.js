@@ -2,10 +2,10 @@ import React, {useRef, useState} from "react";
 import { Pressable, View} from "react-native";
 import {Portal, Modal} from "react-native-paper";
 import ScrollPicker from "react-native-wheel-scrollview-picker";
-import ErrorModal from "../Elements/PopupErr";
-import TimeModal from "../Elements/Modal"
+import AppModal from "../Elements/Modal"
 import Text from "../Elements/Text";
 import SwitchBtn from "../Elements/Switch";
+import Popup from "../Elements/Popup";
 
 /*TODO
 disallow end times being greater than start times
@@ -26,6 +26,7 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
     const minRef = useRef();
 
     const [showingErrorPopUp, setShowingErrorPopUp] = useState(false);
+
 
     const verifyCurTime = () => {
         let curTime = new Date(Date.now())
@@ -61,7 +62,7 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
         console.log(timeToSet.toString())
         console.log(timeToSet.toString() == curTime.toString())
 
-        return time.toString() == curTime.toString()
+        return timeToSet.toString() == curTime.toString()
     }
 
     const setAsCurrTime = () => {
@@ -84,7 +85,6 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
     }
 
     const validateNewTime = () => {
-
         let lowTime = new Date(new Date(Date.now()).setHours(8, 0, 0, 0));
         let highTime = new Date(new Date(Date.now()).setHours(18, 0, 0, 0));
 
@@ -112,7 +112,7 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
 
     return (
         <>
-            <TimeModal
+            <AppModal
                 title={"Choose Time"}
                 modalVisible={modalVisible}
                 toggleModalVisible={toggleModalVisible}
@@ -122,7 +122,7 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
                     switchDefault={setSwitchValue()}
                     switchText={"Use current time"}
                     switchVerifier={verifyCurTime()}
-                    verifyFailMsg={"Current time cannot be used as it is outwith University hours"}
+                    verifyFailMsg={"Current time is outwith University hours"}
                     switchAction={setAsCurrTime}
                 />
 
@@ -132,12 +132,12 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
                     <ScrollPicker
                         ref={hourRef}
                         dataSource={hours}
-                        selectedIndex={selHour}
+                        selectedIndex={hours.indexOf(selHour)}
                         wrapperBackground="transparent"
                         highlightColor="transparent"
                         itemHeight={30}
                         activeItemTextStyle={{fontFamily:"MPLUSRounded1c-ExtraBold", color: "black", fontSize: 18 }}
-                        itemTextStyle={{fontFamily:"MPLUSRounded1c-Medium", fontSize: 12}}
+                        itemTextStyle={{fontFamily:"MPLUSRounded1c-Medium",  color:"black", fontSize: 12}}
                         onValueChange={(hour) => {
                             console.log("hr change:")
                             console.log(new Date(new Date(timeToSet.setHours(hour)).setSeconds(0,0)))
@@ -149,12 +149,13 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
                     <ScrollPicker
                         ref={minRef}
                         dataSource={minutes}
-                        selectedIndex={selMin}
+                        selectedIndex={minutes.indexOf(selMin)}
                         wrapperBackground="transparent"
                         highlightColor="transparent"
+
                         itemHeight={30}
                         activeItemTextStyle={{fontFamily:"MPLUSRounded1c-ExtraBold", color: "black", fontSize: 18 }}
-                        itemTextStyle={{fontFamily:"MPLUSRounded1c-Medium", fontSize: 12}}
+                        itemTextStyle={{fontFamily:"MPLUSRounded1c-Medium", color:"black", fontSize: 12}}
                         onValueChange={(min) => {
                             console.log("min change:")
                             console.log(new Date(new Date(timeToSet.setMinutes(min)).setSeconds(0,0)))
@@ -162,16 +163,22 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
                             setTimeToSet(new Date(new Date(timeToSet.setMinutes(selMin)).setSeconds(0,0)))
                         }}
                     />
+
+
                 </View>
-            </TimeModal>
+            </AppModal>
 
             <Portal>
-                <ErrorModal
-                    errorTitle={"Time Error"}
-                    errorText={"not valid time"}
+                <AppModal
+                    title={"Time Error"}
                     modalVisible={showingErrorPopUp}
                     toggleModalVisible={setShowingErrorPopUp}
-                />
+                    confirmAction={() => {setShowingErrorPopUp(false)}}
+                >
+                    <View className="flex flex-row justify-center items-center p-5">
+                    <Text>Not a valid time!</Text>
+                    </View>
+                </AppModal>
             </Portal>
         </>
 

@@ -1,19 +1,55 @@
 import React, {useState, useEffect} from "react";
-import {Button, Text, View, PermissionsAndroid} from "react-native";
+import {Animated, ImageBackground, View, Pressable, PermissionsAndroid} from "react-native";
 import {WalkMap} from '../components/Map/WalkMap.js';
 import Geolocation, {clearWatch} from "react-native-geolocation-service";
 import {WalkTracker} from "../components/Walking/WalkTracker.js";
 import CompassModal from "../components/Walking/CompassModal.js";
-import {Dialog, Portal} from "react-native-paper";
 import Pedometer from "../components/Walking/Pedometer.jsx";
+import Text from "../components/Elements/Text";
+import Button from "../components/Elements/NextBtn";
+import MapTab from "../components/Elements/MapTab";
+import Label from "../components/Elements/Label";
+import TwoBtnModal from "../components/Elements/TwoBtnModal";
 import {sendNotification} from "../components/Elements/Notification";
+function RerouteBtn (rerouteFunction) {
+	return (
+		<View >
+			<View className="absolute
+			bg-pink-200 border-2 border-t-transparent border-l-transparent w-4 h-4
+			rotate-45  z-10
+			-translate-y-2.5 right-0 -translate-x-16" />
+			<Pressable
+				className="absolute -translate-y-10  right-0 bg-pink-200 border-2 px-1 rounded-lg scale-110 "
+				onPress={()=>rerouteFunction}>
+				<View className="animate-pulse ">
+					<Text>Click to Reroute!</Text>
+				</View>
+			</Pressable>
+		</View>
+	)
+}
+const DirectionTab = ({onLine, walkTracker, dist, angle, header}) =>{
+	return (
+		<View>
+			{(!onLine ) ? <RerouteBtn rerouteFunction={() => {walkTracker.reroute()}} /> : null}
+			<Label title={"Directions"} colour={"yl"} >
+				{
+					(!onLine) ?
+						<View>
+							<Pressable onPress={() => {walkTracker.reroute()}}>
+								<Text colour={true} >Not on route </Text>
+							</Pressable>
+						</View>
+						: ((dist && angle) ? <Text>Head {dist}m at {angle}° {header}</Text> : <Text>-- m  -- °</Text>)
+
+				}
+			</Label>
+		</View>
+	)
+}
+
 
 export default function Walk({route, navigation}) {
-
-   	const styles = {
-   		container: "flex flex-1 justify-center",
-   	};
-
 	const [currLoc, setLoc] = useState();
 	const [polyline, changePoly] = useState(route.params.selectedRoute);
 	const [directionDist, changeDist] = useState();
@@ -88,45 +124,53 @@ export default function Walk({route, navigation}) {
 
 
    	return (
-            <View className={styles.container}>
-               <Text>Walk page</Text>
+            <View className="flex flex-1 justify-center">
 				<WalkMap current={currLoc} polyline={polyline} start={route.params.startingLoc}/>
-				<DirectionTab onLine={onLine} walkTracker={tracker} dist={directionDist} angle={directionAngle} header={directionHeading} changeOnLine={changeOnLine} goingHome={goingHome}/>
-				<CompassModal destination={directionAngle}/>
-				<Pedometer steps={steps} setSteps={setSteps}/>
-				<Button
-					onPress={() => {toggleModalVisible(true)}}
-				 	title="EndWalk"
-				>End Walk</Button>
 
-				<Portal>
-					<Dialog
-						visible={modalVisible}
-						onDismiss={() => toggleModalVisible(false)}
-					>
-						<Dialog.Title>
-							End Walk?
-						</Dialog.Title>
+				<MapTab walkPage={true} >
+					<View className="w-[26rem]  " >
+						<View className="flex gap-2 ">
+						<DirectionTab onLine={onLine} walkTracker={tracker} dist={directionDist} angle={directionAngle} header={directionHeading}/>
+						<Pedometer steps={steps} setSteps={setSteps}/>
+						</View>
 
-						<Button
-							title="End Walk Here"
-							onPress={() =>{
-								tracker.stopWalk();
-								toggleModalVisible(false);
-								navigation.navigate("EndWalk",
-									{
-										walkTracker: tracker,
-										startingLoc: route.params.startingLoc,
-										steps: steps,
-									})
-							}}
-						/>
-						<GoHomeButton tracker ={tracker} goingHome={goingHome} changeOnLine={changeOnLine} toggleModalVisible={toggleModalVisible}/>
+						<View className="-translate-y-2 py-2 ">
+							<CompassModal destination={directionAngle}/>
+							<Button
+								colour="tq"
+								action={() => {toggleModalVisible(true)}}
+								title="End Walk">
+								End Walk
+							</Button>
+						</View>
+					</View>
+				</MapTab>
 
-					</Dialog>
-				</Portal>
-            </View >
-    );
+				<TwoBtnModal
+					actionOne={() =>{
+						tracker.stopWalk();
+						toggleModalVisible(false);
+						navigation.navigate("EndWalk",
+							{
+								walkTracker: tracker,
+								startingLoc: route.params.startingLoc,
+								steps: steps,
+							})
+					}}
+					actionOneText={"End walk here"}
+
+                <GoHomeButton tracker ={tracker} goingHome={goingHome} changeOnLine={changeOnLine} toggleModalVisible={toggleModalVisible}/>
+
+					modalVisible={modalVisible}
+					toggleModalVisible={toggleModalVisible}
+					title={"End walk?"}
+				>
+					<View className="p-4 ">
+						<Text>Do you need lead back to your end point or do you just want to end your walk here? </Text>
+					</View>
+            </TwoBtnModal>
+</View >
+);
 
 }
 
@@ -151,6 +195,8 @@ const DirectionTab = ({onLine, walkTracker, dist, angle, header, changeOnLine}) 
 		return(<Text>Head {dist}m at {angle}° {header}</Text>);
 	}
 }
+
+
 
 const GoHomeButton = ({tracker, goingHome, changeOnLine, toggleModalVisible}) =>{
 	if(!goingHome){

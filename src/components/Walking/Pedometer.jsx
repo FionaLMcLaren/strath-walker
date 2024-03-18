@@ -5,12 +5,17 @@
 
 import React, {useCallback, useState} from "react";
 import {useFocusEffect} from "@react-navigation/native";
-import {Button, Text, View} from "react-native";
+import {View} from "react-native";
+import {IconButton, iconButton} from "react-native-paper";
+import Label from "../Elements/Label";
+import Text from "../Elements/Text";
+import Modal from "../Elements/Modal"
 
 // https://react-native-sensors.github.io/docs/Usage.html
 import { accelerometer, setUpdateIntervalForType, SensorTypes } from 'react-native-sensors';
 import { scan } from 'rxjs';
 import {Dialog, Portal} from "react-native-paper";
+import CompassModal from "./CompassModal";
 
 
 const ACCELEROMETER_UPDATE_INTERVAL = 400;  // Time in ms between each accelerometer reading
@@ -67,17 +72,32 @@ const Pedometer = ({steps, setSteps}) => {
 
     return (
         <View>
-            <Text>Steps: {steps}</Text>
-            <Button title="info" onPress={() => toggleModal2Visible(true)}>?</Button>
-            <Portal>
-                <Dialog
-                    visible={modalVisible2}
-                    onDismiss={() => toggleModal2Visible(false)}
-                >
-                    <Text>For the best results put the phone into your pocket</Text>
+            <Label title={"Steps"} colour="yl">
+                <View className="flex flex-row  translate-y-2 items-center " >
+                    <Text>{steps}</Text>
 
-                </Dialog>
-            </Portal>
+                </View>
+            </Label>
+            <View className="absolute right-0 -translate-x-12 -translate-y-2 scale-75 ">
+                <IconButton
+                    icon={"information-variant"}
+                    size={25}
+                    iconColor={"black"}
+                    className="rounded-full bg-pink-200 border-2 border-white active:scale-95 transition-all "
+                    onPress={() => toggleModal2Visible(true)}
+                />
+                <View className="absolute w-full bg-black h-full rounded-full scale-75 translate-y-1 -z-10"/>
+            </View>
+            <Modal
+                title={"Pedometer Info"}
+                modalVisible={modalVisible2}
+                toggleModalVisible={toggleModal2Visible}
+                confirmAction={() => {toggleModal2Visible(false)}}
+            >
+                <View className="p-4 ">
+                    <Text>For the best results, put your phone into your pocket! </Text>
+                </View>
+            </Modal>
         </View>
 
     )
