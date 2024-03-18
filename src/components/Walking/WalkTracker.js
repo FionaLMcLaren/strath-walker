@@ -5,14 +5,9 @@ import {Path} from "../Routes/Path.js"
 
 export class WalkTracker {
 
-    constructor(poly, changeDist, changeAngle, changeHeading, changePoly, changeGoingHome) {
+    constructor(changeDist, changeAngle, changeHeading, changePoly, changeGoingHome) {
         this.locationHistory = [];
         this.sentNotif = false;
-        this.poly = poly;
-        this.points = this.poly.getPath().getPath();
-        this.pathDist = this.poly.getDistance();
-        this.checkpoints = this.poly.getPath().getPath();
-        this.checkpoints.shift(); //removes start as a checkpoint
         this.initialTime = new Date();
         this.distance = 0;
         this.changeDist = changeDist;
@@ -20,6 +15,14 @@ export class WalkTracker {
         this.changeHeading = changeHeading;
         this.changePoly = changePoly;
         this.changeGoingHome =  changeGoingHome;
+    }
+
+    setRoute(poly){
+        this.poly = poly;
+        this.points = this.poly.getPath().getPath();
+        this.pathDist = this.poly.getDistance();
+        this.checkpoints = this.poly.getPath().getPath();
+        this.checkpoints.shift(); //removes start as a checkpoint
     }
 
     addNode(node){
@@ -56,13 +59,13 @@ export class WalkTracker {
         let nodeLong = node["longitude"];
         let nodeLat = node["latitude"];
 
-
         if(this.atPosition(nodeLat, nodeLong, this.poly.getLeg()[0]["latitude"], this.poly.getLeg()[0]["longitude"])){
             let lineEndLong = this.poly.getLeg()[1]["longitude"];
             let lineEndLat = this.poly.getLeg()[1]["latitude"];
             let dist = calculateDistance(nodeLong, nodeLat, lineEndLong, lineEndLat);
             this.setDistance(dist);
             this.setAngle(nodeLong, nodeLat, lineEndLong, lineEndLat);
+            console.log("abc");
             return true;
         }
 
@@ -214,13 +217,17 @@ export class WalkTracker {
     }
 
     atPosition(currLat, currLong, goalLat, goalLong){
-        const range = 0.0002
+        const range = 0.0005
         let rangeMaxLat = goalLat + range;
         let rangeMaxLong = goalLong + range;
         let rangeMinLat = goalLat - range;
         let rangeMinLong = goalLong - range;
 
         return(currLat<rangeMaxLat && currLong<rangeMaxLong && currLat>rangeMinLat && currLong>rangeMinLong);
+    }
+
+    clearHistory(){
+        this.locationHistory =[];
     }
 
 

@@ -1,13 +1,12 @@
 import React, {useState, useEffect} from "react";
-import {Button, Text, View} from "react-native";
+import {Button, Text, View, PermissionsAndroid} from "react-native";
 import {WalkMap} from '../components/Map/WalkMap.js';
-import Geolocation from "react-native-geolocation-service";
+import Geolocation, {clearWatch} from "react-native-geolocation-service";
 import {WalkTracker} from "../components/Walking/WalkTracker.js";
 import CompassModal from "../components/Walking/CompassModal.js";
 import {Dialog, Portal} from "react-native-paper";
 import Pedometer from "../components/Walking/Pedometer.jsx";
 import {sendNotification} from "../components/Elements/Notification";
-
 
 export default function Walk({route, navigation}) {
 
@@ -20,28 +19,45 @@ export default function Walk({route, navigation}) {
 	const [directionDist, changeDist] = useState();
 	const [directionAngle, changeAngle] = useState();
 	const [directionHeading, changeHeading] = useState();
-	const [tracker, setTracker] = useState();
 	const [modalVisible, toggleModalVisible] = React.useState(false);
 	const [steps, setSteps] = useState(-2);
 	const [onLine, changeOnLine] = useState(true);
 	const [goingHome, changeGoingHome] = useState(false);
 
+	const [tracker] = useState(new WalkTracker(changeDist, changeAngle, changeHeading, changePoly, changeGoingHome));
 	useEffect(()=>{
-		setTracker(new WalkTracker(route.params.selectedRoute, changeDist, changeAngle, changeHeading, changePoly, changeGoingHome));
+		tracker.setRoute(route.params.selectedRoute);
+		getPermission().then();
+		Geolocation.getCurrentPosition(
+			loc => {
+				tracker.clearHistory();
+				setLoc({"latitude": loc["coords"]["latitude"], "longitude": loc["coords"]["longitude"] });
 
-		   Geolocation.watchPosition(
-			   loc => {
-				   console.log(loc);
-				   setLoc({"latitude": loc["coords"]["latitude"], "longitude": loc["coords"]["longitude"] });
+			},
+			error => {
+				console.log(error.code, error.message);
+			},
+			{
+				enableHighAccuracy: true
+			},
+		);
 
-			   },
-			   error => {
-				   console.log(error.code, error.message);
-			   },
-			   {
-				   enableHighAccuracy: true, interval: 2000
-			   },
-		   );
+		const id = Geolocation.watchPosition(
+			loc => {
+				console.log(loc);
+				setLoc({"latitude": loc["coords"]["latitude"], "longitude": loc["coords"]["longitude"] })
+			},
+			error => {
+				console.log(error.code, error.message);
+			},
+			{
+				enableHighAccuracy: true
+			},
+		);
+
+		return()=>{
+			clearWatch(id);
+		}
 
 	   },[]);
 
@@ -131,10 +147,8 @@ const DirectionTab = ({onLine, walkTracker, dist, angle, header, changeOnLine}) 
 				</Button>
 			</View>
 		);
-	}else if(dist && angle){
-		return(<Text>Head {dist}m at {angle}° {header}</Text>);
 	}else{
-		return(<Text>--m --°</Text>);
+		return(<Text>Head {dist}m at {angle}° {header}</Text>);
 	}
 }
 
@@ -152,5 +166,11 @@ const GoHomeButton = ({tracker, goingHome, changeOnLine, toggleModalVisible}) =>
 	}
 }
 
+
+async function getPermission(){
+	await PermissionsAndroid.request(
+		PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+	);
+}
 
 
