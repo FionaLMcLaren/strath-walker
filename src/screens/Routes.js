@@ -177,7 +177,7 @@ export default function Routes({route, navigation}) {
 
                     <Popup snackbarVisible={popupVisible}
                            toggleSnackbarVisible={togglePopupVisible}
-                           text={"Can't start a walk outside of University hours!"}
+                           text={"No selected route!"}
                     />
                 </View>
             </>
