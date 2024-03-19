@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {View} from "react-native";
+import {View,  LogBox} from "react-native";
 import MapPicker from "../components/Map/MapLocationPicker";
 import TimeSetter from "../components/Time/TimeSetter";
 import Popup from "../components/Elements/Popup";
@@ -13,6 +13,8 @@ import {PathGenerator} from "../components/Routes/GeneratePoints";
 import {getSuitablePolylines} from "../components/Routes/PolylineRequest";
 import {getCurrTime, checkInRange} from "../components/Time/TimeFunctions";
 
+
+LogBox.ignoreLogs(['Non-serializable values were found in the navigation state',]);
 export default function StartPoint({ navigation }) {
     const [start, setStart] = useState(new Location("",0,0));
     const [startTime, setStartTime] = React.useState(new Date(new Date().setHours(8,0,0,0)));
