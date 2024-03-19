@@ -130,32 +130,32 @@ export default function EndWalk({route, navigation}) {
                         <Label title={"Duration"} colour={"tq"}>{duration}</Label>
                         <Label title={"Pace"} colour={"tq"}>{pace}m/s</Label>
                     </View>
-                    <View className="-translate-y-2 py-2 ">
-                    <Button
-                        title="Start New Walk"
-                        action={() => navigation.navigate("StartPoint")}
-                        colour={"tq"}
-                    />
-                    <Button
-                        title="Save Walk Data"
-                        action={async () => {
-                            let success = await verifyWalkData(prevData);
-                            if (typeof success === boolean) {
-                                let msg;
-                                success ? msg = "Successfully saved walk data." : msg = "Failed to save walk data.";
-                                setSaveResultMsg(msg)
-                                setSaveModal(true);
-                            }
-                        }}
-                        colour={"pk"}
-                        outline={true}
-                    />
-                    <Button
-                        title="Return to Home"
-                        action={() => navigation.navigate("Home")}
-                        colour={"tq"}
-                        outline={true}
-                    />
+                    <View className="flex gap-4 pt-4 ">
+                        <Button
+                            title="Start New Walk"
+                            action={() => navigation.navigate("StartPoint")}
+                            colour={"tq"}
+                        />
+                        <Button
+                            title="Save Walk Data"
+                            action={async () => {
+                                let success = await verifyWalkData(prevData);
+                                if (typeof success === boolean) {
+                                    let msg;
+                                    success ? msg = "Successfully saved walk data." : msg = "Failed to save walk data.";
+                                    setSaveResultMsg(msg)
+                                    setSaveModal(true);
+                                }
+                            }}
+                            colour={"pk"}
+                            outline={true}
+                        />
+                        <Button
+                            title="Return to Home"
+                            action={() => navigation.navigate("Home")}
+                            colour={"tq"}
+                            outline={true}
+                        />
                     </View>
                 </View>
             </MapTab>

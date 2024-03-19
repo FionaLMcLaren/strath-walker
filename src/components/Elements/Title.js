@@ -7,20 +7,20 @@ import classNames from 'classnames';
 export default function Title({title, icon, colour}) {
 
     return (
-        <View className="flex flex-row items-center gap-2 ml-2 ">
+        <View className="flex flex-row items-center gap-2 ml-2">
             <View
                 className={classNames(
-                    "border-black border-2 border-b-4 border-r-4 rounded-md h-16 w-16 p-2.5 scale-90",
+                    "border-black border-2 border-b-4 border-r-4 rounded-md h-14 w-14 p-2.5 scale-90",
                     colour==="tq" && "bg-teal-400",
                     colour==="pk" && "bg-pink-300",
                     colour==="yl" && "bg-yellow-300")}
             >
                 <View className="z-10">
-                    <Icon source={icon} size={32} color={"white"}/>
+                    <Icon source={icon} size={25} color={"white"}/>
                 </View>
 
                 <View className="absolute left-2.5 bottom-2 scale-110 ">
-                    <Icon source={icon} size={32} color={"black"}/>
+                    <Icon source={icon} size={25} color={"black"}/>
                 </View>
 
             </View>

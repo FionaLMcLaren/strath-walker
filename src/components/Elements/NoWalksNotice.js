@@ -18,22 +18,24 @@ export default function NoWalkNotice ({navigation}) {
                 </View>
             </View>
 
-            <Button
-                title={"Start a Walk"}
-                action={() =>
-                    navigation.navigate("StartPoint")
-                }
-                colour="tq"
-            />
+            <View className="flex gap-4 pt-4 ">
+                <Button
+                    title={"Start a Walk"}
+                    action={() =>
+                        navigation.navigate("StartPoint")
+                    }
+                    colour="tq"
+                />
 
-            <Button
-                title={"Return to Home"}
-                action={() =>
-                    navigation.navigate("Home")
-                }
-                colour="tq"
-                outline={true}
-            />
+                <Button
+                    title={"Return to Home"}
+                    action={() =>
+                        navigation.navigate("Home")
+                    }
+                    colour="tq"
+                    outline={true}
+                />
+            </View>
 
         </View>
     )

@@ -43,7 +43,7 @@ export default function RouteOption({ route, onPress, currentSel, routeName, rou
         );
     } else {
         return (
-            <View className="w-[26rem] px-4 py-1 ">
+            <View className="w-[25rem] px-4 py-1 ">
                 <RouteOptionContent route={route} isSelected={true} routeName={routeName} routeDuration={routeDuration} routeDistance={routeDistance} />
             </View>
         );

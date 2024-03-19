@@ -3,55 +3,10 @@ import MapView, {Marker, Polyline} from "react-native-maps";
 import {PosMarker} from "./UserMarker";
 import React from "react";
 import {MarkerStyle} from "./LocationMarker";
-
+import {mapStyle} from "./mapStyle"
 
 export function WalkMap(props) {
     const coordinates = props.polyline ? props.polyline.getLeg() : [];
-
-    const mapStyle = [
-        {
-            "featureType": "administrative",
-            "elementType": "geometry",
-            "stylers": [
-                {
-                    "visibility": "off"
-                }
-            ]
-        },
-        {
-            "featureType": "poi",
-            "stylers": [
-                {
-                    "visibility": "simplified"
-                }
-            ]
-        },
-        {
-            "featureType": "poi.park",
-            "stylers": [
-                {
-                    "visibility": "simplified"
-                }
-            ]
-        },
-        {
-            "featureType": "road",
-            "elementType": "labels.icon",
-            "stylers": [
-                {
-                    "visibility": "off"
-                }
-            ]
-        },
-        {
-            "featureType": "transit",
-            "stylers": [
-                {
-                    "visibility": "simplified"
-                }
-            ]
-        }
-    ]
 
     return (
         <View className="h-full ">
@@ -91,7 +46,7 @@ const DestinationMarker = ({destination})=>{
         return(
             <Marker
                 coordinate={destination.getPos()}
-                key={destination.getName()}
+                key={"destination"}
             >
                 <MarkerStyle name={destination.getName()}/>
 

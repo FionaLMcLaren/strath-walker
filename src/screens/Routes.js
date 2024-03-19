@@ -76,25 +76,27 @@ function NoRouteNotice ({navigation, startTime, startPoint}) {
                 <Text>points</Text>
             </View>
 
-            <Button
-                title={"Change Start Point"}
-                action={() =>
-                    navigation.navigate("StartPoint")
-                }
-                colour="tq"
-            />
-            <Button
-                title={"Change End Point"}
-                action={() =>
-                    navigation.navigate("EndPoint",
-                    {
-                        startingTime: startTime,
-                        startingLoc: startPoint
-                    })
-                }
-                colour="tq"
-                outline={true}
-            />
+            <View className="flex gap-4 pt-4">
+                <Button
+                    title={"Change Start Point"}
+                    action={() =>
+                        navigation.navigate("StartPoint")
+                    }
+                    colour="tq"
+                />
+                <Button
+                    title={"Change End Point"}
+                    action={() =>
+                        navigation.navigate("EndPoint",
+                        {
+                            startingTime: startTime,
+                            startingLoc: startPoint
+                        })
+                    }
+                    colour="tq"
+                    outline={true}
+                />
+            </View>
 
         </View>
     )
@@ -153,7 +155,7 @@ export default function Routes({route, navigation}) {
                             }
                         </ScrollView>
 
-                        <View className="-translate-y-2 py-2 ">
+                        <View className="pt-4 ">
                             <Button
                                 colour="tq"
                                 action={() => {

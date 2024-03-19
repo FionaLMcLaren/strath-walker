@@ -3,53 +3,9 @@ import MapView, {Polyline} from "react-native-maps";
 import {Marker} from "react-native-maps";
 import {MarkerStyle} from "./LocationMarker";
 import React from "react";
+import {mapStyle} from "./mapStyle"
 
 export const RouteChoiceMap = ({polylines}) => {
-
-    const mapStyle = [
-        {
-            "featureType": "administrative",
-            "elementType": "geometry",
-            "stylers": [
-                {
-                    "visibility": "off"
-                }
-            ]
-        },
-        {
-            "featureType": "poi",
-            "stylers": [
-                {
-                    "visibility": "simplified"
-                }
-            ]
-        },
-        {
-            "featureType": "poi.park",
-            "stylers": [
-                {
-                    "visibility": "simplified"
-                }
-            ]
-        },
-        {
-            "featureType": "road",
-            "elementType": "labels.icon",
-            "stylers": [
-                {
-                    "visibility": "off"
-                }
-            ]
-        },
-        {
-            "featureType": "transit",
-            "stylers": [
-                {
-                    "visibility": "simplified"
-                }
-            ]
-        }
-    ]
 
     return (
         <View className="h-full ">
@@ -103,7 +59,7 @@ const RenderPolylines=({polylines})=>{
             <Polyline
                 key={"line"+index}
                 coordinates={coord}
-                strokeColor="#fde047"
+                strokeColor="#f9a8d4"
                 strokeWidth={6}
             />
 

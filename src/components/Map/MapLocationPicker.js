@@ -8,6 +8,7 @@ import {MarkerStyle} from "./LocationMarker";
 import Geolocation from "@react-native-community/geolocation";
 import {universityPoints} from "../Routes/Points";
 import Text from "../Elements/Text";
+import {mapStyle} from "./mapStyle"
 
 
 
@@ -37,50 +38,7 @@ export default function MapLocationPicker(props) {
     const [usingCurLoc, setUsingCurLoc] = useState(false);
     const [switchValue, switchSetter] = React.useState(false);
 
-    const mapStyle = [
-        {
-            "featureType": "administrative",
-            "elementType": "geometry",
-            "stylers": [
-                {
-                    "visibility": "off"
-                }
-            ]
-        },
-        {
-            "featureType": "poi",
-            "stylers": [
-                {
-                    "visibility": "off"
-                }
-            ]
-        },
-        {
-            "featureType": "poi.park",
-            "stylers": [
-                {
-                    "visibility": "simplified"
-                }
-            ]
-        },
-        {
-            "featureType": "road",
-            "elementType": "labels.icon",
-            "stylers": [
-                {
-                    "visibility": "off"
-                }
-            ]
-        },
-        {
-            "featureType": "transit",
-            "stylers": [
-                {
-                    "visibility": "off"
-                }
-            ]
-        }
-    ]
+
 
     return(
            <View className="mt-6">

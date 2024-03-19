@@ -209,7 +209,7 @@ export default function Walk({route, navigation}) {
 
 						<EndWalkModal tracker ={tracker} goingHome={goingHome} changeOnLine={changeOnLine} toggleModalVisible={toggleModalVisible} modalVisible={modalVisible} startingLoc={route.params.startingLoc} steps={steps} navigation={navigation}/>
 
-						<View className="-translate-y-2 py-2 ">
+						<View className="flex gap-4 py-4 ">
 							<CompassModal destination={directionAngle}/>
 							<Button
 								colour="tq"
