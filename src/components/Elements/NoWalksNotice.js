@@ -29,7 +29,7 @@ export default function NoWalkNotice ({navigation}) {
             <Button
                 title={"Return to Home"}
                 action={() =>
-                    navigation.navigate("StartPoint")
+                    navigation.navigate("Home")
                 }
                 colour="tq"
                 outline={true}

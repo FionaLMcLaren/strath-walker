@@ -39,7 +39,10 @@ const DirectionTab = ({onLine, walkTracker, dist, angle, header, changeOnLine}) 
 				{
 					(!onLine) ?
 						<View>
-							<Pressable onPress={() => {walkTracker.reroute().then(()=>changeOnLine(walkTracker.checkAtStartPoint()));}}>
+							<Pressable
+								onPress={() => {walkTracker.reroute().then(()=>changeOnLine(walkTracker.checkAtStartPoint()));}}
+								className="active:95 transition-all "
+							>
 								<Text colour={true} >Not on route </Text>
 							</Pressable>
 						</View>
