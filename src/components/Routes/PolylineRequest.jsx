@@ -48,8 +48,8 @@ export class Polyline {
         return readableDuration(time);
     }
 
-    setCoords(c){
-        this.coordinates = c;
+    setLegCoords(c){
+        this.coordinates = ([c].concat(this.coordinates.slice(1)));
     }
 
 
