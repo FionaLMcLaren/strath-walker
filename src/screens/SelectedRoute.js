@@ -42,11 +42,11 @@ function SelectedRouteTab({pastWalk, navigation, selectedRoute, endTime, setEndT
     return (
         <>
             <MapTab routePage={true}>
-                <View>
+                <View className="flex items-center ">
                     <RouteOption route={selectedRoute} routeName={routeName} routeDistance={distance} routeDuration={duration}/>
                 </View>
 
-            <View className="-translate-y-2 py-2 ">
+            <View className="py-2 ">
                 <Button
                     colour="tq"
                     action={() => {
@@ -121,7 +121,7 @@ export default function SelectedRoute({route, navigation}) {
 
         return (
             <View className="flex flex-1 justify-center">
-                <RouteChoiceMap polyline={selectedRoute}/>
+                <RouteChoiceMap polylines={selectedRoute}/>
                 <SelectedRouteTab navigation={navigation}
                                   startTime={startTime}
                                   selectedRoute={selectedRoute}

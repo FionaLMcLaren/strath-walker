@@ -78,9 +78,10 @@ export default function StartWalk({route, navigation}) {
 				<Button
 					title="Save for later"
 					action={() => {
+
 						saveRoute(selRoute).finally( () => {
-							setSaveModal(true)
-							navigation.navigate("Home")
+								setSaveModal(true)
+
 						}
 						)
 						}
@@ -95,7 +96,8 @@ export default function StartWalk({route, navigation}) {
 				title={"Save Walk Result"}
 				modalVisible={saveModal}
 				toggleModalVisible={setSaveModal}
-				confirmAction={() => setSaveModal(false)}
+				confirmAction={() => navigation.navigate("Home")}
+				dismissAction={() => navigation.navigate("Home")}
 			>
 				<View className="p-4 ">
 					<Text>Successfully saved the route</Text>

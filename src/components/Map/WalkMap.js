@@ -24,7 +24,7 @@ export function WalkMap(props) {
             >
                 <PosMarker currentPos = {props.current}/>
 
-                <DestinationMarker destination={props.destination}/>
+                <DestinationMarker destination={props.destination} />
 
                 {
                     props.polyline &&
@@ -47,6 +47,7 @@ const DestinationMarker = ({destination})=>{
             <Marker
                 coordinate={destination.getPos()}
                 key={"destination"}
+                tracksViewChanges={false}
             >
                 <MarkerStyle name={destination.getName()}/>
 

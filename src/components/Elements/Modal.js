@@ -10,7 +10,13 @@ export default function appModal(props) {
             <Portal>
                 <Modal
                     visible={props.modalVisible}
-                    onDismiss={() => props.toggleModalVisible(false)}
+                    onDismiss={() => {
+                        if (props.dismissAction) {
+                            props.dismissAction
+                        } else {
+                            props.toggleModalVisible(false)
+                        }
+                    }}
                 >
                     <View className="absolute bg-teal-100 w-full h-full scale-95 translate-y-5 rounded-lg border-2 border-b-4 " />
                     <IconButton
@@ -18,7 +24,13 @@ export default function appModal(props) {
                         size={25}
                         colour={"black"}
                         className="rounded-full bg-teal-400 border-2 border-b-4 border-r-4 bg-black "
-                        onPress={() => props.toggleModalVisible(false)}
+                        onDismiss={() => {
+                            if (props.dismissAction) {
+                                props.dismissAction
+                            } else {
+                                props.toggleModalVisible(false)
+                            }
+                        }}
                     />
                     <View className="flex items-center m-6 justify-center
                          bg-white

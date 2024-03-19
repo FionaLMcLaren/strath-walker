@@ -98,8 +98,8 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
 
                 <View className="flex pb-4 justify-center items-center">
                 <View className="flex flex-row items-center gap-2">
-                    <View className="absolute border-b-4 border-2 rounded-md w-10 h-1/4 left-16 scale-125 "/>
-                    <View className="absolute border-b-4 border-2 rounded-md w-10 h-1/4 right-16 scale-125 "/>
+                    <View className="absolute border-b-4 border-2 rounded-md w-10 h-1/4 left-20 scale-125 "/>
+                    <View className="absolute border-b-4 border-2 rounded-md w-10 h-1/4 right-20 scale-125 "/>
                     <ScrollPicker
                         ref={hourRef}
                         dataSource={hoursReadable}

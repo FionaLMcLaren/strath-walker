@@ -130,7 +130,7 @@ export default function EndWalk({route, navigation}) {
                         <Label title={"Duration"} colour={"tq"}>{duration}</Label>
                         <Label title={"Pace"} colour={"tq"}>{pace}m/s</Label>
                     </View>
-                    <View className="flex gap-4 pt-4 ">
+                    <View className="flex gap-4 py-4">
                         <Button
                             title="Start New Walk"
                             action={() => navigation.navigate("StartPoint")}

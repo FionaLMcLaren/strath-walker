@@ -31,7 +31,7 @@ export default function StartPoint({ navigation }) {
 
     return (
         <View className="mt-2">
-            <View className="flex justify-center ">
+            <View className="flex justify-center h-full ">
                 <View>
 
                 <Title

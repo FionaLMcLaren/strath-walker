@@ -7,7 +7,7 @@ import Text from "../Elements/Text";
 import Modal from "../Elements/Modal"
 import Button from "../Elements/NextBtn"
 
-export default function CompassModal({destination}){
+export default function CompassModal({destination, heading}){
 
     const [modalVisible, toggleModalVisible] = React.useState(false);
     const [angle, setAngle] = useState(0);
@@ -42,29 +42,31 @@ export default function CompassModal({destination}){
                     <View className="py-4 items-center gap-1">
                         <Label title={"Your Direction"} colour="tq"/>
                         <Text>{angle} deg</Text>
-
-
-
-                                <ImageBackground
+                        <View>
+                                <Animated.Image
                                     style={{
                                         width: 40,
                                         height: 40,
-                                        transform: [{rotate: `${(angle+destination)%360}deg`}],
+                                        transform: [{rotate: `${(destination-angle)%360}deg`}],
+                                        margin: 75,
                                     }}
+                                    className="absolute "
                                     source={require('../../../images/arrow.png')}
-                                >
+                                />
 
                                         <Animated.Image
                                             style={{
                                                 width: 200,
                                                 height: 200,
-                                                transform: [{rotate: `${angle}deg`}],
+                                                transform: [{rotate: `-${angle}deg`}],
+
                                             }}
+
                                             source={require('../../../images/compass.png')}
                                         />
-                                </ImageBackground>
+                        </View>
 
-                        <DestinationHeading destination = {destination}/>
+                        <DestinationHeading destination = {destination} heading={heading} />
                     </View>
                 </Modal>
 
@@ -74,29 +76,12 @@ export default function CompassModal({destination}){
     );
 }
 
-const DestinationArrow = ({destination}) => {
-    if(destination || destination ===0){
-        return(
-            <View className="flex items-center ">
-                <Image
-                    style={{
-                        width: 20,
-                        height: 20,
-                        transform: [{rotate: `${destination}deg`}],
-                    }}
-                    source={require('../../../images/arrow.png')}
-                />
-            </View>
-        );
-    }
-}
-
-const DestinationHeading=({destination})=>{
+const DestinationHeading=({destination, heading})=>{
     if(destination || destination ===0) {
         return(
             <View className="flex items-center ">
-                <Label title={"Destination"} colour="tq"/>
-                <Text>{destination} deg</Text>
+                <Label title={"Destination"} colour="pk"/>
+                <Text>{destination} deg {heading}</Text>
             </View>
         )
     }
