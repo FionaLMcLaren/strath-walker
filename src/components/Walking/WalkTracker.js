@@ -150,7 +150,7 @@ export class WalkTracker {
 
     getReadableDuration() {
         let time = this.getDuration();
-        readableDuration(time);
+        return readableDuration(time);
     }
 
 

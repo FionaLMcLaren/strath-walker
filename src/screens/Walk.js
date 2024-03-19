@@ -89,7 +89,7 @@ const EndWalkModal = ({tracker, goingHome, changeOnLine, toggleModalVisible, mod
 	}else{
 		return(
 			<Modal
-				action={() =>{
+				confirmAction={() =>{
 					tracker.stopWalk();
 					toggleModalVisible(false);
 					navigation.navigate("EndWalk",
