@@ -112,12 +112,6 @@ const EndWalkModal = ({tracker, goingHome, changeOnLine, toggleModalVisible, mod
 	}
 }
 
-async function getPermission(){
-	await PermissionsAndroid.request(
-		PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-	);
-}
-
 
 
 
@@ -136,7 +130,6 @@ export default function Walk({route, navigation}) {
 	const [tracker] = useState(new WalkTracker(changeDist, changeAngle, changeHeading, changePoly, changeGoingHome, changeDestination));
 	useEffect(()=>{
 		tracker.setRoute(route.params.selectedRoute);
-		getPermission().then();
 		Geolocation.getCurrentPosition(
 			loc => {
 				tracker.clearHistory();
