@@ -23,36 +23,44 @@ export default function Home({ navigation }) {
         getPermission().then(r=> setPermission(r));
     }, []);
 
-    let startAction = navigation.navigate("StartPoint");
-    let walkAction = navigation.navigate("WalkDataView");
-    let routeAction = navigation.navigate("SavedRoute");
-
-    if(!permission){
-        startAction = toggleModalVisible(true);
-        walkAction = toggleModalVisible(true);
-        routeAction = toggleModalVisible(true);
-    }
-
     return (
         <View className="flex-1 items-center justify-center gap-2">
             <Text title={true} bold={true} >Welcome!</Text>
 
             <HomeBtn
-                action={() => startAction}
+                action={() => {
+                    if (permission) {
+                        navigation.navigate("StartPoint");
+                    } else {
+                        toggleModalVisible(true);
+                    }
+                }}
                 title={"Start new walk"}
                 colour={"tq"}
                 icon={"walk"}
             />
 
             <HomeBtn
-                action={() => walkAction}
+                action={() => {
+                    if (permission) {
+                        navigation.navigate("WalkDataView");
+                    } else {
+                        toggleModalVisible(true);
+                    }
+                }}
                 title={"See past walks"}
                 colour={"pk"}
                 icon={"navigation-variant"}
             />
 
             <HomeBtn
-                action={() => routeAction}
+                action={() => {
+                    if (permission) {
+                        navigation.navigate("SavedRoute");
+                    } else {
+                        toggleModalVisible(true);
+                    }
+                }}
                 title={"See saved routes"}
                 colour={"yl"}
                 icon={"book-marker"}

@@ -1,6 +1,6 @@
 import {getPolyline} from "../Routes/PolylineRequest.jsx"
 import {Location} from "../Routes/Location.js"
-import {calculateDistance, convertRadians} from "../Routes/Distance.js"
+import {calculateDistance} from "../Routes/Distance.js"
 import {Path} from "../Routes/Path.js"
 import {readableDuration} from "../Time/TimeFunctions";
 
@@ -160,7 +160,8 @@ export class WalkTracker {
 
 
     setAngle(startLong, startLat, endLong, endLat){
-        let angle = Math.round(convertRadians(Math.atan(Math.abs((startLong-endLong)/(startLat-endLat)))));  //Uses arctan(opp/adj) = angle
+        let angle = Math.round(Math.atan(Math.abs((startLong-endLong)/(startLat-endLat))) * 180/Math.PI); // arctan(opp/adj) = angle
+
         if((endLong > startLong) && (endLat < startLat)){  //Accounting for position of angle E, W and S
             angle = 180-angle;
         }else if((endLong < startLong) && (endLat < startLat)){

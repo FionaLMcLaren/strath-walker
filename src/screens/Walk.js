@@ -12,11 +12,11 @@ import Label from "../components/Elements/Label";
 import TwoBtnModal from "../components/Elements/TwoBtnModal";
 import Modal from "../components/Elements/Modal";
 import {sendNotification} from "../components/Elements/Notification";
-
+import SuccessModal from "../components/Walking/CompleteWalkModal"
 
 function RerouteBtn (rerouteFunction) {
 	return (
-		<View >
+		<Pressable onPress={()=>rerouteFunction} className="active:95 transition-all ">
 			<View className="absolute
 			bg-pink-200 border-2 border-t-transparent border-l-transparent w-4 h-4
 			rotate-45  z-10
@@ -28,7 +28,7 @@ function RerouteBtn (rerouteFunction) {
 					<Text>Click to Reroute!</Text>
 				</View>
 			</Pressable>
-		</View>
+		</Pressable>
 	)
 }
 const DirectionTab = ({onLine, walkTracker, dist, angle, header, changeOnLine}) =>{
@@ -38,14 +38,12 @@ const DirectionTab = ({onLine, walkTracker, dist, angle, header, changeOnLine}) 
 			<Label title={"Directions"} colour={"yl"} >
 				{
 					(!onLine) ?
-						<View>
 							<Pressable
 								onPress={() => {walkTracker.reroute().then(()=>changeOnLine(walkTracker.checkAtStartPoint()));}}
-								className="active:95 transition-all "
+								className="pt-2 active:scale-95 transition-all "
 							>
-								<Text colour={true} >Not on route </Text>
+								<Text colour={true} title={true} >Not on route </Text>
 							</Pressable>
-						</View>
 						: <Text>Head {dist}m at {angle}° {header}</Text>
 
 				}
@@ -126,6 +124,7 @@ export default function Walk({route, navigation}) {
 	const [onLine, changeOnLine] = useState(true);
 	const [goingHome, changeGoingHome] = useState(false);
 	const [destination, changeDestination] = useState();
+	const [congratsModalVisible, setCongratsModalVisible] = React.useState(false);
 
 	const [tracker] = useState(new WalkTracker(changeDist, changeAngle, changeHeading, changePoly, changeGoingHome, changeDestination));
 	useEffect(()=>{
@@ -170,8 +169,8 @@ export default function Walk({route, navigation}) {
 	useEffect(() => {
 		if(currLoc){
 			if(tracker.addNode(currLoc)){
-				tracker.stopWalk();
-				toggleModalVisible(false);
+
+				setCongratsModalVisible(true);
 
 			}
 
@@ -190,12 +189,12 @@ export default function Walk({route, navigation}) {
 
 
    	return (
-            <View className="flex flex-1 justify-center">
+            <View className="flex flex-1 justify-center ">
 				<WalkMap current={currLoc} polyline={polyline} start={route.params.startingLoc} destination={destination}/>
 
 				<MapTab walkPage={true} >
 					<View className="w-[26rem]  " >
-						<View className="flex gap-2 ">
+						<View className="flex justify-center gap-2 ">
 						<DirectionTab onLine={onLine} walkTracker={tracker} dist={directionDist} angle={directionAngle} header={directionHeading} changeOnLine={changeOnLine}/>
 						<Pedometer steps={steps} setSteps={setSteps}/>
 						</View>
@@ -203,7 +202,7 @@ export default function Walk({route, navigation}) {
 						<EndWalkModal tracker ={tracker} goingHome={goingHome} changeOnLine={changeOnLine} toggleModalVisible={toggleModalVisible} modalVisible={modalVisible} startingLoc={route.params.startingLoc} steps={steps} navigation={navigation}/>
 
 						<View className="flex gap-4 py-4 ">
-							<CompassModal destination={directionAngle}/>
+							<CompassModal destination={directionAngle} heading={directionHeading}/>
 							<Button
 								colour="tq"
 								action={() => {toggleModalVisible(true)}}
@@ -214,7 +213,14 @@ export default function Walk({route, navigation}) {
 					</View>
 				</MapTab>
 
-
+				<SuccessModal
+					route={route}
+					navigation={navigation}
+					tracker={tracker}
+					steps={steps}
+					modalVisible={congratsModalVisible}
+					toggleModalVisible={setCongratsModalVisible}
+				/>
 </View >
 );
 

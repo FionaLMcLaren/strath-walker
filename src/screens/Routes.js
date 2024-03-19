@@ -108,8 +108,6 @@ export default function Routes({route, navigation}) {
     const endTime = route.params.endingTime;
     const end = route.params.endingLoc;
 
-
-
     // Use the Google Routes API to get the actual routes
     const [routes, setRoutes] = useState([]);
 
@@ -140,7 +138,7 @@ export default function Routes({route, navigation}) {
                     <RouteChoiceMap polylines={selectedRoute} />
                     <MapTab routePage={true}>
                         {routes>1 ? <SwipeArrow /> : null}
-                        <ScrollView horizontal={true}>
+                        <ScrollView horizontal={true} className="pb-4 ">
                             {
                                 routes ?
                                     routes.map((route) => {
@@ -154,8 +152,7 @@ export default function Routes({route, navigation}) {
                                     :   <Text>Loading...</Text>
                             }
                         </ScrollView>
-
-                        <View className="pt-4 ">
+                        <View className="pb-4 ">
                             <Button
                                 colour="tq"
                                 action={() => {

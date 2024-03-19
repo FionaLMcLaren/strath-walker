@@ -1,11 +1,10 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {Portal} from "react-native-paper";
 import {View, Animated, Image } from "react-native";
 
 import { FadeIn, FadeOut } from 'react-native-reanimated';
 
 import Text from "./Text"
-import classNames from "classnames";
 
 
 export default function LoadScreen() {

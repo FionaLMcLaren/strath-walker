@@ -1,11 +1,12 @@
 import {Dialog, Portal} from "react-native-paper";
 import {Button} from "react-native";
 import React from "react";
+import Modal from "../Elements/Modal"
 
-const SuccessModal = () =>{
-    const [modalVisible, toggleModalVisible] = React.useState(true);
+export default function SuccessModal({route, navigation, tracker, steps, modalVisible, toggleModalVisible}){
 
-    setTimeout(()=>{
+    const goToEndWalk = () => {
+        tracker.stopWalk();
         toggleModalVisible(false);
         navigation.navigate("EndWalk",
             {
@@ -13,16 +14,18 @@ const SuccessModal = () =>{
                 startingLoc: route.params.startingLoc,
                 steps: steps,
             })
-    }, 5000);
-    return(
-        <Portal>
-            <Dialog
-                visible={modalVisible}
-                onDismiss={() => toggleModalVisible(false)}
-            >
-                Congratulations! - You Completed the Walk!
+    }
 
-            </Dialog>
-        </Portal>
+    return(
+        <Modal
+            confirmAction={() =>{goToEndWalk()}}
+            dismissAction={() =>{goToEndWalk()}}
+            modalVisible={modalVisible}
+            toggleModalVisible={toggleModalVisible}
+            title={"Finished Walk"}
+
+        >
+                Congratulations! - You Completed the Walk!
+        </Modal>
     );
 }
