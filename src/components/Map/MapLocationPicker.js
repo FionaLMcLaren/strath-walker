@@ -6,9 +6,7 @@ import {Marker} from "react-native-maps";
 import SwitchBtn from "../Elements/Switch";
 import Text from "../Elements/Text";
 import Geolocation from "@react-native-community/geolocation";
-
-
-const points = [new Location("Rottenrow", 55.861873, -4.244115), new Location("Royal College", 55.8612, -4.2464)];
+import {universityLocations} from "./LocationData";
 
 export default function MapLocationPicker(props) {
 
@@ -103,7 +101,7 @@ export default function MapLocationPicker(props) {
                     longitudeDelta: 0.002,
                   }}
                 >
-                {points.map((marker) => (
+                {universityLocations.map((marker) => (
                     <Marker
                       coordinate={marker.getPos()}
                       onPress = {e=>props.changeLoc(marker)}
