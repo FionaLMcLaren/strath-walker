@@ -30,7 +30,7 @@ export default function EndPoint({ route, navigation }) {
 	}, []);
 
 	return (
-		<View className="mt-4">
+		<View className="mt-2">
 			<View className="flex justify-center ">
 				<View>
 
@@ -65,27 +65,29 @@ export default function EndPoint({ route, navigation }) {
 					toggleModalVisible={toggleModalVisible}
 				/>
 
-				<Button
-					colour="tq"
-					title={"Get routes"}
-					arrow="true"
-					action={() =>
-						{
-							if (end.getName()) {
-								togglePopupVisible(false)
-								navigation.navigate("Routes", {
-										startingTime: startTime,
-										startingLoc: start,
-										endingTime: endTime,
-										endingLoc: end,
-									}
-								)
-							} else {
-								togglePopupVisible(true)
+				<View className="pt-5 ">
+					<Button
+						colour="tq"
+						title={"Get routes"}
+						arrow="true"
+						action={() =>
+							{
+								if (end.getName()) {
+									togglePopupVisible(false)
+									navigation.navigate("Routes", {
+											startingTime: startTime,
+											startingLoc: start,
+											endingTime: endTime,
+											endingLoc: end,
+										}
+									)
+								} else {
+									togglePopupVisible(true)
+								}
 							}
 						}
-					}
-				/>
+					/>
+				</View>
 			</View>
 
 			<Popup snackbarVisible={popupVisible}

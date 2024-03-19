@@ -1164,6 +1164,11 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@bugsnag/core-performance@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@bugsnag/core-performance/-/core-performance-2.2.0.tgz#7a27c1dffbdbf05d267e68c6e644b291477081ec"
+  integrity sha512-Yb8n2oOzSQw/SqoWdDjpJB92ik6BlfNeRSl5lNEVGLJvwV7go2FIr1VvnQJEGiQWQzHtvkuCR4xRub+75a4HUg==
+
 "@bugsnag/core@^7.19.0":
   version "7.19.0"
   resolved "https://registry.yarnpkg.com/@bugsnag/core/-/core-7.19.0.tgz#7663a4addb1322e8315a4012dc9db2aad3fea53b"
@@ -1175,10 +1180,17 @@
     iserror "0.0.2"
     stack-generator "^2.0.3"
 
-"@bugsnag/cuid@^3.0.0":
+"@bugsnag/cuid@^3.0.0", "@bugsnag/cuid@^3.0.2":
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/@bugsnag/cuid/-/cuid-3.0.2.tgz#544f8e6e7e3768c8cb618ca5c5fb1eea6aacbb7e"
   integrity sha512-cIwzC93r3PQ/INeuwtZwkZIG2K8WWN0rRLZQhu+mr48Ay+i6sEki4GYfTsflse7hZ1BeDWrNb/Q9vgY3B31xHQ==
+
+"@bugsnag/delivery-fetch-performance@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@bugsnag/delivery-fetch-performance/-/delivery-fetch-performance-2.2.0.tgz#779c9cbfaecb838796f0572339620abdc984f3e0"
+  integrity sha512-0cDe0LedVS1c9PoMe69CGljv6LSnlHn0jUZzA8+QCf3YyM6MwHNYLpSqO8DpknOtBGan4LxAwqW7arux4fEzRw==
+  dependencies:
+    "@bugsnag/core-performance" "^2.2.0"
 
 "@bugsnag/delivery-react-native@^7.22.3":
   version "7.22.3"
@@ -1230,6 +1242,16 @@
   resolved "https://registry.yarnpkg.com/@bugsnag/plugin-react/-/plugin-react-7.19.0.tgz#3f86c6ed2745cd60a4099d0e14ca46f2b9cf501f"
   integrity sha512-owC4QXYJWGllMoOPcH5P7sbDIDuFLMCbjGAU6FwH5mBMObSQo+1ViSKImlTJQUFXATM8ySISTBVt7w3C6FFHng==
 
+"@bugsnag/react-native-performance@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@bugsnag/react-native-performance/-/react-native-performance-2.2.0.tgz#1f6c02ed281dcbc16160a65e40c8000efb8b1acf"
+  integrity sha512-iIBGHeenAc6/TBOIPKMETsygfrXTN2l0oMh3tYq4+UuhjvdX3pm9mSorcYky1+fmhOFSrgOmTJPkZ+GpCC9oOg==
+  dependencies:
+    "@bugsnag/core-performance" "^2.2.0"
+    "@bugsnag/cuid" "^3.0.2"
+    "@bugsnag/delivery-fetch-performance" "^2.2.0"
+    "@bugsnag/request-tracker-performance" "^2.2.0"
+
 "@bugsnag/react-native@^7.22.6":
   version "7.22.6"
   resolved "https://registry.yarnpkg.com/@bugsnag/react-native/-/react-native-7.22.6.tgz#7eca44909c0d8c68abc310f1a668c921642339af"
@@ -1247,6 +1269,13 @@
     "@bugsnag/plugin-react-native-session" "^7.22.3"
     "@bugsnag/plugin-react-native-unhandled-rejection" "^7.19.0"
     iserror "^0.0.2"
+
+"@bugsnag/request-tracker-performance@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@bugsnag/request-tracker-performance/-/request-tracker-performance-2.2.0.tgz#81e25f5d45d84dc04b5984e3ba76ca9f6235cb63"
+  integrity sha512-OVjjx64AUnzUmM1dkvb4lrP1hzxNPgnCUEZfYd3jMRiXtHh038Stf0igNCdy4zsCr2D5HvJEfF1cZ3BbkPff+w==
+  dependencies:
+    "@bugsnag/core-performance" "^2.2.0"
 
 "@bugsnag/safe-json-stringify@^6.0.0":
   version "6.0.0"
@@ -1814,6 +1843,11 @@
   version "3.1.0"
   resolved "https://registry.npmjs.org/@react-native-community/geolocation/-/geolocation-3.1.0.tgz"
   integrity sha512-Aj76wMeCLz9kczpe7W2IXxSRNj+hRR7sqyfXq9ZaJIWNH23jeJfzMpovclg+e1uM8Vr8jCYEcZyD4rKub6Vc/Q==
+
+"@react-native-community/netinfo@^11.3.1":
+  version "11.3.1"
+  resolved "https://registry.yarnpkg.com/@react-native-community/netinfo/-/netinfo-11.3.1.tgz#4539371a2f4bd402d932031be82c2449ed63a1a5"
+  integrity sha512-UBnJxyV0b7i9Moa97Av+HKho1ByzX0DtbJXzUQS5E3xhQs6P2D/Os0iw3ouy7joY1TVd6uIhplPbr7l1SJNaNQ==
 
 "@react-native/assets-registry@0.73.1":
   version "0.73.1"
@@ -6267,6 +6301,11 @@ react-native-element-dropdown@^2.10.1:
   integrity sha512-7J3K6T1LZo5H2rsEdAPpYDwhgog4UvatFq8bsW3dCrd2oyXiftn83gcQP1NKRYl4QMyb4WCMXIf+FqmZzS4o/Q==
   dependencies:
     lodash "^4.17.21"
+
+react-native-file-access@^3.0.6:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/react-native-file-access/-/react-native-file-access-3.0.6.tgz#ace3772e562707f9eaf7c877311a1a9d8c825945"
+  integrity sha512-uTG+RIT4I5ce1hGHG6KYuLXqtt2eaINE8+2yz8tlL0yBFI7QpO+nKlU36iObmmpCjKuBMknDhpqWCbQn8ovnfQ==
 
 react-native-geolocation-service@^5.3.1:
   version "5.3.1"

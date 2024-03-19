@@ -30,7 +30,7 @@ export default function StartPoint({ navigation }) {
     }, []);
 
     return (
-        <View className="mt-4">
+        <View className="mt-2">
             <View className="flex justify-center ">
                 <View>
 
@@ -65,25 +65,28 @@ export default function StartPoint({ navigation }) {
                     toggleModalVisible={toggleModalVisible}
                 />
 
-                <Button
-                    colour="tq"
-                    title={"set end point"}
-                    arrow="true"
-                    action={() =>
-                        {
-                            if (start.getName()) {
-                                togglePopupVisible(false)
-                                navigation.navigate("EndPoint",
-                                {
-                                    startingTime: startTime,
-                                    startingLoc: start
-                                })
-                            } else {
-                                togglePopupVisible(true)
+                <View className="pt-5 ">
+
+                    <Button
+                        colour="tq"
+                        title={"set end point"}
+                        arrow="true"
+                        action={() =>
+                            {
+                                if (start.getName()) {
+                                    togglePopupVisible(false)
+                                    navigation.navigate("EndPoint",
+                                    {
+                                        startingTime: startTime,
+                                        startingLoc: start
+                                    })
+                                } else {
+                                    togglePopupVisible(true)
+                                }
                             }
                         }
-                    }
-                />
+                    />
+                </View>
             </View>
 
             <Popup snackbarVisible={popupVisible}

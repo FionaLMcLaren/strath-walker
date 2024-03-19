@@ -60,7 +60,7 @@ export default function StartWalk({route, navigation}) {
 					</View>
 			}
 
-			<View className="flex ">
+			<View className="flex gap-4 pt-4 ">
 				<Button
 					title={(time<0 || time=== "--") ? "Start anyway" : "Start"}
 					action={() => navigation.navigate("Walk",

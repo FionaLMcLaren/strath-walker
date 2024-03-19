@@ -3,52 +3,9 @@ import MapView, {Polyline} from "react-native-maps";
 import {Marker} from "react-native-maps";
 import React from "react";
 import {PosMarker} from "./UserMarker";
+import {mapStyle} from "./mapStyle"
 
 export function PrevWalkMap(route) {
-    const mapStyle = [
-        {
-            "featureType": "administrative",
-            "elementType": "geometry",
-            "stylers": [
-                {
-                    "visibility": "off"
-                }
-            ]
-        },
-        {
-            "featureType": "poi",
-            "stylers": [
-                {
-                    "visibility": "simplified"
-                }
-            ]
-        },
-        {
-            "featureType": "poi.park",
-            "stylers": [
-                {
-                    "visibility": "simplified"
-                }
-            ]
-        },
-        {
-            "featureType": "road",
-            "elementType": "labels.icon",
-            "stylers": [
-                {
-                    "visibility": "off"
-                }
-            ]
-        },
-        {
-            "featureType": "transit",
-            "stylers": [
-                {
-                    "visibility": "simplified"
-                }
-            ]
-        }
-    ]
 
   return (
     <MapView

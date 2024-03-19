@@ -31,7 +31,7 @@ function BtnContent ({title, arrow}) {
 export default function NextBtn({title, colour, action, arrow, outline}) {
 
     return (
-        <Pressable onPress={action} className="active:scale-95 transition-all mt-12 ">
+        <Pressable onPress={action} className="active:scale-95 transition-all ">
             <View
                 onPress={action}
                 className={classNames(
