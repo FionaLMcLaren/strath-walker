@@ -108,6 +108,7 @@ export default function MapLocationPicker(props) {
                       coordinate={marker.getPos()}
                       onPress = {e=>props.changeLoc(marker)}
                       key={marker.getName()}
+                      tracksViewChanges={false}
                     >
                     <MarkerStyle loc={props.loc} name={marker.getName()}/>
 

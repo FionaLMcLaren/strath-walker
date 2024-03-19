@@ -7,12 +7,6 @@ import Text from "../Elements/Text";
 import SwitchBtn from "../Elements/Switch";
 import Popup from "../Elements/Popup";
 
-/*TODO
-disallow end times being greater than start times
-error when trying to set with current time with a time outwith the working hours
-rounding up current times to nearest quarter?
-*/
-
 export default function TimeSelect({time, timeSetter, prevTime, modalVisible, toggleModalVisible, switchSetter }) {
     const hours = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
     const minutes= [0, 15, 30, 45]
@@ -118,13 +112,16 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
                 toggleModalVisible={toggleModalVisible}
                 confirmAction={validateSubmit}
             >
-                <SwitchBtn
-                    switchDefault={setSwitchValue()}
-                    switchText={"Use current time"}
-                    switchVerifier={verifyCurTime()}
-                    verifyFailMsg={"Current time is outwith University hours"}
-                    switchAction={setAsCurrTime}
-                />
+                {
+                    !prevTime &&
+                    <SwitchBtn
+                        switchDefault={setSwitchValue()}
+                        switchText={"Use current time"}
+                        switchVerifier={verifyCurTime()}
+                        verifyFailMsg={"Current time is outwith University hours"}
+                        switchAction={setAsCurrTime}
+                    />
+                }
 
                 <View className="flex flex-row justify-center items-center px-5">
                     <View className="absolute border-b-4 border-2 rounded-md w-10 h-1/4 left-1/4 scale-125 "/>
