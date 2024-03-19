@@ -5,6 +5,7 @@ import {startNotification, stopNotification} from "../components/Elements/Notifi
 import Text from "../components/Elements/Text";
 import Button from "../components/Elements/NextBtn";
 import {saveRoute, savePath} from "../components/Routes/PathStorage";
+import Modal from "../components/Elements/Modal";
 
 function TitleBlock() {
 	return (
@@ -31,6 +32,8 @@ export default function StartWalk({route, navigation}) {
 
 	const [time, setTime] = useState(timeDiff(start));
 	changeTime(start, setTime);
+
+	const [saveModal, setSaveModal] = useState(false);
 
     useEffect(() => {
         startNotification(start, time).then();
@@ -75,7 +78,11 @@ export default function StartWalk({route, navigation}) {
 				<Button
 					title="Save for later"
 					action={() => {
-						saveRoute(selRoute).finally(navigation.navigate("SavedRoute"))
+						saveRoute(selRoute).finally( () => {
+							setSaveModal(true)
+							navigation.navigate("Home")
+						}
+						)
 						}
 					}
 					colour="tq"
@@ -83,6 +90,18 @@ export default function StartWalk({route, navigation}) {
 				/> : null
 				}
 			</View>
+
+			<Modal
+				title={"Save Walk Result"}
+				modalVisible={saveModal}
+				toggleModalVisible={setSaveModal}
+				confirmAction={() => setSaveModal(false)}
+			>
+				<View className="p-4 ">
+					<Text>Successfully saved the route</Text>
+				</View>
+			</Modal>
+
 		</View>
 	)
 }

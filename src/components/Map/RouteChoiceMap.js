@@ -91,7 +91,7 @@ const RenderPolylines=({polylines})=>{
             <Polyline
                 index={index}
                 coordinates={coord}
-                strokeColor="#4285F4"
+                strokeColor="#2dd4bf"
                 strokeWidth={6}
             />
 
@@ -103,7 +103,7 @@ const RenderPolylines=({polylines})=>{
             <Polyline
                 index={index}
                 coordinates={coord}
-                strokeColor="#eb4034"
+                strokeColor="#fde047"
                 strokeWidth={6}
             />
 
