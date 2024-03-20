@@ -49,6 +49,7 @@ const RenderPolylines=({polylines})=>{
                 coordinates={coord}
                 strokeColor="#2dd4bf"
                 strokeWidth={6}
+                tracksViewChanges={false}
             />
 
         );
@@ -61,6 +62,7 @@ const RenderPolylines=({polylines})=>{
                 coordinates={coord}
                 strokeColor="#f9a8d4"
                 strokeWidth={6}
+                tracksViewChanges={false}
             />
 
         );

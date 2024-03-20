@@ -1,0 +1,57 @@
+[
+  {
+    "name": "Rottenrow",
+    "latitude": 55.8619,
+    "longitude": -4.2441
+  },
+  {
+    "name": "George Square",
+    "latitude": 55.8612,
+    "longitude": -4.2502
+  },
+  {
+    "name": "Glasgow Green",
+    "latitude": 55.8491,
+    "longitude": -4.2353
+  },
+  {
+    "name": "Buchanan Galleries",
+    "latitude": 55.8638,
+    "longitude": -4.2524
+  },
+  {
+    "name": "St. Enochs",
+    "latitude": 55.857,
+    "longitude": -4.2516
+  },
+  {
+    "name": "Princes Square",
+    "latitude": 55.8592,
+    "longitude": -4.2538
+  },
+  {
+    "name": "Clutha Bar",
+    "latitude": 55.8546,
+    "longitude": -4.25
+  },
+  {
+    "name": "Glasgow Necropolis",
+    "latitude": 55.8628,
+    "longitude": -4.2312
+  },
+  {
+    "name": "Glasgow Cathedral",
+    "latitude": 55.8631,
+    "longitude": -4.2346
+  },
+  {
+    "name": "Theatre Royal",
+    "latitude": 55.8665,
+    "longitude": -4.2562
+  },
+  {
+    "name": "Glasgow Bridge",
+    "latitude": 55.8555,
+    "longitude": -4.2579
+  }
+]
