@@ -41,11 +41,12 @@ function SelectedRouteTab({pastWalk, navigation, selectedRoute, endTime, setEndT
 
     return (
         <>
-            <MapTab routePage={true}>
+            <MapTab routePage={true} pastWalk={pastWalk} >
                 <View className="flex items-center ">
                     <RouteOption route={selectedRoute} routeName={routeName} routeDistance={distance} routeDuration={duration}/>
                 </View>
 
+                {pastWalk ?  null :
             <View className="py-2 ">
                 <Button
                     colour="tq"
@@ -67,6 +68,7 @@ function SelectedRouteTab({pastWalk, navigation, selectedRoute, endTime, setEndT
                     }}
                     title="Select Route"/>
             </View>
+                }
         </MapTab>
 
             <TimeSelect
@@ -75,7 +77,8 @@ function SelectedRouteTab({pastWalk, navigation, selectedRoute, endTime, setEndT
             prevTime={startTime}
             modalVisible={modalVisible}
             toggleModalVisible={toggleModalVisible}
-            selectedRoute={true}/>
+            selectedRoute={true}
+            />
 
             <Popup snackbarVisible={popupVisible}
                    toggleSnackbarVisible={togglePopupVisible}

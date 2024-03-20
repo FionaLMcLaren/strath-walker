@@ -79,15 +79,15 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
                 toggleModalVisible={toggleModalVisible}
                 confirmAction={validateSubmit}
             >
-                { (selectedRoute && !prevTime) ? null :
-                <SwitchBtn
-                    switchValue={switchValue}
-                    switchSetter={switchSetter}
-                    switchText={"Use current time"}
-                    switchVerifier={(checkInRange(getCurrTime(), 8, 18))}
-                    verifyFailMsg={"Current time is outwith University hours"}
-                    switchAction={setAsCurrTime}
-                />
+                { (selectedRoute || prevTime) ? null :
+                    <SwitchBtn
+                        switchValue={switchValue}
+                        switchSetter={switchSetter}
+                        switchText={"Use current time"}
+                        switchVerifier={(checkInRange(getCurrTime(), 8, 18))}
+                        verifyFailMsg={"Current time is outwith University hours"}
+                        switchAction={setAsCurrTime}
+                    />
                 }
 
                 <View className="flex pb-4 justify-center items-center">

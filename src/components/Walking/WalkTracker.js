@@ -102,7 +102,7 @@ export class WalkTracker {
 
             let between = (lineStartLong <= nodeLong && nodeLong <= lineEndLong) || (lineStartLong >= nodeLong && nodeLong >= lineEndLong) || (lineStartLat <= nodeLat && nodeLat <= lineEndLat) || (lineStartLat >= nodeLat && nodeLat >= lineEndLat)
 
-            if ((total <= (actualDist + (0.5 * actualDist))) && between){
+            if ((total <= (actualDist + (0.2 * actualDist))) && between){
                 let newLine = [node];
                 let newCoord = this.poly.getLeg().slice(i+1);
                 newLine = newLine.concat(newCoord);
@@ -162,11 +162,11 @@ export class WalkTracker {
     setAngle(startLong, startLat, endLong, endLat){
         let angle = Math.round(Math.atan(Math.abs((startLong-endLong)/(startLat-endLat))) * 180/Math.PI); // arctan(opp/adj) = angle
 
-        if((endLong > startLong) && (endLat < startLat)){  //Accounting for position of angle E, W and S
+        if((endLong > startLong) && (endLat <= startLat)){  //Accounting for position of angle E, W and S
             angle = 180-angle;
-        }else if((endLong < startLong) && (endLat < startLat)){
+        }else if((endLong <= startLong) && (endLat < startLat)){
             angle = 270-angle;
-        }else if((endLong < startLong) && (endLat > startLat)){
+        }else if((endLong <= startLong) && (endLat >= startLat)){
             angle = 360-angle;
         }
 
@@ -228,7 +228,7 @@ export class WalkTracker {
     }
 
     atPosition(currLat, currLong, goalLat, goalLong){
-        const range = 0.0005
+        const range = 0.001
         let rangeMaxLat = goalLat + range;
         let rangeMaxLong = goalLong + range;
         let rangeMinLat = goalLat - range;

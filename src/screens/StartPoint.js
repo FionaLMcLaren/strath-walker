@@ -69,7 +69,7 @@ export default function StartPoint({ navigation }) {
 
                     <Button
                         colour="tq"
-                        title={"set end point"}
+                        title={"Set End Point"}
                         arrow="true"
                         action={() =>
                             {

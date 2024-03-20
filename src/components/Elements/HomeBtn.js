@@ -18,7 +18,7 @@ export default function HomeBtn({title, icon, colour, action}) {
 
 
             <View className="flex ">
-                <View className="absolute scale-125 -translate-x-4 -translate-y-5 bg-white border-2 p-4 ">
+                <View className="absolute scale-125 -translate-x-4 -translate-y-5 bg-white border-2 py-4 px-2">
                     <Icon
                         source={icon}
                         size={40}
@@ -26,7 +26,7 @@ export default function HomeBtn({title, icon, colour, action}) {
                 </View>
 
                 <View className="flex flex-row gap-1 self-end ">
-                    <View className="scale-95">
+                    <View className="scale-90 ">
                         <Text bold={true} >
                             {title}
                         </Text>

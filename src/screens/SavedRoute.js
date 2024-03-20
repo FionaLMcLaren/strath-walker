@@ -15,15 +15,14 @@ import LoadScreen from "../components/Elements/LoadingScreen";
 export default function Routes({route, navigation}) {
     const [savedRoutes, setSavedRoutes] = useState([]);
 
-    const [popupVisible, togglePopupVisible] = React.useState(false);
     const [loadScreenVisible, setLoadScreenVisible] = useState(true);
 
     useEffect(() => {
         loadRoutes().then(walks => {
             setSavedRoutes(walks)
+            console.log(savedRoutes);
             setLoadScreenVisible(false)
         });
-        console.log(savedRoutes);
     }, [])
 
 
@@ -36,9 +35,9 @@ export default function Routes({route, navigation}) {
                     <ScrollView className="flex flex-1 p-2 mb-6 " >
                         {
                             savedRoutes ?
-                                savedRoutes.map((route) => {
+                                savedRoutes.map((route, index) => {
                                     return(
-                                        <RouteItem key={route.getKey()}
+                                        <RouteItem   key={index}
                                                      route={route}
                                                      onPress={() => {
                                                              navigation.navigate("SelectedRoute",
