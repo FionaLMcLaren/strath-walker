@@ -14,6 +14,7 @@ import Label from "../components/Elements/Label";
 import classNames from "classnames";
 import CompassModal from "../components/Walking/CompassModal";
 import Popup from "../components/Elements/Popup";
+import {pointsOfInterest} from "../components/Map/LocationData";
 
 function RouteOption({ route, onPress, currentSel }) {
     const isSelected = route == currentSel;
@@ -113,14 +114,13 @@ export default function Routes({route, navigation}) {
     const start = new Location("Rottenrow", 55.861873, -4.244115);
     const end = new Location("Royal College", 55.8612, -4.2464);
 */
-    const middlePoints = [new Location("George Square", 55.8612, -4.2502), new Location("Glasgow Green", 55.8491, -4.2353), new Location("Buchanan Galleries", 55.8638, -4.2524)];
 
     // Use the Google Routes API to get the actual routes
     const [routes, setRoutes] = useState([]);
 
     useEffect(() => {
         // Get the potential destination order
-        const pathGenerator = new PathGenerator(start, end, middlePoints);
+        const pathGenerator = new PathGenerator(start, end, pointsOfInterest);
         const potentialPaths = pathGenerator.getPaths();
 
         getSuitablePolylines(potentialPaths, startTime, endTime).then(routes => setRoutes(routes));
