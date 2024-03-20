@@ -95,7 +95,7 @@ const LocationMarkerStyle =(props)=>{
     if(props.loc.getName() === props.name) {
         return (
             <View className=" p-1 ">
-                <View className="border-black border-2 border-b-4 rounded-md bg-teal-100 p-1 scale-105  ">
+                <View className="border-black border-2 border-b-4 rounded-md bg-teal-100 p-1  ">
                     <Text className="z-30 text-black ">{props.name}</Text>
                 </View>
                 <View

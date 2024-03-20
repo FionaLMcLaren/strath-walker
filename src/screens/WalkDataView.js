@@ -14,7 +14,6 @@ import {checkInRange, getCurrTime} from "../components/Time/TimeFunctions";
 export default function WalkDataView({navigation}) {
 
   const [loadScreenVisible, setLoadScreenVisible] = useState(true);
-  const [popupVisible, togglePopupVisible] = React.useState(false);
 
   const [walkData, setWalkData] = React.useState([]);
   const [avgPace, setAvgPace] = React.useState(null);

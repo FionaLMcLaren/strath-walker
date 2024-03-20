@@ -24,7 +24,8 @@ export default function EndWalk({route, navigation}) {
 
     const distance = walkTracker.getDistance();
     const duration = walkTracker.getReadableDuration();
-    const pace = walkTracker.calculatePace(duration);
+    const timeTaken = walkTracker.getDuration();
+    const pace = (walkTracker.calculatePace(timeTaken)).toFixed(2);
 
     const points = walkTracker.getPoints();
     const history = walkTracker.getLocationHistory();
@@ -140,7 +141,7 @@ export default function EndWalk({route, navigation}) {
                             title="Save Walk Data"
                             action={async () => {
                                 let success = await verifyWalkData(prevData);
-                                if (typeof success === boolean) {
+                                if (typeof success === "boolean") {
                                     let msg;
                                     success ? msg = "Successfully saved walk data." : msg = "Failed to save walk data.";
                                     setSaveResultMsg(msg)

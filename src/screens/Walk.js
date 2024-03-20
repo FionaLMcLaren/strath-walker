@@ -169,9 +169,8 @@ export default function Walk({route, navigation}) {
 	useEffect(() => {
 		if(currLoc){
 			if(tracker.addNode(currLoc)){
-
 				setCongratsModalVisible(true);
-
+				return;
 			}
 
 			if(!tracker.onLine()){

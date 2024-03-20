@@ -54,8 +54,6 @@ export default function WalkListItem({ route, data, onPress, colour }) {
                        colour==="pk" && "bg-pink-100",
                        colour==="yl" && "bg-yellow-100")}>
 
-
-
             <View className="flex " >
 
                 <View className="absolute  bg-white w-20 flex justify-center self-end border-2 p-4 h-full  ">
@@ -67,7 +65,7 @@ export default function WalkListItem({ route, data, onPress, colour }) {
 
                 <View className="w-3/4 p-4 flex gap-2 ">
                     {
-                        route ?
+                        route && !data ?
                             <SavedRouteContent route={route} />
                             :
                             <PastWalkContent data={data} />

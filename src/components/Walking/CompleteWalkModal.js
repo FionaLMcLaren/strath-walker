@@ -1,7 +1,8 @@
 import {Dialog, Portal} from "react-native-paper";
-import {Button} from "react-native";
+import {Button, View} from "react-native";
 import React from "react";
 import Modal from "../Elements/Modal"
+import Text from "../Elements/Text"
 
 export default function SuccessModal({route, navigation, tracker, steps, modalVisible, toggleModalVisible}){
 
@@ -25,7 +26,9 @@ export default function SuccessModal({route, navigation, tracker, steps, modalVi
             title={"Finished Walk"}
 
         >
-                Congratulations! - You Completed the Walk!
+            <View className="p-4">
+                <Text>Congratulations! - You Completed the Walk!</Text>
+            </View>
         </Modal>
     );
 }

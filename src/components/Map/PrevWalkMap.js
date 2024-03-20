@@ -11,7 +11,7 @@ export function PrevWalkMap(route) {
     <MapView
       className={styles.map}
       minZoomLevel={10}
-      style={StyleSheet.absoluteFillObject, {height:"80%"}}
+      style={StyleSheet.absoluteFillObject, {height:"100%"}}
       customMapStyle={mapStyle}
       initialRegion={{
           latitude: 55.851873,
