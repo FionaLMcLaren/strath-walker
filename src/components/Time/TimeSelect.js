@@ -11,12 +11,6 @@ import {getCurrTime, checkInRange} from "./TimeFunctions"
 import {PathGenerator} from "../Routes/GeneratePoints";
 import {getSuitablePolylines} from "../Routes/PolylineRequest";
 
-/*TODO
-disallow end times being greater than start times
-error when trying to set with current time with a time outwith the working hours
-rounding up current times to nearest quarter?
-*/
-
 export default function TimeSelect({time, timeSetter, prevTime, modalVisible, toggleModalVisible, selectedRoute }) {
     const hours = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
     const minutes= [0, 15, 30, 45]
@@ -85,7 +79,7 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
                 toggleModalVisible={toggleModalVisible}
                 confirmAction={validateSubmit}
             >
-                { (selectedRoute) ? null :
+                { (selectedRoute && !prevTime) ? null :
                 <SwitchBtn
                     switchValue={switchValue}
                     switchSetter={switchSetter}

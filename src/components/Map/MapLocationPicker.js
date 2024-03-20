@@ -6,11 +6,9 @@ import {Marker} from "react-native-maps";
 import SwitchBtn from "../Elements/Switch";
 import {MarkerStyle} from "./LocationMarker";
 import Geolocation from "@react-native-community/geolocation";
-import {universityPoints} from "../Routes/Points";
 import Text from "../Elements/Text";
 import {mapStyle} from "./mapStyle"
-
-
+import {universityLocations} from "./LocationData";
 
 export default function MapLocationPicker(props) {
 
@@ -66,7 +64,7 @@ export default function MapLocationPicker(props) {
                     longitudeDelta: 0.002,
                   }}
                 >
-                {universityPoints.map((marker, index) => (
+                {universityLocations.map((marker, index) => (
                     <Marker
                       coordinate={marker.getPos()}
                       onPress = {e=> {
@@ -76,6 +74,7 @@ export default function MapLocationPicker(props) {
                       }
                     }
                       key={index}
+                      tracksViewChanges={false}
                     >
                     <LocationMarkerStyle loc={props.loc} name={marker.getName()}/>
 

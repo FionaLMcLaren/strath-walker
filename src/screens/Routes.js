@@ -12,6 +12,8 @@ import MapTab from "../components/Elements/MapTab";
 import Label from "../components/Elements/Label";
 import classNames from "classnames";
 import Popup from "../components/Elements/Popup";
+import {pointsOfInterest} from "../components/Map/LocationData";
+
 import LoadScreen from "../components/Elements/LoadingScreen"
 function RouteOption({ route, onPress, currentSel }) {
     const isSelected = route == currentSel;
@@ -115,7 +117,7 @@ export default function Routes({route, navigation}) {
 
     useEffect(() => {
         // Get the potential destination order
-        const pathGenerator = new PathGenerator(start, end, middlePoints);
+        const pathGenerator = new PathGenerator(start, end, pointsOfInterest);
         const potentialPaths = pathGenerator.getPaths();
 
         getSuitablePolylines(potentialPaths, startTime, endTime).then(
