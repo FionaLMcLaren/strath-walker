@@ -72,6 +72,7 @@ export const RouteChoiceMap = ({polyline}) => {
                         coordinates={coordinates}
                         strokeColor="#2dd4bf"
                         strokeWidth={6}
+                        tracksViewChanges={false}
                     />
                 }
             </MapView>
