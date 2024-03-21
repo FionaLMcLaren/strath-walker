@@ -181,7 +181,7 @@ export default function Walk({route, navigation}) {
 				}
 
 				if(tracker.checkTime()){
-					sendNotification("headBack", "Running out of time", "Your pace is slower than we expected so you may wish to head back now/start walking back now");
+					sendNotification("headBack", "Running out of time", "Your pace is slower than we expected so you may wish to head back now/start walking back now").then();
 				}
 			}
 

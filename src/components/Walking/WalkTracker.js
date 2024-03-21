@@ -208,8 +208,9 @@ export class WalkTracker {
 
     checkTime(){
         const currTime = new Date();
-        if(!this.sentNotif && (currTime> (this.initialTime + 300000))){
-            let timeDiff = currTime - this.initialTime
+        if(!this.sentNotif && (currTime.getTime()> (this.initialTime.getTime() + 300000))){
+
+            let timeDiff = (currTime - this.initialTime)/1000;
             let pace = this.calculatePace(timeDiff);
             let roughRemainingDist = this.pathDist - this.distance;
             if((roughRemainingDist/pace)>timeDiff){
