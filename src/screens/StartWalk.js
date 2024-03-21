@@ -39,9 +39,6 @@ export default function StartWalk({route, navigation}) {
 
     useEffect(() => {
         startNotification(start, time).then();
-        return()=>{
-            stopNotification().then();
-        }
     }, [])
 
 
@@ -65,15 +62,16 @@ export default function StartWalk({route, navigation}) {
 			<View className="flex gap-4 pt-4 ">
 				<Button
 					title={(time<0 || time=== "--") ? "Start anyway" : "Start"}
-					action={() => navigation.navigate("Walk",
-						{
+					action={() => {
+						stopNotification().then();
+						navigation.navigate("Walk", {
 							startingTime: route.params.startingTime,
 							startingLoc: route.params.startingLoc,
 							endingTime: route.params.endingTime,
 							endingLoc: route.params.endingLoc,
 							selectedRoute: route.params.selectedRoute,
 						})
-					}
+					}}
 					colour="tq"
 				/>
 				{(!isSavedRoute) ?

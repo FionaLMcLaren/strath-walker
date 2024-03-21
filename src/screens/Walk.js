@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {View, Pressable, PermissionsAndroid} from "react-native";
+import {View, Pressable} from "react-native";
 import {WalkMap} from '../components/Map/WalkMap.js';
 import Geolocation, {clearWatch} from "react-native-geolocation-service";
 import {WalkTracker} from "../components/Walking/WalkTracker.js";
@@ -13,6 +13,7 @@ import TwoBtnModal from "../components/Elements/TwoBtnModal";
 import Modal from "../components/Elements/Modal";
 import {sendNotification} from "../components/Elements/Notification";
 import SuccessModal from "../components/Walking/CompleteWalkModal"
+
 
 function RerouteBtn (rerouteFunction) {
 	return (
@@ -124,7 +125,8 @@ export default function Walk({route, navigation}) {
 	const [onLine, changeOnLine] = useState(true);
 	const [goingHome, changeGoingHome] = useState(false);
 	const [destination, changeDestination] = useState();
-	const [congratsModalVisible, setCongratsModalVisible] = React.useState(false);
+	const [congratsModalVisible, setCongratsModalVisible] = useState(false);
+	const [finished, setFinished] = useState(false);
 
 	const [tracker] = useState(new WalkTracker(changeDist, changeAngle, changeHeading, changePoly, changeGoingHome, changeDestination));
 	useEffect(()=>{
@@ -167,21 +169,23 @@ export default function Walk({route, navigation}) {
 
 
 	useEffect(() => {
-		if(currLoc){
+		if(currLoc && !finished){
 			if(tracker.addNode(currLoc)){
 				setCongratsModalVisible(true);
-				return;
-			}
-
-			if(!tracker.onLine()){
-				changeOnLine(tracker.checkAtStartPoint());
+				setFinished(true);
 			}else{
-				changeOnLine(true);
+				if(!tracker.onLine()){
+					changeOnLine(tracker.checkAtStartPoint());
+				}else{
+					changeOnLine(true);
+				}
+
+				if(tracker.checkTime()){
+					sendNotification("headBack", "Running out of time", "Your pace is slower than we expected so you may wish to head back now/start walking back now");
+				}
 			}
 
-			if(tracker.checkTime()){
-				sendNotification("headBack", "Running out of time", "Your pace is slower than we expected so you may wish to head back now/start walking back now");
-			}
+
 		}
 	}, [currLoc]);
 
