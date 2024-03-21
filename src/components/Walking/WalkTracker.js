@@ -43,15 +43,15 @@ export class WalkTracker {
     }
 
     checkAtCheckPoint(node){
-        if(this.atPosition(node["latitude"], node["longitude"], this.checkpoints[0]["latitude"], this.checkpoints[0]["longitude"])){
-            this.checkpoints.slice(1);
-            this.changeDestination(this.checkpoints[0]);
-            this.poly.changeLeg();
+        if(this.atPosition(node["latitude"], node["longitude"], this.checkpoints[0]["latitude"], this.checkpoints[0]["longitude"], 0.001)){
+            this.checkpoints.shift();
             if(this.checkpoints.length === 0){
                 return true;
             }else if(this.checkpoints.length === 1){
                 this.changeGoingHome(true);
             }
+            this.changeDestination(this.checkpoints[0]);
+            this.poly.changeLeg();
         }
 
         return false;
@@ -62,14 +62,15 @@ export class WalkTracker {
         let node = this.locationHistory[this.locationHistory.length-1];
         let nodeLong = node["longitude"];
         let nodeLat = node["latitude"];
+        let lineStartLong = this.poly.getLeg()[0]["longitude"];
+        let lineStartLat = this.poly.getLeg()[0]["latitude"];
 
-        if(this.atPosition(nodeLat, nodeLong, this.poly.getLeg()[0]["latitude"], this.poly.getLeg()[0]["longitude"])){
+        if(this.atPosition(nodeLat, nodeLong, lineStartLat, lineStartLong, 0.0005)){
             let lineEndLong = this.poly.getLeg()[1]["longitude"];
             let lineEndLat = this.poly.getLeg()[1]["latitude"];
             let dist = calculateDistance(nodeLong, nodeLat, lineEndLong, lineEndLat);
             this.setDistance(dist);
-            this.setAngle(nodeLong, nodeLat, lineEndLong, lineEndLat);
-            console.log("abc");
+            this.setAngle(lineStartLong, lineStartLat, lineEndLong, lineEndLat);
             return true;
         }
 
@@ -102,7 +103,7 @@ export class WalkTracker {
 
             let between = (lineStartLong <= nodeLong && nodeLong <= lineEndLong) || (lineStartLong >= nodeLong && nodeLong >= lineEndLong) || (lineStartLat <= nodeLat && nodeLat <= lineEndLat) || (lineStartLat >= nodeLat && nodeLat >= lineEndLat)
 
-            if ((total <= (actualDist + (0.2 * actualDist))) && between){
+            if ((total <= (actualDist + (0.1 * actualDist))) && between){
                 let newLine = [node];
                 let newCoord = this.poly.getLeg().slice(i+1);
                 newLine = newLine.concat(newCoord);
@@ -165,7 +166,7 @@ export class WalkTracker {
         if((endLong > startLong) && (endLat <= startLat)){  //Accounting for position of angle E, W and S
             angle = 180-angle;
         }else if((endLong <= startLong) && (endLat < startLat)){
-            angle = 270-angle;
+            angle = 180+angle;
         }else if((endLong <= startLong) && (endLat >= startLat)){
             angle = 360-angle;
         }
@@ -229,8 +230,7 @@ export class WalkTracker {
         return 0.32
     }
 
-    atPosition(currLat, currLong, goalLat, goalLong){
-        const range = 0.001
+    atPosition(currLat, currLong, goalLat, goalLong, range){
         let rangeMaxLat = goalLat + range;
         let rangeMaxLong = goalLong + range;
         let rangeMinLat = goalLat - range;

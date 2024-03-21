@@ -1,4 +1,4 @@
-import notifee, {TriggerType, cancelTriggerNotifications} from '@notifee/react-native';
+import notifee, {TriggerType} from '@notifee/react-native';
 
 
 export async function MakeChannels() {
@@ -19,8 +19,6 @@ export async function MakeChannels() {
 }
 
 export async function startNotification(start, diff) {
-    console.log(start);
-    console.log(diff);
     if(diff>2) {
 
         const trigger= {
@@ -44,6 +42,7 @@ export async function startNotification(start, diff) {
 }
 
 export async function stopNotification(){
+    console.log("stopped")
     await notifee.cancelNotification("walkTimer");
 }
 
