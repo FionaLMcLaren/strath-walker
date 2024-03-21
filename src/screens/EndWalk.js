@@ -87,8 +87,8 @@ export default function EndWalk({route, navigation}) {
             let count = 0;
 
             finalData.forEach((walk) => {
-                accumulatedPace = accumulatedPace + walk.pace
-                count++
+                accumulatedPace = accumulatedPace + Number(walk.pace);
+                count++;
             });
             let averagePace = (accumulatedPace / count);
             await AsyncStorage.setItem('AveragePace', JSON.stringify(averagePace))
