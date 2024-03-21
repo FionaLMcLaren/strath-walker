@@ -21,7 +21,7 @@ export class WalkTracker {
 
     setRoute(poly){
         this.poly = poly;
-        this.points = this.poly.getPath().getPath();
+        this.points = JSON.parse(JSON.stringify(this.poly.getPath().getPath())); // stringify -> parse to make clone
         this.pathDist = this.poly.getDistance();
         this.checkpoints = this.poly.getPath().getPath();
         this.checkpoints.shift(); //removes start as a checkpoint
@@ -224,7 +224,9 @@ export class WalkTracker {
         if (duration > 0){
             pace = this.distance/duration;
         }
-        return pace;
+        console.log("pace: " + pace);
+        //return pace;
+        return 0.32
     }
 
     atPosition(currLat, currLong, goalLat, goalLong){
