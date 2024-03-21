@@ -12,7 +12,7 @@ export class Polyline {
         this.coordinates = polylines.map(coordinates => coordinates.map(coord => ({latitude: coord[0], longitude: coord[1]})));
         this.path = path;
         this.distance = distance; // in meters
-        this.duration = parseInt(duration.slice(0, -1)); // in seconds
+        this.duration = duration; // in seconds
     }
 
     getKey() {
@@ -113,15 +113,13 @@ export const getPolyline = async (path) => {
         const polylines = legs.map(leg=> decode(leg.polyline.encodedPolyline));
         const distance = route.distanceMeters;
 
-        let pace = await AsyncStorage.getItem('AveragePace');
-        let duration;
+        let pace = await getAvgPace();
+        let duration = parseInt(route.duration.slice(0, -1));
         if(pace !== null && pace !== "0"){
-            pace = JSON.parse(pace).toFixed(2);  //uses average pace to calculate time it would take for user
+            pace = pace.toFixed(2);  //uses average pace to calculate time it would take for user
             //google takes average pace to be around 1.33m/s so we use this number as well as the time taken to get the distance if slopes were not taken into account
-            let equivalentDist = 1.33*route.duration;
+            let equivalentDist = 1.33*duration;
             duration = equivalentDist/pace;
-        }else{
-            duration = route.duration;
         }
 
 
