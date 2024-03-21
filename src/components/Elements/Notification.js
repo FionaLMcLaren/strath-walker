@@ -34,6 +34,9 @@ export async function startNotification(start, diff) {
                 body: 'Your walk is meant to start now',
                 android: {
                     channelId: 'wTime',
+                    pressAction: {
+                        id: 'default',
+                    },
                 },
             },
             trigger,
@@ -42,7 +45,6 @@ export async function startNotification(start, diff) {
 }
 
 export async function stopNotification(){
-    console.log("stopped")
     await notifee.cancelNotification("walkTimer");
 }
 
@@ -51,6 +53,10 @@ export async function sendNotification(channelId, title, body) {
     await notifee.displayNotification({
         title,
         body,
-        android:{channelId}
+        android:{channelId,
+            pressAction: {
+                id: 'default',
+            }
+        }
     });
 }
