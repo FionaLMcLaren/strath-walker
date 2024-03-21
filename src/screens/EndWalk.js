@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import { Alert, View } from "react-native";
 import {ResultMap} from '../components/Map/ResultMap.js';
 import {renderEndWalk} from "../components/Walking/EndWalkRenderer";
-import {savePath} from "../components/Routes/PathStorage";
+import {savePath, saveRoute} from "../components/Routes/PathStorage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { overwriteAlertRes, getPreviousWalkData, saveWalkData} from "../components/WalkData/SaveWalk"
 
@@ -13,7 +13,7 @@ import Label from "../components/Elements/Label";
 
 import TwoBtnModal from "../components/Elements/TwoBtnModal";
 import Modal from "../components/Elements/Modal"
-
+import {Path} from "../components/Routes/Path"
 
 export default function EndWalk({route, navigation}) {
 
@@ -40,21 +40,34 @@ export default function EndWalk({route, navigation}) {
         setCoordinates(c=>([...c, newNode]));
     }
 
+    function pushNewLine(newNode) {
+        setCoordinates(c=>([...c, newNode]));
+    }
+
+    const [prevData, setPrevData] = React.useState(null);
+
+    useEffect(() => {
+        renderEndWalk(walkTracker.getLocationHistory().slice(), pushNewLine, setLoc);
+        void getPreviousWalkData()
+    }, []);
+
+    useEffect(() => {
+        if(prevData !== null){
+            void verifyWalkData()
+        }
+    }, [prevData])
+
     // save walk data functions //
-
     const storageLimit = 5; // change to modify max number of values
-
     const walkData = {
         startTime: walkTracker.getStart(),
         endTime: walkTracker.getEnd(),
         selectedRoute: points,
         distance: distance,
-        steps: steps,
+        steps: 0, // TODO: change to real steps
         walkedCoords: history,
         pace: pace
     }
-
-    const [prevData, setPrevData] = React.useState([]);
 
     const saveWalkData = async (overLimit) => {
         let finalData = prevData;
@@ -86,7 +99,6 @@ export default function EndWalk({route, navigation}) {
             return false;
         }
     }
-
     const getPreviousWalkData = async () => {
         try {
             const value = await AsyncStorage.getItem('WalkData');
@@ -95,15 +107,11 @@ export default function EndWalk({route, navigation}) {
             console.log(error);
         }
     }
-
-    const verifyWalkData = async (prevData) => {
+    const verifyWalkData = async () => {
         try {
-            console.log("prev data: " + prevData);
-            console.log(typeof prevData)
             if(prevData.length === storageLimit){
-                setOverwriteModal(true);
-            }
-            else{
+                return saveWalkData(true);
+            } else{
                 return saveWalkData(false);
             }
         } catch (error) {
@@ -111,12 +119,6 @@ export default function EndWalk({route, navigation}) {
             return false;
         }
     }
-
-
-    useEffect(() => {
-        renderEndWalk(walkTracker.getLocationHistory().slice(), pushNewLine, setLoc);
-        getPreviousWalkData();
-    }, []);
 
 
 
@@ -138,16 +140,15 @@ export default function EndWalk({route, navigation}) {
                             colour={"tq"}
                         />
                         <Button
-                            title="Save Walk Data"
-                            action={async () => {
-                                let success = await verifyWalkData(prevData);
-                                if (typeof success === "boolean") {
-                                    let msg;
-                                    success ? msg = "Successfully saved walk data." : msg = "Failed to save walk data.";
-                                    setSaveResultMsg(msg)
-                                    setSaveModal(true);
-                                }
-                            }}
+                            title="Save Route"
+                            action={() => {
+                                savePath(new Path(walkTracker.getPoints())).finally( () => {
+                                        setSaveResultMsg("Route saved successfully!")
+                                        setSaveModal(true)
+                                    }
+                                )
+                            }
+                            }
                             colour={"pk"}
                             outline={true}
                         />

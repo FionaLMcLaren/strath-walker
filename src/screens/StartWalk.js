@@ -6,6 +6,7 @@ import Text from "../components/Elements/Text";
 import Button from "../components/Elements/NextBtn";
 import {saveRoute, savePath} from "../components/Routes/PathStorage";
 import Modal from "../components/Elements/Modal";
+import {Path} from "../components/Routes/Path";
 
 function TitleBlock() {
 	return (
@@ -34,6 +35,7 @@ export default function StartWalk({route, navigation}) {
 	changeTime(start, setTime);
 
 	const [saveModal, setSaveModal] = useState(false);
+	const [saveResultMsg, setSaveResultMsg] = useState();
 
     useEffect(() => {
         startNotification(start, time).then();
@@ -78,13 +80,11 @@ export default function StartWalk({route, navigation}) {
 				<Button
 					title="Save for later"
 					action={() => {
-
 						saveRoute(selRoute).finally( () => {
 								setSaveModal(true)
-
-						}
+							}
 						)
-						}
+					}
 					}
 					colour="tq"
 					outline={true}
@@ -100,7 +100,7 @@ export default function StartWalk({route, navigation}) {
 				dismissAction={() => navigation.navigate("Home")}
 			>
 				<View className="p-4 ">
-					<Text>Successfully saved the route</Text>
+					<Text>Route saved successfully!</Text>
 				</View>
 			</Modal>
 

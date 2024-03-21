@@ -38,7 +38,7 @@ export default function App() {
                 <Stack.Screen name="EndPoint" component={EndPoint} options={{ title: 'Set End Point' }}/>
                 <Stack.Screen name="StartWalk" component={StartWalk} options={{ title: 'Start your Walk' }}/>
                 <Stack.Screen name="Walk" component={Walk} options={{ headerShown: false }} />
-                <Stack.Screen name="EndWalk" component={EndWalk} options={{ title: 'End your Walk' }}/>
+                <Stack.Screen name="EndWalk" component={EndWalk} options={{ headerShown: false }} />
                 <Stack.Screen name="Routes" component={Routes} options={{ title: 'Select your Route' }}/>
                 <Stack.Screen name="SavedRoute" component={SavedRoute} options={{ title: 'View Saved Routes' }}/>
                 <Stack.Screen name="SelectedRoute" component={SelectedRoute} options={{ title: 'See Selected Route' }}/>

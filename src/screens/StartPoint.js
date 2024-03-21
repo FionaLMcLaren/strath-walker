@@ -44,7 +44,7 @@ export default function StartPoint({ navigation }) {
                 <Label
                     title={"Start Point"}
                     colour={"yl"}>
-                    {start.getName()? start.getName() : "Not Set"}
+                    <Text>{start.getName()? start.getName() : "Not Set"}</Text>
                 </Label>
 
 
