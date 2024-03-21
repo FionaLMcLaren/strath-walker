@@ -41,7 +41,7 @@ export default function WalkDataView({navigation}) {
         <>
           { (loadScreenVisible) ? <LoadScreen  /> : null }
         <View className="flex flex-1 ">
-          <View className=" flex justify-center items-center py-4 border-b-2 bg-teal-100 ">
+          <View className=" flex justify-center items-center py-4 border-b-2 bg-teal-100 px-6 ">
             <Label title={"Your Average Pace"} colour="pk">
               {avgPace ? (avgPace.toString()+"m/s") : "N/A"}
             </Label>

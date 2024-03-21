@@ -21,14 +21,16 @@ function RouteOptionContent ({route, isSelected, routeName, routeDuration, route
                     null
             }
 
-            <Label title={"Name"} colour="yl"/>
-            <Text>{routeName}</Text>
-            <Label title={"Duration"} colour="yl">
-                <Text>{routeDuration}</Text>
-            </Label>
-            <Label title={"Distance"} colour="yl">
-                <Text>{routeDistance}m</Text>
-            </Label>
+            <View className="flex px-10 py-6  ">
+                <Label title={"Name"} colour="yl"/>
+                <Text>{routeName}</Text>
+                <Label title={"Duration"} colour="yl">
+                    <Text>{routeDuration}</Text>
+                </Label>
+                <Label title={"Distance"} colour="yl">
+                    <Text>{routeDistance}m</Text>
+                </Label>
+            </View>
 
         </View>
     )

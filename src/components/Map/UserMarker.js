@@ -7,15 +7,10 @@ export const PosMarker = ({currentPos}) => {
         return(
             <Marker
                 coordinate={currentPos}
-                className="w-full h-full "
                 tracksViewChanges={false}
             >
-                <View className="w-full h-full">
-
                     <View className=" rounded-full h-5 w-5 bg-pink-300 border-2 border-black  " />
                     <View className="absolute rounded-full h-5 w-5 border-2 border-white bg-transparent z-10 scale-90 " />
-
-                </View>
             </Marker>
         );
     }

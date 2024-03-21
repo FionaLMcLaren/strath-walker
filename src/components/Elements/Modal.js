@@ -23,10 +23,10 @@ export default function appModal(props) {
                         icon={"close"}
                         size={25}
                         colour={"black"}
-                        className="rounded-full bg-teal-400 border-2 border-b-4 border-r-4 bg-black "
-                        onDismiss={() => {
+                        className="rounded-full bg-teal-400 border-2 border-b-4 border-r-4 bg-black active:bg-teal-500 transition-all "
+                        onPress={() => {
                             if (props.dismissAction) {
-                                props.dismissAction
+                                props.dismissAction()
                             } else {
                                 props.toggleModalVisible(false)
                             }
