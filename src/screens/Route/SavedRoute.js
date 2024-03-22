@@ -1,31 +1,26 @@
 import React, {useEffect, useState} from "react";
-import {View, ScrollView, Pressable} from "react-native";
-import {Icon} from "react-native-paper";
+import {View, ScrollView} from "react-native";
 import { loadRoutes} from "../../components/Routes/PathStorage";
-
 import Text from "../../components/Elements/Text";
 import NoWalkNotice from "../../components/Elements/NoWalksNotice";
-import RouteItem from "../../components/Elements/WalkListItem"
-import Popup from "../../components/Elements/Popup";
-
-import {getCurrTime, checkInRange} from "../../components/Time/TimeFunctions"
+import RouteItem from "../../components/Elements/WalkListItem";
 import LoadScreen from "../../components/Elements/LoadingScreen";
 
 
-export default function Routes({route, navigation}) {
+//Page showing all the saved routes
+export default function Routes({navigation}) {
     const [savedRoutes, setSavedRoutes] = useState([]);
+    const [loadScreenVisible, setLoadScreenVisible] = useState(true); //whether loading screen is being shown or not
 
-    const [loadScreenVisible, setLoadScreenVisible] = useState(true);
 
     useEffect(() => {
         loadRoutes().then(walks => {
-            setSavedRoutes(walks)
-            console.log(savedRoutes);
-            setLoadScreenVisible(false)
+            setSavedRoutes(walks);
+            setLoadScreenVisible(false);
         });
     }, [])
 
-
+    //if there are saved routes to show then show a scrollable list of their details
     if (savedRoutes.length > 0) {
         return (
             <>
@@ -34,22 +29,19 @@ export default function Routes({route, navigation}) {
                 <View className="flex flex-1 ">
                     <ScrollView className="flex flex-1 p-2 mb-6 " >
                         {
-                            savedRoutes ?
-                                savedRoutes.map((route, index) => {
-                                    return(
-                                        <RouteItem   key={index}
-                                                     route={route}
-                                                     onPress={() => {
-                                                             navigation.navigate("SelectedRoute",
-                                                             {
-                                                                 chosenRoute: route,
-                                                             })
-                                                     }}
-                                                     colour="yl"
-                                        />)
-                                }
-                                )
-                                :   <Text>Loading...</Text>
+                            savedRoutes.map((route, index) => {
+                                return(
+                                    <RouteItem   key={index}
+                                                 route={route}
+                                                 onPress={() => {
+                                                     navigation.navigate("SelectedRoute",
+                                                         {
+                                                             chosenRoute: route,
+                                                         })
+                                                 }}
+                                                 colour="yl"
+                                    />)
+                            })
                         }
                     </ScrollView>
 

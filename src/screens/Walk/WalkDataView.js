@@ -1,25 +1,20 @@
 import React, {useEffect, useState} from "react";
-import { View, ScrollView, SafeAreaView, TouchableHighlight, Button, Alert} from "react-native";
+import {View, ScrollView} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 import RouteItem from "../../components/Elements/WalkListItem";
 import NoWalkNotice from "../../components/Elements/NoWalksNotice";
-
-import Text from "../../components/Elements/Text"
 import LoadScreen from "../../components/Elements/LoadingScreen";
 import Label from "../../components/Elements/Label";
-import Popup from "../../components/Elements/Popup";
-import {checkInRange, getCurrTime} from "../../components/Time/TimeFunctions";
 
+//Screen to show the saved walk data
 export default function WalkDataView({navigation}) {
 
-  const [loadScreenVisible, setLoadScreenVisible] = useState(true);
-
+  const [loadScreenVisible, setLoadScreenVisible] = useState(true); //shows the loading screen while loading
   const [walkData, setWalkData] = React.useState([]);
   const [avgPace, setAvgPace] = React.useState(null);
 
 
-
+  //gets the saved walk data
   const getWalkData = async () => {
     try {
       const walks = await AsyncStorage.getItem('WalkData');
@@ -32,9 +27,10 @@ export default function WalkDataView({navigation}) {
     }
   }
 
-  useEffect( () => {
-     getWalkData().then(e => setLoadScreenVisible(false))
+  useEffect( () => { //once finished rendering hide the loading screen
+     getWalkData().then(() => setLoadScreenVisible(false))
   }, []);
+
 
   if(walkData.length > 0){
     return (
@@ -48,23 +44,21 @@ export default function WalkDataView({navigation}) {
           </View>
           <ScrollView className="flex flex-1 p-2 " >
             {
-              walkData ?
-                    walkData.map((nextWalkData, index) => {
-                      return (
-                          <RouteItem
-                              key={index}
-                              data={nextWalkData}
-                              onPress={() => {
-                                  navigation.navigate("SelectedRoute",
-                                      {
-                                        chosenRoute: nextWalkData,
-                                        pastWalk: true
-                                      })
-                              }}
-                              colour="pk"
-                          />)
-                    })
-                  :   <Text>Loading...</Text>
+              walkData.map((nextWalkData, index) => {
+                return (
+                    <RouteItem
+                        key={index}
+                        data={nextWalkData}
+                        onPress={() => {
+                          navigation.navigate("SelectedRoute",
+                              {
+                                chosenRoute: nextWalkData,
+                                pastWalk: true
+                              })
+                        }}
+                        colour="pk"
+                    />)
+              })
             }
           </ScrollView>
 

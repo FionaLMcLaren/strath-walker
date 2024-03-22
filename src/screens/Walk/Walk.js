@@ -26,7 +26,7 @@ export default function Walk({route, navigation}) {
 	const [onLine, changeOnLine] = useState(true);  //if the user is on the polyline i.e. the route
 	const [destination, changeDestination] = useState();  //the destination the user is currently heading to
 
-	const [steps, setSteps] = useState(0); //number of steps worked
+	const [steps, setSteps] = useState(-1); //number of steps worked
 
 	const [modalVisible, toggleModalVisible] = React.useState(false);
 	const [congratsModalVisible, setCongratsModalVisible] = useState(false);
@@ -38,7 +38,6 @@ export default function Walk({route, navigation}) {
 
 	useEffect(()=>{
 		tracker.setRoute(route.params.selectedRoute);  //sets the route that the user is taking
-		setSteps(0);  //resets steps to 0 as the stepometer counts extra steps while loading
 		Geolocation.getCurrentPosition(  //get initial position of user
 			loc => {
 				tracker.clearHistory();

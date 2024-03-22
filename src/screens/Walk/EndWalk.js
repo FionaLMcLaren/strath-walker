@@ -1,58 +1,52 @@
 import React, {useState, useEffect} from "react";
-import { Alert, View } from "react-native";
+import {View} from "react-native";
 import {ResultMap} from '../../components/Map/ResultMap.js';
 import {renderEndWalk} from "../../components/Walking/EndWalkRenderer";
-import {savePath, saveRoute} from "../../components/Routes/PathStorage";
+import {savePath,} from "../../components/Routes/PathStorage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { overwriteAlertRes, getPreviousWalkData, saveWalkData} from "../components/WalkData/SaveWalk"
-
 import Text from "../../components/Elements/Text";
 import Button from "../../components/Elements/NextBtn";
 import MapTab from "../../components/Elements/MapTab";
 import Label from "../../components/Elements/Label";
-
 import TwoBtnModal from "../../components/Elements/TwoBtnModal";
-import Modal from "../../components/Elements/Modal"
-import {Path} from "../../components/Routes/Path"
+import Modal from "../../components/Elements/Modal";
+import {Path} from "../../components/Routes/Path";
 
 export default function EndWalk({route, navigation}) {
-
-    const walkTracker = route.params.walkTracker;
 
     const [currLoc, setLoc] = useState();
     const [coordinates, setCoordinates] = useState([]);
 
+    const walkTracker = route.params.walkTracker; //gets the passed in walk tracker
+
+    //gets value from walk tracker
     const distance = walkTracker.getDistance();
     const duration = walkTracker.getReadableDuration();
     const timeTaken = walkTracker.getDuration();
     const pace = (walkTracker.calculatePace(timeTaken)).toFixed(2);
-
     const points = walkTracker.getPoints();
     const history = walkTracker.getLocationHistory();
-    const steps = route.params.steps;
+
+    const steps = route.params.steps; //get steps
 
     const [overwriteModal, setOverwriteModal] = useState(false);
     const [saveModal, setSaveModal] = useState(false);
-    const [saveResultMsg, setSaveResultMsg] = useState();
+    const [saveResultMsg, setSaveResultMsg] = useState("");
+    const [prevData, setPrevData] = useState(null);
 
 
+    //ads a node to the coordinates (used when animating the line that the user walked)
     function pushNewLine(newNode) {
         setCoordinates(c=>([...c, newNode]));
     }
-
-    function pushNewLine(newNode) {
-        setCoordinates(c=>([...c, newNode]));
-    }
-
-    const [prevData, setPrevData] = React.useState(null);
 
     useEffect(() => {
-        renderEndWalk(walkTracker.getLocationHistory().slice(), pushNewLine, setLoc);
+        renderEndWalk(walkTracker.getLocationHistory().slice(), pushNewLine, setLoc); //renders the end walk line to animate it
         void getPreviousWalkData()
     }, []);
 
     useEffect(() => {
-        if(prevData !== null){
+        if(prevData !== null){ //verifies the walk data if it exists
             void verifyWalkData()
         }
     }, [prevData])
@@ -64,7 +58,7 @@ export default function EndWalk({route, navigation}) {
         endTime: walkTracker.getEnd(),
         selectedRoute: points,
         distance: distance,
-        steps: 0, // TODO: change to real steps
+        steps: steps,
         walkedCoords: history,
         pace: pace
     }
@@ -99,6 +93,7 @@ export default function EndWalk({route, navigation}) {
             return false;
         }
     }
+
     const getPreviousWalkData = async () => {
         try {
             const value = await AsyncStorage.getItem('WalkData');
@@ -107,6 +102,8 @@ export default function EndWalk({route, navigation}) {
             console.log(error);
         }
     }
+
+
     const verifyWalkData = async () => {
         try {
             if(prevData.length === storageLimit){
