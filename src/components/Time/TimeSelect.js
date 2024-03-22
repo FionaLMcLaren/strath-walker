@@ -11,6 +11,23 @@ import {getCurrTime, checkInRange} from "./TimeFunctions"
 import {PathGenerator} from "../Routes/GeneratePoints";
 import {getSuitablePolylines} from "../Routes/PolylineRequest";
 
+/*
+A component used for when the user is to choose their start/end time.
+ It has two scrollers that represents hours and minutes the user can
+ select for their start/end time, and a switch that can be used by the user
+ to set their start time as their current time. It validates that all times
+ chosen are within University hours and sends a notice if the user tries to
+ set the time as times outwith this range.
+ It takes...
+- time, which is the time that is to be set
+- timeSetter, which changes the value of the time
+- prevTime, which is used to show if the user is setting an end time
+- modalVisible and toggleModalVisible, which controls if this component is
+on screen or not.
+- selectedRoute, which indicates if the component is on the selectedRoute screen
+or not
+ */
+
 export default function TimeSelect({time, timeSetter, prevTime, modalVisible, toggleModalVisible, selectedRoute }) {
     const hours = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
     const minutes= [0, 15, 30, 45]

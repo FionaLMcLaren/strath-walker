@@ -5,6 +5,10 @@ import React from "react";
 import {PosMarker} from "./UserMarker";
 import {mapStyle} from "./mapStyle"
 
+/*
+This map is displayed for viewing a past walk and the polyline it generated, and the points that
+were used as route stops on that walk
+ */
 export function PrevWalkMap(route) {
 
   return (

@@ -10,6 +10,11 @@ import Text from "../Elements/Text";
 import {mapStyle} from "./mapStyle"
 import {universityLocations} from "./LocationData";
 
+/*
+This map is displayed for when the user is choosing a start/end point. It shows all
+the possible University locations they can start/end their walk.
+ */
+
 export default function MapLocationPicker(props) {
 
     const setToCurLoc = () => {

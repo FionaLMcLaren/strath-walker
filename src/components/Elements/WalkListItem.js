@@ -5,6 +5,19 @@ import React from "react";
 import classNames from 'classnames';
 import {Icon} from "react-native-paper";
 
+/*
+Buttons that display on saved pages to represent the data. It will display
+ for either past walks (in which `data` will be truthy) or
+ saved route (in which `route` will be truthy).
+ Other than that, they take in...
+- OnPress, which is the action that happens when you click on the data.
+Often, this will be navigating to the selectedRoute page to render the polyline
+for that data and show more details.
+- A colour, which can either be "yl", "tq", or "pk" - which are
+part of the colour scheme. This is rendered as the primary
+ background of the button
+ */
+
 function SavedRouteContent ({route }) {
     return (
         <>

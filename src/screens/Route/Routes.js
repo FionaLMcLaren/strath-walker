@@ -53,18 +53,15 @@ export default function Routes({route, navigation}) {
                     <MapTab routePage={true}>
                         {routes>1 ? <SwipeArrow /> : null}
                         <ScrollView horizontal={true} className="pb-4 ">
-                            {
-                                routes ?
-                                    routes.map((route) => {
+                            { routes.map((route) => {
                                         return(
                                             <RouteOption key={route.getKey()}
                                                          route={route}
                                                          onPress={(route) => { setSelectedRoute(route) }}
                                                          currentSel={selectedRoute}
                                             />)
-                                    })
-                                    :   <Text>Loading...</Text>
-                            }
+                                    }) }
+
                         </ScrollView>
                         <View className="pb-4 ">
                             <Button

@@ -5,6 +5,10 @@ import React from "react";
 import {MarkerStyle} from "./LocationMarker";
 import {mapStyle} from "./mapStyle"
 
+/*
+The map used when the user is walking. It will show a line to their next stop and
+where the user is on the map.
+ */
 export function WalkMap(props) {
     const coordinates = props.polyline ? props.polyline.getLeg() : [];
 

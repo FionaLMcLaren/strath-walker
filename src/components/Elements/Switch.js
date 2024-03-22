@@ -4,7 +4,17 @@ import Popup from "./Popup";
 import classNames from 'classnames';
 import Text from "./Text";
 
-
+/*
+A switch component that can be turned off and on and have actions corresponding to
+both actions. It takes...
+- switchValue, which is the value of the switch, being either true or false
+- switchSetter, which is used to change the value of the switch when needed
+- switchText, which is the text detailing the switch's purpose
+- switchAction, which is the function that happens when the switch is turned on
+- switchOffAction, which is the function that happens when the switch is turned off
+- switchVerifier, which runs to check that a switch can be turned on
+- verifyFailMsg, which shows a popup message when a switch cannot be turned on
+ */
 export default function SwitchBtn({ switchValue, switchSetter, switchText, switchAction, switchOffAction, switchVerifier, verifyFailMsg  }) {
 
     const [popupVisible, togglePopupVisible] = React.useState(false);

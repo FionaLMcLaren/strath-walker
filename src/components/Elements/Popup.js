@@ -5,7 +5,16 @@ import Text from "./Text"
 import classNames from "classnames";
 import {FadeInUp, FadeOutDown} from "react-native-reanimated";
 
-export default function Popup({snackbarVisible, toggleSnackbarVisible, text}) {
+/*
+A popup display for the app. Will Often be used to show a
+small notice at the bottom of the screen. If it is not dismissed by
+the user, it goes off screen after roughly 5 seconds.
+It takes in...
+- Text, which is the content of the popup
+- snackbarVisible and snackbarVisible - which controls if the popup is
+showing on screen or not.
+ */
+export default function Popup({snackbarVisible, snackbarVisible, text}) {
 
     useEffect(() => {
         if (snackbarVisible) {

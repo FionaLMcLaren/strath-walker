@@ -1,7 +1,9 @@
 import {Marker} from "react-native-maps";
 import {Text, View} from "react-native";
 import React from "react";
-
+/*
+The marker used for rendering the user's location on the map
+ */
 export const PosMarker = ({currentPos}) => {
     if(currentPos){
         return(
