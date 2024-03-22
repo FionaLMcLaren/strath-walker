@@ -1,6 +1,6 @@
 import React from "react";
-import { View, Pressable } from "react-native";
-import {Icon } from "react-native-paper";
+import {Pressable, View} from "react-native";
+import {Icon} from "react-native-paper";
 import Text from "./Text"
 import classNames from 'classnames';
 

@@ -1,6 +1,6 @@
 import {IconButton, Portal} from "react-native-paper";
 import React, {useEffect} from "react";
-import {View, Animated} from "react-native";
+import {Animated, View} from "react-native";
 import Text from "./Text"
 import classNames from "classnames";
 import {FadeInUp, FadeOutDown} from "react-native-reanimated";

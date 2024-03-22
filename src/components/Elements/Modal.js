@@ -1,6 +1,6 @@
-import React, { useState} from "react";
-import { Pressable, View} from "react-native";
-import {Portal, Modal, Icon, IconButton} from "react-native-paper";
+import React from "react";
+import {Pressable, View} from "react-native";
+import {Icon, IconButton, Modal, Portal} from "react-native-paper";
 import Text from "../Elements/Text";
 
 /*
