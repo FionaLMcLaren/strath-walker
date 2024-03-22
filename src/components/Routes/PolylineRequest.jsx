@@ -65,7 +65,7 @@ export const getPolyline = async (path) => {
     const endLocation = path.getLast();
 
     try {
-        console.log("Fetching route " + path.getReadableName() + "...");
+
         const response = await fetch('https://routes.googleapis.com/directions/v2:computeRoutes', {
             method: 'POST',
             headers: {
@@ -127,7 +127,7 @@ export const getPolyline = async (path) => {
         }
 
 
-        console.log("Finished fetching route from " + path.getReadableName() + "!");
+
 
         return new Polyline(
             path.getNamePath().join(" -> "),
@@ -159,9 +159,9 @@ export const getSuitablePolylines = async (sortedPaths, startTime, endTime) => {
 
     let polylineDictionary = {};
 
-    console.log("Fetching suitable polylines...");
-    console.log("Free time: " + freeTimeinSeconds + " seconds");
-    console.log("Possible paths: " + sortedPaths.length);
+
+
+
     const debugTime = new Date().getTime();
 
     //Checks midway through array searching for a value within the acceptable array
@@ -169,7 +169,7 @@ export const getSuitablePolylines = async (sortedPaths, startTime, endTime) => {
         const polyline = await getPolyline(sortedPaths[currentIndex]); //gets polyline from routes api
 
         if (polyline === undefined) {
-            console.log("This route is impossible! Assuming the rest are the same...");
+
             minDurationIndex = 0; maxDurationIndex = -1;
             break;
         }
@@ -216,9 +216,9 @@ export const getSuitablePolylines = async (sortedPaths, startTime, endTime) => {
         suitablePolylines.push(polylineDictionary[i]);
     }
 
-    console.log("Finished fetching suitable polylines!");
-    console.log("Suitable polylines: " + suitablePolylines.length);
-    console.log("Time taken: " + (new Date().getTime() - debugTime) + "ms");
+
+
+
 
     return suitablePolylines;
 }
@@ -236,6 +236,6 @@ export const getAvgPace = async () => {
             return JSON.parse(pace);
         }
     } catch (error) {
-        console.log(error);
+
     }
 }

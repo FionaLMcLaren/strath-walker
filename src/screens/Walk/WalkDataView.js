@@ -23,7 +23,7 @@ export default function WalkDataView({navigation}) {
       const pace = await AsyncStorage.getItem('AveragePace');
       pace !== null ? setAvgPace(+(JSON.parse(pace).toFixed(2))) : setAvgPace(null);
     } catch (error) {
-      console.log(error);
+
     }
   }
 

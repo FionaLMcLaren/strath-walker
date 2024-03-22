@@ -226,7 +226,7 @@ export class WalkTracker {
         if (duration > 0){
             pace = this.distance/duration;
         }
-        console.log("pace: " + pace);
+
         //return pace;
         return 0.32
     }

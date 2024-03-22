@@ -25,7 +25,7 @@ export default function MapLocationPicker(props) {
                 switchSetter(true);
             },
             error => {
-                console.log(error.code, error.message);
+
                 setUsingCurLoc(false);
             },
             {},

@@ -89,7 +89,7 @@ export default function EndWalk({route, navigation}) {
 
             return true;
         } catch (error) {
-            console.log(error)
+
             return false;
         }
     }
@@ -99,7 +99,7 @@ export default function EndWalk({route, navigation}) {
             const value = await AsyncStorage.getItem('WalkData');
             value !== null ? setPrevData(JSON.parse(value)) : setPrevData([]);
         } catch (error) {
-            console.log(error);
+
         }
     }
 
@@ -112,7 +112,7 @@ export default function EndWalk({route, navigation}) {
                 return saveWalkData(false);
             }
         } catch (error) {
-            console.log(error)
+
             return false;
         }
     }

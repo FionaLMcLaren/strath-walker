@@ -19,7 +19,7 @@ export default function Popup({snackbarVisible, snackbarVisible, text}) {
     useEffect(() => {
         if (snackbarVisible) {
             const timeout = setTimeout(() => {
-                console.log("timeout!")
+
                 toggleSnackbarVisible(false)
             }, 5000);
 

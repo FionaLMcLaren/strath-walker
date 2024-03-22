@@ -72,7 +72,7 @@ export default function TimeSelect({timeSetter, prevTime, modalVisible, toggleMo
         if (validateNewTime(timeToSet)) {
             toggleModalVisible(false)
         } else {
-            console.log("not valid time")
+
         }
     }
 
@@ -118,8 +118,8 @@ export default function TimeSelect({timeSetter, prevTime, modalVisible, toggleMo
                         itemTextStyle={{fontFamily:"MPLUSRounded1c-Medium",  color:"black", fontSize: 12}}
                         onValueChange={(hourVal) => {
                             const hour = hours[hoursReadable.indexOf(hourVal)]
-                            console.log("hr change:")
-                            console.log(new Date(new Date(timeToSet.setHours(hour)).setSeconds(0,0)))
+
+
                             setSelHour(hour)
                             setTimeToSet(new Date(new Date(timeToSet.setHours(selHour)).setSeconds(0,0)))
                         }}
@@ -136,8 +136,8 @@ export default function TimeSelect({timeSetter, prevTime, modalVisible, toggleMo
                         itemTextStyle={{fontFamily:"MPLUSRounded1c-Medium", color:"black", fontSize: 12}}
                         onValueChange={(minVal) => {
                             const min = minutes[minutesReadable.indexOf(minVal)]
-                            console.log("min change:")
-                            console.log(new Date(new Date(timeToSet.setMinutes(min)).setSeconds(0,0)))
+
+
                             setSelMin(min)
                             setTimeToSet(new Date(new Date(timeToSet.setMinutes(selMin)).setSeconds(0,0)))
                         }}
