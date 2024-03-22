@@ -1,19 +1,19 @@
 import React, {useState, useEffect} from "react";
 import { Alert, View } from "react-native";
-import {ResultMap} from '../components/Map/ResultMap.js';
-import {renderEndWalk} from "../components/Walking/EndWalkRenderer";
-import {savePath, saveRoute} from "../components/Routes/PathStorage";
+import {ResultMap} from '../../components/Map/ResultMap.js';
+import {renderEndWalk} from "../../components/Walking/EndWalkRenderer";
+import {savePath, saveRoute} from "../../components/Routes/PathStorage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { overwriteAlertRes, getPreviousWalkData, saveWalkData} from "../components/WalkData/SaveWalk"
 
-import Text from "../components/Elements/Text";
-import Button from "../components/Elements/NextBtn";
-import MapTab from "../components/Elements/MapTab";
-import Label from "../components/Elements/Label";
+import Text from "../../components/Elements/Text";
+import Button from "../../components/Elements/NextBtn";
+import MapTab from "../../components/Elements/MapTab";
+import Label from "../../components/Elements/Label";
 
-import TwoBtnModal from "../components/Elements/TwoBtnModal";
-import Modal from "../components/Elements/Modal"
-import {Path} from "../components/Routes/Path"
+import TwoBtnModal from "../../components/Elements/TwoBtnModal";
+import Modal from "../../components/Elements/Modal"
+import {Path} from "../../components/Routes/Path"
 
 export default function EndWalk({route, navigation}) {
 

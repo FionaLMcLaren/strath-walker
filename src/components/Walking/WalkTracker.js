@@ -113,7 +113,7 @@ export class WalkTracker {
                 return true;
             }
         }
-        return false;
+        this.checkAtStartPoint();
     }
 
     setDistance(dist){
@@ -206,7 +206,7 @@ export class WalkTracker {
 
     }
 
-    checkTime(){
+    notEnoughTime(){
         const currTime = new Date();
         if(!this.sentNotif && (currTime.getTime()> (this.initialTime.getTime() + 300000))){
 
