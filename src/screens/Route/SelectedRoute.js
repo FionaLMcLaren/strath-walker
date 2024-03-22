@@ -152,7 +152,6 @@ function SelectedRouteTab({pastWalk, navigation, selectedRoute, endTime, setEndT
         </MapTab>
 
             <TimeSelect
-            time={endTime}
             timeSetter={setEndTime}
             prevTime={startTime}
             modalVisible={modalVisible}
