@@ -1,5 +1,3 @@
-
-
 //Animates a recreation of a walk by just waiting a second and adding another coordinate to the line till done
 export function renderEndWalk(coord, pushNewLine, changePos){
 
@@ -11,7 +9,7 @@ export function renderEndWalk(coord, pushNewLine, changePos){
                 clearInterval(animateCoord);
             }
 
-            pushNewLine(newNode);
+            pushNewLine(newNode); //moves the node to the line
 
             changePos(newNode);
         }, 500);
