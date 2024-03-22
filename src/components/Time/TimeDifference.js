@@ -2,7 +2,7 @@
 
 export function changeTime(startDate, setStateTime){
 
-    let changeTimer = setInterval(function(){
+    let changeTimer = setInterval(function(){ //Change the time every second
         let diff = timeDiff(startDate);
 
         if(diff === 0){
@@ -14,7 +14,7 @@ export function changeTime(startDate, setStateTime){
 
 }
 
-export function timeDiff(startDate){
+export function timeDiff(startDate){ //gets the difference between start time and current time
     let currTime = new Date().getTime();
     let diff = startDate.getTime() - currTime;
 

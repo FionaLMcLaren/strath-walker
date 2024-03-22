@@ -1,6 +1,5 @@
+//Class that stores
 export class Path{
-
-    // new Path(Location) || new Path([Location, Location, ...])
     constructor(locationArgs) {
 
         let node;
@@ -51,6 +50,8 @@ export class Path{
         return this.name;
     }
 
+
+    //Gets the name of a route
     getReadableName() {
         const pathName = this.getFirst().getName() + " to " + this.getLast().getName();
         if (this.path.length > 2) {
@@ -62,8 +63,5 @@ export class Path{
         }
     }
 
-    getDistance() {
-        return this.distance;
-    }
 
 }
