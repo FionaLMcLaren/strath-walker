@@ -1,17 +1,13 @@
 import React, {useEffect, useRef, useState} from "react";
-import { Pressable, View} from "react-native";
-import {Portal, Modal} from "react-native-paper";
+import {View} from "react-native";
+import {Portal} from "react-native-paper";
 import ScrollPicker from "react-native-wheel-scrollview-picker";
-import AppModal from "../Elements/Modal"
+import AppModal from "../Elements/Modal";
 import Text from "../Elements/Text";
 import SwitchBtn from "../Elements/Switch";
-import Popup from "../Elements/Popup";
+import {getCurrTime, checkInRange} from "./TimeFunctions";
 
-import {getCurrTime, checkInRange} from "./TimeFunctions"
-import {PathGenerator} from "../Routes/GeneratePoints";
-import {getSuitablePolylines} from "../Routes/PolylineRequest";
-
-export default function TimeSelect({time, timeSetter, prevTime, modalVisible, toggleModalVisible, selectedRoute }) {
+export default function TimeSelect({timeSetter, prevTime, modalVisible, toggleModalVisible, selectedRoute }) {
     const hours = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
     const minutes= [0, 15, 30, 45]
 
@@ -66,7 +62,7 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
     useEffect(() => {
         let curTime = getCurrTime()
 
-        switchSetter(timeToSet.toString() == curTime.toString());
+        switchSetter(timeToSet.toString() === curTime.toString());
     }, []);
 
 
