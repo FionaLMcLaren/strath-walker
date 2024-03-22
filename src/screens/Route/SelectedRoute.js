@@ -10,8 +10,13 @@ import {checkInRange, getCurrTime, readableDuration} from "../../components/Time
 import Popup from "../../components/Elements/Popup";
 
 
-//Screen shows the selected saved route
+//Screen shows the selected saved walks/routes.
 export default function SelectedRoute({route, navigation}) {
+    /*
+    The function should pass either of these two optional parameters:
+    `selectedRoute` is true when we are wanting to render a saved route,
+    and `pastWalk` is true when we want to render a past walk
+    */
     const selectedRoute = route.params.chosenRoute;
     const pastWalk = route.params.pastWalk;
 
@@ -20,6 +25,12 @@ export default function SelectedRoute({route, navigation}) {
 
     const [modalVisible, toggleModalVisible] = useState(false);
 
+    /*
+    When the `pastWalk` parameter is true, that means we will render a map page for a past walk.
+    We call the `prevWalkMap`, which is responsible for rendering the polyline of the past walk onto
+    the map, and the `SelectedRouteTab` will show the details of the past walk, with the parameter of
+    `pastWalk` being set to true so the component outputs its content for a past walk.
+     */
     if (pastWalk) {
         const start = selectedRoute['selectedRoute'][0]
         const end = selectedRoute['selectedRoute'][selectedRoute['selectedRoute'].length - 1]
@@ -41,6 +52,12 @@ export default function SelectedRoute({route, navigation}) {
             </View>
 
         )
+        /*
+When the `pastWalk` parameter is not true, that means we will render a map page for a selected route.
+We call the `RouteChoiceMap`, as it can make the polyline for our selected route,
+ and the `SelectedRouteTab` will show the details of the past route, with the
+ parameter of `pastWalk` being set to false so the component outputs its content for a selected route.
+ */
     } else {
         const start = selectedRoute.path.getFirst();
         const end = selectedRoute.path.getLast();
@@ -74,6 +91,11 @@ function SelectedRouteTab({pastWalk, navigation, selectedRoute, endTime, setEndT
     let distance
     let duration
 
+    /*
+    When the parameter `pastWalk` has been passed in as true, as we store saved walks differently from
+    a saved route, we need to call the right corresponding methods to get our saved walk's name, distance and
+    duration. When it is false, we call the methods to get the same details of our saved route.
+     */
     if (pastWalk) {
         routeName = selectedRoute['selectedRoute'][0]['name'].toString() + " to " +
             selectedRoute['selectedRoute'][selectedRoute['selectedRoute'].length - 1]['name'].toString()
@@ -87,6 +109,15 @@ function SelectedRouteTab({pastWalk, navigation, selectedRoute, endTime, setEndT
         duration = selectedRoute.getReadableDuration()
     }
 
+    /*
+   If we are rendering a save walk also, we don't give the option to navigate to
+   the start walk page as this is exclusive to saved route - users can repeat saved
+   routes and make this their walk to do.
+   When the user chooses to do a saved route, we give them the option to select their
+   end time, setting their start time as their current time. If the user is outwith
+   university hours, we don't them start the walk. 
+     */
+
     return (
         <>
             <MapTab routePage={true} pastWalk={pastWalk} >
@@ -94,7 +125,8 @@ function SelectedRouteTab({pastWalk, navigation, selectedRoute, endTime, setEndT
                     <RouteOption route={selectedRoute} routeName={routeName} routeDistance={distance} routeDuration={duration}/>
                 </View>
 
-                {pastWalk ?  null :
+
+           {pastWalk ?  null :
             <View className="py-2 ">
                 <Button
                     colour="tq"

@@ -3,6 +3,18 @@ import { Pressable, View} from "react-native";
 import {Portal, Modal, Icon, IconButton} from "react-native-paper";
 import Text from "../Elements/Text";
 
+/*
+A dialog display for the app.
+It takes in...
+- A title, which is rendered as the title of the modal
+- Children, which is the content of the modal
+- modalVisible and setModalVisible - which controls if the modal
+is showing on screen or not
+- confirmAction, which is the action to be executed when the user
+accepts the modal
+- dismissAction, which, if it exists, is the action to be executed
+when the user closes the modal
+ */
 export default function appModal(props) {
 
     return (

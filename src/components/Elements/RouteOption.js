@@ -4,6 +4,18 @@ import Text from "./Text";
 import Label from "./Label";
 import React from "react";
 
+/*
+Renders an option for a route for the user to take. It takes...
+- onPress, which is the action that executes when the option is clicked on (when
+it is on the route option page)
+- route, which is the route that is currently showing on screen
+- currentSel, which is the route that has been chosen by the user, or the app
+in the case of the component being on the saved route page
+- routeName, which is a readable name of the route
+- routeDuration, which is a readable duration of the route
+- routeDistance, which is a readable distance of the route
+ */
+
 function RouteOptionContent ({route, isSelected, routeName, routeDuration, routeDistance}) {
 
     return (

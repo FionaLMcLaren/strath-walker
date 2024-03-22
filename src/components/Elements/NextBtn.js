@@ -4,6 +4,23 @@ import {Icon } from "react-native-paper";
 import Text from "./Text"
 import classNames from 'classnames';
 
+/*
+A button that is used as the main action button for most screens, usually
+having the action to proceed to the next page. It takes...
+- A title, that reads out the action the button will execute
+- Arrow, which, when true, renders an arrow icon next to the button.
+Handy for showing buttons who have the action of going to next
+page
+- An action, which is the function that happens when the button is clicked
+- A colour, which can either be "yl", "tq", or "pk" - which are
+part of the colour scheme. This is rendered as the primary
+ background of the button
+ - Outline, which when true, renders the button in an outlined style.
+ This makes the background white and makes the border the colour of the
+ colour parameter passed in. Handy for showing buttons that could be
+ considered a secondary action to a primary one - so if two or more buttons
+ are on screen at once to imply some sort of importance
+ */
 function BtnContent ({title, arrow}) {
     return (
         <View className={classNames(

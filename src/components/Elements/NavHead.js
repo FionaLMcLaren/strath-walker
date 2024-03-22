@@ -4,6 +4,11 @@ import { getHeaderTitle } from '@react-navigation/elements';
 import Text from "./Text"
 import {Icon, IconButton} from "react-native-paper";
 
+/*
+A NavBar that displays at the top of most screens. It renders
+with a back button that, when clicked, goes back to the previous screen.
+It takes in a title that corresponds to the screen that is showing
+ */
 function BackButton ({navigation, back}) {
 
     if (back) {

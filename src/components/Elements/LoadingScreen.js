@@ -6,7 +6,12 @@ import { FadeIn, FadeOut } from 'react-native-reanimated';
 
 import Text from "./Text"
 
-
+/*
+The loading screen appears as a splash screen for elements
+that are awaiting data, such as our route page. It will be
+displayed as the data is being collected, representing to
+the user that their action is being processed.
+ */
 export default function LoadScreen() {
 
     return (
