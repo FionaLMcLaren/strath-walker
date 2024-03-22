@@ -2,10 +2,10 @@ import React, {useEffect, useState} from "react";
 import {PermissionsAndroid, View} from "react-native";
 import HomeBtn from "../components/Elements/HomeBtn";
 import Text from "../components/Elements/Text";
-import {MakeChannels} from "../components/Elements/Notification";
+import {MakeChannels} from "../components/Notification";
 import Modal from "../components/Elements/Modal";
 
-async function getPermission(){
+async function getPermission(){ //function that triggers permission request for accessing the location
     const allowed = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
     );
@@ -14,15 +14,16 @@ async function getPermission(){
 }
 
 export default function Home({ navigation }) {
-
-    const [permission, setPermission] = useState(false);
-    const [modalVisible, toggleModalVisible] = useState(false);
+    const [permission, setPermission] = useState(false);  //Variable containing if location permission has been allowed or not
+    const [modalVisible, toggleModalVisible] = useState(false);  //If modal is visible or not
 
     useEffect(() => {
         MakeChannels().then();  //Makes the notification channel
-        getPermission().then(r=> setPermission(r));
+        getPermission().then(r=> setPermission(r));  //Attempts to get location permission
     }, []);
 
+
+    //Redirect button (if permission is not enabled then a modal appears telling the user they need to enable it to continue )
     return (
         <View className="flex-1 items-center justify-center gap-2">
             <Text title={true} bold={true} >Welcome!</Text>

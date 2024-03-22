@@ -2,6 +2,10 @@ import {View} from "react-native";
 import Text from "../Elements/Text";
 import React from "react";
 
+/*
+The marker used for rendering location points on the map.
+ */
+
 export const MarkerStyle=(props)=>{
     return(
         <View className=" p-1 ">

@@ -1,44 +1,26 @@
 import React, {useEffect, useState} from "react";
 import {View} from "react-native";
-import {changeTime, timeDiff} from '../components/Time/TimeDifference.js';
-import {startNotification, stopNotification} from "../components/Elements/Notification";
-import Text from "../components/Elements/Text";
-import Button from "../components/Elements/NextBtn";
-import {saveRoute, savePath} from "../components/Routes/PathStorage";
-import Modal from "../components/Elements/Modal";
-import {Path} from "../components/Routes/Path";
+import {changeTime, timeDiff} from '../../components/Time/TimeDifference.js';
+import {startNotification, stopNotification} from "../../components/Notification";
+import Text from "../../components/Elements/Text";
+import Button from "../../components/Elements/NextBtn";
+import {saveRoute} from "../../components/Routes/PathStorage";
+import Modal from "../../components/Elements/Modal";
 
-function TitleBlock() {
-	return (
-		<View>
-			<View className="flex items-center justify-center w-56 p-2 m-6 scale-150 ">
-				<View className="flex flex-row" >
-					<Text xlTitle={true} black={true} >Your </Text>
-					<View className="py-1 px-2 rounded-lg border-black border-b-4 border-2 rotate-3 bg-yellow-300 -translate-y-2 ">
-						<Text xlTitle={true} black={true}>Walk </Text>
-					</View>
-				</View>
 
-				<Text xlTitle={true} black={true}>is Ready! </Text>
-			</View>
-		</View>
-	)
-}
-
+//The Start walk page has a timer counting down to the beginning of the walk as well as the option to save the route for later
 export default function StartWalk({route, navigation}) {
 
 	const start = route.params.startingTime;
 	const selRoute = route.params.selectedRoute;
 	const isSavedRoute = route.params.savedRoute;
-
 	const [time, setTime] = useState(timeDiff(start));
-	changeTime(start, setTime);
+	changeTime(start, setTime);  //start the countdown timer
 
 	const [saveModal, setSaveModal] = useState(false);
-	const [saveResultMsg, setSaveResultMsg] = useState();
 
     useEffect(() => {
-        startNotification(start, time).then();
+        startNotification(start, time).then();  //start timer for sending notification for when walk starts
     }, [])
 
 
@@ -63,7 +45,7 @@ export default function StartWalk({route, navigation}) {
 				<Button
 					title={(time<0 || time=== "--") ? "Start anyway" : "Start"}
 					action={() => {
-						stopNotification().then();
+						stopNotification().then();  //stop the notificaion from sending when a walk is started
 						navigation.navigate("Walk", {
 							startingTime: route.params.startingTime,
 							startingLoc: route.params.startingLoc,
@@ -106,3 +88,21 @@ export default function StartWalk({route, navigation}) {
 	)
 }
 
+
+//Walk is Ready Title
+function TitleBlock() {
+	return (
+		<View>
+			<View className="flex items-center justify-center w-56 p-2 m-6 scale-150 ">
+				<View className="flex flex-row" >
+					<Text xlTitle={true} black={true} >Your </Text>
+					<View className="py-1 px-2 rounded-lg border-black border-b-4 border-2 rotate-3 bg-yellow-300 -translate-y-2 ">
+						<Text xlTitle={true} black={true}>Walk </Text>
+					</View>
+				</View>
+
+				<Text xlTitle={true} black={true}>is Ready! </Text>
+			</View>
+		</View>
+	)
+}
