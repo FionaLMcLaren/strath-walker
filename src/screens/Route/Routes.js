@@ -25,7 +25,7 @@ export default function Routes({route, navigation}) {
     // Use the Google Routes API to get the actual routes
     const [routes, setRoutes] = useState([]);
 
-    const [loadScreenVisible, setLoadScreenVisible] = useState(true)
+    const [loadScreenVisible, setLoadScreenVisible] = useState(true) //sets if loading screen is beeing seen or not
 
     useEffect(() => {
         // Get the potential destination order
