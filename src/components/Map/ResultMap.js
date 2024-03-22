@@ -1,4 +1,4 @@
-import {Text, View, StyleSheet} from "react-native";
+import {StyleSheet, View} from "react-native";
 import MapView, {Polyline} from "react-native-maps";
 import {PosMarker} from "./UserMarker";
 import React from "react";

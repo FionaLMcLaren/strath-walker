@@ -1,5 +1,5 @@
-import React, { useState} from "react";
-import {View, Pressable, Switch} from "react-native";
+import React from "react";
+import {Pressable, Switch, View} from "react-native";
 import Popup from "./Popup";
 import classNames from 'classnames';
 import Text from "./Text";

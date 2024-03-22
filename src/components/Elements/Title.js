@@ -1,5 +1,5 @@
 import React from "react";
-import { View} from "react-native";
+import {View} from "react-native";
 import Text from "../Elements/Text"
 import {Icon} from "react-native-paper";
 import classNames from 'classnames';
