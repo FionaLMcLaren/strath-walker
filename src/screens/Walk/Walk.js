@@ -45,7 +45,7 @@ export default function Walk({route, navigation}) {
 
 			},
 			error => {
-				console.log(error.code, error.message);
+
 			},
 			{
 				enableHighAccuracy: true
@@ -54,11 +54,11 @@ export default function Walk({route, navigation}) {
 
 		const id = Geolocation.watchPosition(  //watch the location of the user
 			loc => {
-				console.log(loc);
+
 				setLoc({"latitude": loc["coords"]["latitude"], "longitude": loc["coords"]["longitude"] })
 			},
 			error => {
-				console.log(error.code, error.message);
+
 			},
 			{
 				enableHighAccuracy: true
