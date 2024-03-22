@@ -1,11 +1,12 @@
-import {Dialog, Portal} from "react-native-paper";
-import {Button, View} from "react-native";
+import {View} from "react-native";
 import React from "react";
-import Modal from "../Elements/Modal"
-import Text from "../Elements/Text"
+import Modal from "../Elements/Modal";
+import Text from "../Elements/Text";
 
+
+//Modal that appears on completion of a walk
 export default function SuccessModal({route, navigation, tracker, steps, modalVisible, toggleModalVisible}){
-
+    //Function that runs to end the walk
     const goToEndWalk = () => {
         tracker.stopWalk();
         toggleModalVisible(false);
