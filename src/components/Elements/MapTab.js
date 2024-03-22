@@ -2,6 +2,22 @@ import {View} from "react-native";
 import React from "react";
 import classNames from "classnames";
 
+/*
+The map tab displays at the bottom of map pages, showing
+the page details while still making sure the map being shown
+on screen is still clear to the user.
+It takes in...
+- A colour, which can either be "yl", "tq", or "pk" - which are
+part of the colour scheme. This is rendered as the primary colour
+of the MapTab's border
+- Either routePage/pastWalk/walkPage/endPage - each one
+corresponding to what screen the `MapTab` is displaying on,
+and is set to true when the `MapTab` is on that page. As
+these screens are going to be displaying different details,
+we use this to set a height good for the length of information.
+- Children, which is the content of the `MapTab`.
+ */
+
 export default function MapTab(props) {
     return (
         <>

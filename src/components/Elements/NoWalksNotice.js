@@ -3,6 +3,11 @@ import Text from "./Text";
 import Button from "./NextBtn";
 import React from "react";
 
+/*
+Rendered for the saved walk/route pages. When there is no data for either of these,
+a screen is displayed to the user to tell them this and prompt them to start a walk
+so they can go to make this data.
+*/
 export default function NoWalkNotice ({navigation}) {
     return (
         <View className="flex flex-1 justify-center items-center ">

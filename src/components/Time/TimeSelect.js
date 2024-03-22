@@ -1,17 +1,30 @@
 import React, {useEffect, useRef, useState} from "react";
-import { Pressable, View} from "react-native";
-import {Portal, Modal} from "react-native-paper";
+import {View} from "react-native";
+import {Portal} from "react-native-paper";
 import ScrollPicker from "react-native-wheel-scrollview-picker";
-import AppModal from "../Elements/Modal"
+import AppModal from "../Elements/Modal";
 import Text from "../Elements/Text";
 import SwitchBtn from "../Elements/Switch";
-import Popup from "../Elements/Popup";
+import {getCurrTime, checkInRange} from "./TimeFunctions";
 
-import {getCurrTime, checkInRange} from "./TimeFunctions"
-import {PathGenerator} from "../Routes/GeneratePoints";
-import {getSuitablePolylines} from "../Routes/PolylineRequest";
+/*
+A component used for when the user is to choose their start/end time.
+ It has two scrollers that represents hours and minutes the user can
+ select for their start/end time, and a switch that can be used by the user
+ to set their start time as their current time. It validates that all times
+ chosen are within University hours and sends a notice if the user tries to
+ set the time as times outwith this range.
+ It takes...
+- time, which is the time that is to be set
+- timeSetter, which changes the value of the time
+- prevTime, which is used to show if the user is setting an end time
+- modalVisible and toggleModalVisible, which controls if this component is
+on screen or not.
+- selectedRoute, which indicates if the component is on the selectedRoute screen
+or not
+ */
 
-export default function TimeSelect({time, timeSetter, prevTime, modalVisible, toggleModalVisible, selectedRoute }) {
+export default function TimeSelect({timeSetter, prevTime, modalVisible, toggleModalVisible, selectedRoute }) {
     const hours = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
     const minutes= [0, 15, 30, 45]
 
@@ -59,14 +72,14 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
         if (validateNewTime(timeToSet)) {
             toggleModalVisible(false)
         } else {
-            console.log("not valid time")
+
         }
     }
 
     useEffect(() => {
         let curTime = getCurrTime()
 
-        switchSetter(timeToSet.toString() == curTime.toString());
+        switchSetter(timeToSet.toString() === curTime.toString());
     }, []);
 
 
@@ -105,8 +118,8 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
                         itemTextStyle={{fontFamily:"MPLUSRounded1c-Medium",  color:"black", fontSize: 12}}
                         onValueChange={(hourVal) => {
                             const hour = hours[hoursReadable.indexOf(hourVal)]
-                            console.log("hr change:")
-                            console.log(new Date(new Date(timeToSet.setHours(hour)).setSeconds(0,0)))
+
+
                             setSelHour(hour)
                             setTimeToSet(new Date(new Date(timeToSet.setHours(selHour)).setSeconds(0,0)))
                         }}
@@ -123,8 +136,8 @@ export default function TimeSelect({time, timeSetter, prevTime, modalVisible, to
                         itemTextStyle={{fontFamily:"MPLUSRounded1c-Medium", color:"black", fontSize: 12}}
                         onValueChange={(minVal) => {
                             const min = minutes[minutesReadable.indexOf(minVal)]
-                            console.log("min change:")
-                            console.log(new Date(new Date(timeToSet.setMinutes(min)).setSeconds(0,0)))
+
+
                             setSelMin(min)
                             setTimeToSet(new Date(new Date(timeToSet.setMinutes(selMin)).setSeconds(0,0)))
                         }}

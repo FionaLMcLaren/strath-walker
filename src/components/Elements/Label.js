@@ -3,6 +3,18 @@ import Text from "./Text";
 import React from "react";
 import classNames from 'classnames';
 
+/*
+A label renders to show labelled information, such as chosen location.
+It takes in...
+- A colour, which can either be "yl", "tq", or "pk" - which are
+part of the colour scheme. This is rendered as the primary colour of
+label
+- A title, which is rendered as the title of the label. For the
+chosen location example, it would be something like "Location".
+- Children, which is the information corresponding to the label.
+For the chosen location example, it would be what the user has
+set as the location.
+ */
 export default function Label(props) {
 
     return(

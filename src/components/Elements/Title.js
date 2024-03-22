@@ -1,9 +1,17 @@
 import React from "react";
-import { View} from "react-native";
+import {View} from "react-native";
 import Text from "../Elements/Text"
 import {Icon} from "react-native-paper";
 import classNames from 'classnames';
 
+/*
+Renders a title element, used to name and segment parts of the app. It takes...
+- title, which is the text of the title
+- icon, which is the icon to display next to the title as a graphic
+- colour, which is the background colour of the graphic displaying next
+to the title text. It can either be "yl", "tq", or "pk" - which are
+part of the colour scheme.
+ */
 export default function Title({title, icon, colour}) {
 
     return (

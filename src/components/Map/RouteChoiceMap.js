@@ -1,10 +1,14 @@
-import {Text, View, StyleSheet} from "react-native";
-import MapView, {Polyline} from "react-native-maps";
-import {Marker} from "react-native-maps";
+import {StyleSheet, View} from "react-native";
+import MapView, {Marker, Polyline} from "react-native-maps";
 import {MarkerStyle} from "./LocationMarker";
 import React from "react";
 import {mapStyle} from "./mapStyle"
 
+/*
+This map is displayed for viewing route options available when a user goes to
+pick the walk they want to do. It renders the stops that are visited as location
+markers and a polyline that shows how we path through these stops.
+ */
 export const RouteChoiceMap = ({polylines}) => {
 
     return (

@@ -1,3 +1,7 @@
+/*
+The style we use for our maps, generated with the styling wizard from Google Maps API
+ */
+
 export const mapStyle = [
     {
         "featureType": "administrative",

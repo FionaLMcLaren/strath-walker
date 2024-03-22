@@ -1,8 +1,22 @@
-import React, { useState} from "react";
-import { Pressable, View} from "react-native";
-import {Portal, Modal, Icon, IconButton} from "react-native-paper";
+import React from "react";
+import {Pressable, View} from "react-native";
+import {IconButton, Modal, Portal} from "react-native-paper";
 import Text from "../Elements/Text";
 
+/*
+A dialog display for the app that shows two actions instead of just the one.
+It takes in...
+- A title, which is rendered as the title of the modal
+- Children, which is the content of the modal
+- modalVisible and setModalVisible - which controls if the modal
+is showing on screen or not
+- actionOne and actionTwo, which is the action to be executed when the user
+clicks that action
+- actionOneText and actionTwoText, which is the text to detail an action's
+function 
+- dismissAction, which, if it exists, is the action to be executed
+when the user closes the modal
+ */
 export default function TwoBtnModal(props) {
 
     return (

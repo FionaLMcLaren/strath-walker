@@ -1,6 +1,7 @@
 import notifee, {TriggerType} from '@notifee/react-native';
 
 
+//Make the notification channels (needded t send notifications on android)
 export async function MakeChannels() {
     await notifee.createChannel({
         id: 'wTime',
@@ -18,10 +19,12 @@ export async function MakeChannels() {
 
 }
 
-export async function startNotification(start, diff) {
-    if(diff>2) {
 
-        const trigger= {
+//Start the notification time for starting a walk
+export async function startNotification(start, diff) {
+    if(diff>2) { //only trigger the notification to send if the walk is 2 minutes or more away
+
+        const trigger= { //triggers notification to send at a specific time
             type: TriggerType.TIMESTAMP,
             timestamp: start.getTime(),
         };
@@ -44,11 +47,15 @@ export async function startNotification(start, diff) {
     }
 }
 
+
+
+//Stops the walk timer notification from being sent out (if the walk has already been started)
 export async function stopNotification(){
     await notifee.cancelNotification("walkTimer");
 }
 
 
+//Send a notification
 export async function sendNotification(channelId, title, body) {
     await notifee.displayNotification({
         title,

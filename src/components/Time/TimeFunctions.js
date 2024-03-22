@@ -13,6 +13,8 @@ export const getCurrTime = () => {
     return (new Date(curTime.getTime()))
 }
 
+
+
 export const checkInRange = (time, low, high) => {
     let lowTime = new Date(new Date(Date.now()).setHours(low, 0, 0, 0));
     let highTime = new Date(new Date(Date.now()).setHours(high, 0, 0, 0));
@@ -20,6 +22,8 @@ export const checkInRange = (time, low, high) => {
     return (time <= highTime) && (time >= lowTime);
 }
 
+
+//Gets the duration in an easier to read format
 export function readableDuration(time) {
     let minsVal = Math.floor(time / 60);
     let secsVal;
@@ -36,27 +40,6 @@ export function readableDuration(time) {
     return (mins + " min " + secs + " sec");
 }
 
-export function changeTime(startDate, setStateTime){
 
-    let changeTimer = setInterval(function(){
-        let currTime = new Date().getTime();
-        let diff = startDate.getTime() - currTime;
-
-
-        if(diff<0){
-            diff = 0;
-        }else{
-            diff = (diff / 1000);
-            diff = Math.floor(diff/60) + 1;
-        }
-
-        if(diff === 0){
-            clearInterval(changeTimer);
-        }
-
-        setStateTime(diff);
-    }, 1000);
-
-}
 
 

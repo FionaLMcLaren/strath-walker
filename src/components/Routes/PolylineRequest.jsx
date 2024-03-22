@@ -1,9 +1,10 @@
 import {GOOGLE_CLOUD_API_KEY} from '@env';
 import {decode} from "@googlemaps/polyline-codec";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, {useState} from "react";
 import {readableDuration} from "../Time/TimeFunctions";
 
+
+//Creates the line that a walker will follow
 export class Polyline {
     constructor(key, polylines, path, distance, duration) {
         this.key = key;
@@ -56,13 +57,15 @@ export class Polyline {
 
 }
 
+
+//gets a polyline using the routes api
 export const getPolyline = async (path) => {
     const startLocation = path.getFirst();
     const intermediateLocations = path.getIntermediates();
     const endLocation = path.getLast();
 
     try {
-        console.log("Fetching route " + path.getReadableName() + "...");
+
         const response = await fetch('https://routes.googleapis.com/directions/v2:computeRoutes', {
             method: 'POST',
             headers: {
@@ -105,6 +108,7 @@ export const getPolyline = async (path) => {
                 units: 'METRIC',
             }),
         })
+
         const data = await response.json();
         if (Object.keys(data).length === 0) return undefined; // routing impossible: ie from america to uk
 
@@ -123,7 +127,7 @@ export const getPolyline = async (path) => {
         }
 
 
-        console.log("Finished fetching route from " + path.getReadableName() + "!");
+
 
         return new Polyline(
             path.getNamePath().join(" -> "),
@@ -137,43 +141,56 @@ export const getPolyline = async (path) => {
     }
 };
 
+
+//Gets an array of suitable polylines
 export const getSuitablePolylines = async (sortedPaths, startTime, endTime) => {
     const UPPER_LEEWAY = 120; // 2 minutes of leeway for the maximum duration
     const LOWER_LEEWAY = 1000; // 10 minutes of leeway for the minimum duration
+
     const freeTimeinSeconds = (endTime.getTime() - startTime.getTime()) / 1000;
     const freeTimeUpperBound = freeTimeinSeconds + UPPER_LEEWAY;
     const freeTimeLowerBound = freeTimeinSeconds - LOWER_LEEWAY;
+
     if (freeTimeinSeconds <= 0) return [];
+
     let minDurationIndex = 0;
     let maxDurationIndex = sortedPaths.length - 1;
     let currentIndex = Math.floor(sortedPaths.length / 2);
 
     let polylineDictionary = {};
 
-    console.log("Fetching suitable polylines...");
-    console.log("Free time: " + freeTimeinSeconds + " seconds");
-    console.log("Possible paths: " + sortedPaths.length);
+
+
+
     const debugTime = new Date().getTime();
 
-    while ( (!(minDurationIndex in polylineDictionary) || !(maxDurationIndex in polylineDictionary)) && minDurationIndex <= maxDurationIndex) {
-        const polyline = await getPolyline(sortedPaths[currentIndex]);
+    //Checks midway through array searching for a value within the acceptable array
+    while ((!(minDurationIndex in polylineDictionary) || !(maxDurationIndex in polylineDictionary)) && minDurationIndex <= maxDurationIndex) {
+        const polyline = await getPolyline(sortedPaths[currentIndex]); //gets polyline from routes api
+
         if (polyline === undefined) {
-            console.log("This route is impossible! Assuming the rest are the same...");
+
             minDurationIndex = 0; maxDurationIndex = -1;
             break;
         }
+
         polylineDictionary[currentIndex] = polyline;
         const TOO_LONG = polyline.getDuration() > freeTimeUpperBound;
         const TOO_SHORT = polyline.getDuration() < freeTimeLowerBound;
+
         if (TOO_LONG) {
             maxDurationIndex = currentIndex - 1;
             currentIndex = Math.ceil((currentIndex + minDurationIndex) / 2);
             if (currentIndex in polylineDictionary) currentIndex--; // final check to avoid infinite loop
-        } else if (TOO_SHORT) {
+
+        }else if (TOO_SHORT) {
             minDurationIndex = currentIndex + 1;
             currentIndex = Math.floor((currentIndex + maxDurationIndex) / 2);
             if (currentIndex in polylineDictionary) currentIndex++; // final check to avoid infinite loop
+
         } else {
+            //once a value is found within the range, checks the values surrounding it until a value is not in the range
+
             let lowerSearchIndex = currentIndex;
             while (lowerSearchIndex > minDurationIndex) {
                 lowerSearchIndex--;
@@ -181,6 +198,8 @@ export const getSuitablePolylines = async (sortedPaths, startTime, endTime) => {
                 polylineDictionary[lowerSearchIndex] = lowerSearchPolyline;
                 if (lowerSearchPolyline.getDuration() < freeTimeLowerBound) minDurationIndex = lowerSearchIndex + 1;
             }
+
+
             let upperSearchIndex = currentIndex;
             while (upperSearchIndex < maxDurationIndex) {
                 upperSearchIndex++;
@@ -192,18 +211,21 @@ export const getSuitablePolylines = async (sortedPaths, startTime, endTime) => {
     }
 
     let suitablePolylines = [];
-    for (let i = minDurationIndex; i <= maxDurationIndex; i++) {
+
+    for (let i = minDurationIndex; i <= maxDurationIndex; i++) { //adds all the polylines in an acceptable range to the suitablePolyline array
         suitablePolylines.push(polylineDictionary[i]);
     }
 
-    console.log("Finished fetching suitable polylines!");
-    console.log("Suitable polylines: " + suitablePolylines.length);
-    console.log("Time taken: " + (new Date().getTime() - debugTime) + "ms");
+
+
+
 
     return suitablePolylines;
 }
 
-// code for reading in average pace, move/use as needed
+
+
+//Code for reading in average pace
 export const getAvgPace = async () => {
     try {
         const pace = await AsyncStorage.getItem('AveragePace');
@@ -214,6 +236,6 @@ export const getAvgPace = async () => {
             return JSON.parse(pace);
         }
     } catch (error) {
-        console.log(error);
+
     }
 }

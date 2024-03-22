@@ -1,9 +1,21 @@
 import React from "react";
-import { View, Pressable } from "react-native";
-import {Icon } from "react-native-paper";
+import {Pressable, View} from "react-native";
+import {Icon} from "react-native-paper";
 import classNames from 'classnames';
 import Text from './Text';
 
+/*
+Buttons that display on the home page. They take in...
+- A title,which displays as the name of the button.
+- An icon, which is the name of the source of the icon
+to be fetched from the icon library (MaterialCommunityIcons)
+- A colour, which can either be "yl", "tq", or "pk" - which are
+part of the colour scheme. This is rendered as the primary
+ background of the button
+- Action, which is to be the action that is triggered when the button
+is pressed. This will likely be a navigation action to go to the
+corresponding page the home page button points to in its title.
+ */
 export default function HomeBtn({title, icon, colour, action}) {
 
     return (
