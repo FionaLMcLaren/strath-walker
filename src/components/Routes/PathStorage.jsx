@@ -5,6 +5,7 @@ import {getPolyline} from "./PolylineRequest";
 
 const MAX_SAVES = 5;
 
+
 const pathExistsInArray = (path, array) => {
     for (const existingPath of array) {
         if (existingPath.getNamePath().toString() === path.getNamePath().toString()) return true;

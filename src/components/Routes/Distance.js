@@ -1,3 +1,4 @@
+//Haversine formula use to calculate distance between 2 points
 export function calculateDistance(startLong, startLat, endLong, endLat){
     let r = 6371000;
 

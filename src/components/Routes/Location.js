@@ -1,3 +1,4 @@
+//Class storing the longitude, latitude and name of locations
 export class Location{  //class to hold location data. Simply stores the longitude and the longitude
 
     constructor(name, lat, long) {
