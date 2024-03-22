@@ -1,14 +1,14 @@
 import "./global.css"
 import Home from './src/screens/Home';
-import StartPoint from './src/screens/StartPoint';
-import EndPoint from './src/screens/EndPoint';
-import Routes from './src/screens/Routes';
-import Walk from './src/screens/Walk';
-import StartWalk from './src/screens/StartWalk';
-import EndWalk from './src/screens/EndWalk';
-import SavedRoute from './src/screens/SavedRoute';
-import SelectedRoute from './src/screens/SelectedRoute';
-import WalkDataView from './src/screens/WalkDataView';
+import StartPoint from './src/screens/SelectPoint/StartPoint';
+import EndPoint from './src/screens/SelectPoint/EndPoint';
+import Routes from './src/screens/Route/Routes';
+import Walk from './src/screens/Walk/Walk';
+import StartWalk from './src/screens/Walk/StartWalk';
+import EndWalk from './src/screens/Walk/EndWalk';
+import SavedRoute from './src/screens/Route/SavedRoute';
+import SelectedRoute from './src/screens/Route/SelectedRoute';
+import WalkDataView from './src/screens/Walk/WalkDataView';
 
 import NavHead from './src/components/Elements/NavHead';
 

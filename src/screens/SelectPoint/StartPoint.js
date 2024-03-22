@@ -1,20 +1,19 @@
 import React, {useEffect, useState} from "react";
 import {View,  LogBox} from "react-native";
-import MapPicker from "../components/Map/MapLocationPicker";
-import TimeSetter from "../components/Time/TimeSetter";
-import Popup from "../components/Elements/Popup";
-import Text from "../components/Elements/Text";
-import Button from "../components/Elements/NextBtn";
-import Title from "../components/Elements/Title";
-import Label from "../components/Elements/Label";
-
-import {Location} from '../components/Routes/Location.js';
-import {PathGenerator} from "../components/Routes/GeneratePoints";
-import {getSuitablePolylines} from "../components/Routes/PolylineRequest";
-import {getCurrTime, checkInRange} from "../components/Time/TimeFunctions";
+import MapPicker from "../../components/Map/MapLocationPicker";
+import TimeSetter from "../../components/Time/TimeSetter";
+import Popup from "../../components/Elements/Popup";
+import Text from "../../components/Elements/Text";
+import Button from "../../components/Elements/NextBtn";
+import Title from "../../components/Elements/Title";
+import Label from "../../components/Elements/Label";
+import {Location} from '../../components/Routes/Location.js';
+import {getCurrTime, checkInRange} from "../../components/Time/TimeFunctions";
 
 
 LogBox.ignoreLogs(['Non-serializable values were found in the navigation state',]);
+
+//Start point page for selecting the start point and time of the walks
 export default function StartPoint({ navigation }) {
     const [start, setStart] = useState(new Location("",0,0));
     const [startTime, setStartTime] = React.useState(new Date(new Date().setHours(8,0,0,0)));
@@ -24,7 +23,7 @@ export default function StartPoint({ navigation }) {
 
     useEffect(() => {
         let currTime = getCurrTime()
-        if (checkInRange(currTime, 8, 17)) {
+        if (checkInRange(currTime, 8, 17)) { //sets the time if within uni hours
             setStartTime(currTime)
         }
     }, []);

@@ -2,14 +2,14 @@ import React, {useEffect, useState} from "react";
 import { View, ScrollView, SafeAreaView, TouchableHighlight, Button, Alert} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
-import RouteItem from "../components/Elements/WalkListItem";
-import NoWalkNotice from "../components/Elements/NoWalksNotice";
+import RouteItem from "../../components/Elements/WalkListItem";
+import NoWalkNotice from "../../components/Elements/NoWalksNotice";
 
-import Text from "../components/Elements/Text"
-import LoadScreen from "../components/Elements/LoadingScreen";
-import Label from "../components/Elements/Label";
-import Popup from "../components/Elements/Popup";
-import {checkInRange, getCurrTime} from "../components/Time/TimeFunctions";
+import Text from "../../components/Elements/Text"
+import LoadScreen from "../../components/Elements/LoadingScreen";
+import Label from "../../components/Elements/Label";
+import Popup from "../../components/Elements/Popup";
+import {checkInRange, getCurrTime} from "../../components/Time/TimeFunctions";
 
 export default function WalkDataView({navigation}) {
 

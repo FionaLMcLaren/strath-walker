@@ -1,23 +1,23 @@
 import React, {useEffect, useState} from "react";
 import {View, ScrollView, Pressable} from "react-native";
 import {Icon} from "react-native-paper";
-import {PathGenerator} from '../components/Routes/GeneratePoints.js';
-import {Location} from '../components/Routes/Location.js';
-import {RouteChoiceMap} from '../components/Map/RouteChoiceMap.js';
-import {getSuitablePolylines} from "../components/Routes/PolylineRequest";
-import {loadPaths, savePath} from "../components/Routes/PathStorage";
+import {PathGenerator} from '../../components/Routes/GeneratePoints.js';
+import {Location} from '../../components/Routes/Location.js';
+import {RouteChoiceMap} from '../../components/Map/RouteChoiceMap.js';
+import {getSuitablePolylines} from "../../components/Routes/PolylineRequest";
+import {loadPaths, savePath} from "../../components/Routes/PathStorage";
 
-import TimeSelect from "../components/Time/TimeSelect"
+import TimeSelect from "../../components/Time/TimeSelect"
 
-import Text from "../components/Elements/Text";
-import Button from "../components/Elements/NextBtn";
-import MapTab from "../components/Elements/MapTab";
-import RouteOption from "../components/Elements/RouteOption";
+import Text from "../../components/Elements/Text";
+import Button from "../../components/Elements/NextBtn";
+import MapTab from "../../components/Elements/MapTab";
+import RouteOption from "../../components/Elements/RouteOption";
 import classNames from "classnames";
-import CompassModal from "../components/Walking/CompassModal";
-import {PrevWalkMap} from "../components/Map/PrevWalkMap";
-import {checkInRange, getCurrTime, readableDuration} from "../components/Time/TimeFunctions";
-import Popup from "../components/Elements/Popup";
+import CompassModal from "../../components/Walking/CompassModal";
+import {PrevWalkMap} from "../../components/Map/PrevWalkMap";
+import {checkInRange, getCurrTime, readableDuration} from "../../components/Time/TimeFunctions";
+import Popup from "../../components/Elements/Popup";
 
 function SelectedRouteTab({pastWalk, navigation, selectedRoute, endTime, setEndTime, startTime, modalVisible, toggleModalVisible, start, end}) {
     const [popupVisible, togglePopupVisible] = useState(false);
