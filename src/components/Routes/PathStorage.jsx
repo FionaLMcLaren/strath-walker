@@ -5,6 +5,7 @@ import {getPolyline} from "./PolylineRequest";
 
 const MAX_SAVES = 5;
 
+
 const pathExistsInArray = (path, array) => {
     for (const existingPath of array) {
         if (existingPath.getNamePath().toString() === path.getNamePath().toString()) return true;
@@ -56,7 +57,7 @@ export const savePath = async (path) => {
 export const loadPaths = async () => {
     //await AsyncStorage.removeItem('savedPaths')
     const pathJSON = await AsyncStorage.getItem('savedPaths');
-    console.log(pathJSON);
+
     if (pathJSON === null) return [];
     const savedPathArraysObject = JSON.parse(pathJSON);
     return savedPathArraysObject.map(pathArray => new Path(pathArray.map(location => new Location(location.name, location.latitude, location.longitude))));

@@ -1,53 +1,15 @@
-import {Text, View, StyleSheet} from "react-native";
+import {StyleSheet, View} from "react-native";
 import MapView, {Polyline} from "react-native-maps";
 import {PosMarker} from "./UserMarker";
 import React from "react";
+import {mapStyle} from "./mapStyle"
 
+/*
+This map is displayed when a walk ends, showing the progress of the user's walk as an animated
+polyline.
+ */
 export function ResultMap(props) {
-    const mapStyle = [
-        {
-            "featureType": "administrative",
-            "elementType": "geometry",
-            "stylers": [
-                {
-                    "visibility": "off"
-                }
-            ]
-        },
-        {
-            "featureType": "poi",
-            "stylers": [
-                {
-                    "visibility": "simplified"
-                }
-            ]
-        },
-        {
-            "featureType": "poi.park",
-            "stylers": [
-                {
-                    "visibility": "simplified"
-                }
-            ]
-        },
-        {
-            "featureType": "road",
-            "elementType": "labels.icon",
-            "stylers": [
-                {
-                    "visibility": "off"
-                }
-            ]
-        },
-        {
-            "featureType": "transit",
-            "stylers": [
-                {
-                    "visibility": "simplified"
-                }
-            ]
-        }
-    ]
+
 
     return (
         <View className="h-full ">

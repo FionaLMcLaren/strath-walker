@@ -1,9 +1,26 @@
 import React from "react";
-import { View, Pressable } from "react-native";
-import {Icon } from "react-native-paper";
+import {Pressable, View} from "react-native";
+import {Icon} from "react-native-paper";
 import Text from "./Text"
 import classNames from 'classnames';
 
+/*
+A button that is used as the main action button for most screens, usually
+having the action to proceed to the next page. It takes...
+- A title, that reads out the action the button will execute
+- Arrow, which, when true, renders an arrow icon next to the button.
+Handy for showing buttons who have the action of going to next
+page
+- An action, which is the function that happens when the button is clicked
+- A colour, which can either be "yl", "tq", or "pk" - which are
+part of the colour scheme. This is rendered as the primary
+ background of the button
+ - Outline, which when true, renders the button in an outlined style.
+ This makes the background white and makes the border the colour of the
+ colour parameter passed in. Handy for showing buttons that could be
+ considered a secondary action to a primary one - so if two or more buttons
+ are on screen at once to imply some sort of importance
+ */
 function BtnContent ({title, arrow}) {
     return (
         <View className={classNames(
@@ -31,32 +48,22 @@ function BtnContent ({title, arrow}) {
 export default function NextBtn({title, colour, action, arrow, outline}) {
 
     return (
-        <View>
-            <View className={classNames(
-                "-z-10 flex mx-4 rounded-3xl translate-y-16 h-12",
-                arrow && "scale-95 ",
-                !arrow && "scale-90 ",
-                !outline &&  "bg-black",
-                colour==="tq" && outline && "bg-teal-400 border-2 border-black",
-                colour==="pk" && outline && "bg-pink-300 border-2 border-black",
-                colour==="yl" && outline && "bg-yellow-300 border-2 border-black"
-            )}>
-            </View>
-
-            <Pressable
+        <Pressable onPress={action} className="active:scale-95 transition-all ">
+            <View
                 onPress={action}
                 className={classNames(
-                    " rounded-3xl border-2 p-1.5 mx-6 flex justify-center overflow-hidden" +
-                    " active:scale-95 transition-all",
-                    colour==="tq" && !outline && "bg-teal-400 border-white",
-                    colour==="pk" && !outline && "bg-pink-300 border-white ",
-                    colour==="yl" && !outline && "bg-yellow-300 border-white",
-                    outline && "bg-white border-black " )}>
+                    " rounded-3xl border-2 border-b-4 border-r-4 p-1.5 mx-6 flex justify-center overflow-hidden",
+                    colour==="tq" && !outline && "bg-teal-400 border-black",
+                    colour==="pk" && !outline && "bg-pink-300 border-black ",
+                    colour==="yl" && !outline && "bg-yellow-300 border-black",
+                    colour==="tq" && outline && "bg-white border-teal-400",
+                    colour==="pk" && outline && "bg-white border-pink-300",
+                    colour==="yl" && outline && "bg-white border-yellow-300" )}>
 
 
                 <BtnContent arrow={arrow} title={title} />
 
-            </Pressable>
-        </View>
+            </View>
+        </Pressable>
     )
 }

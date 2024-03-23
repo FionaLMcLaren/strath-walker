@@ -1,95 +1,59 @@
+# StrathWalk 
+The StrathWalk app aims to get students at Strathclyde healthier and more relaxed by showing them walks they can do 
+between classes.
+
 This is a [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+
+# Installing the App
+
+## Release Build
+Please download the APK we have set up from this app here.
+
+## Development Build
+
+>**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+
+### Step 1: Clone the repository
+Please clone the repository onto your machine so you have all the files to run the app. 
+
+### Step 2: Install Dependencies
+
+To install the app's dependencies, run...
+
+```bash
+npm install --legacy-peer-deps
+```
+
+### Step 3: Start the Application
+
+To start the application, run...
+
+```bash
+# 
+npx react-native start --reset-cache
+```
+
+The reset cache option is needed for ensuring our Nativewind styling works and the app appears as it should
 
 
 # Libraries Used
 
-- Adel Reda (2023) react-native-select-dropdown, npm. Available at: https://www.npmjs.com/package/react-native-select-dropdown (Accessed: 24 February 2024).
-
-- callstack (2024) React Native Paper. Available at: https://reactnativepaper.com/ (Accessed: 24 February 2024).
-
-- NativeWind (2022). Available at: https://nativewind.dev/ (Accessed: 24 February 2024).
-
-- React Navigation (2024). Available at: https://reactnavigation.org/ (Accessed: 24 February 2024).
-
-- react-native-maps (2024) npm. Available at: https://www.npmjs.com/package/react-native-maps (Accessed: 24 February 2024).
-
+- Adel Reda (2023) react-native-select-dropdown, npm. Available at: https://www.npmjs.
+com/package/react-native-select-dropdown (Accessed: 24 February 2024).
+- Angela Yu and google-wombot (2022) @googlemaps/polyline-codec, npm. Available at: https://www.npmjs.
+com/package/@googlemaps/polyline-codec (Accessed: 21 March 2024).
+- Brie B et al. (2024) react-native-maps, npm. Available at: https://www.npmjs.com/package/react-native-maps 
+(Accessed: 24 February 2024).
+callstack (2024) React Native Paper. Available at: https://reactnativepaper.com/ (Accessed: 24 February 2024).
+- Esa-Matti Suuronen and dschmidt (2022) react-native-sensors, npm. Available at: https://www.npmjs.
+com/package/react-native-sensors (Accessed: 21 March 2024).
+- firoframe (2023) react-native-compass-heading, npm. Available at: https://www.npmjs.
+com/package/react-native-compass-heading (Accessed: 21 March 2024).
+- Invertase (2023) Notifee, Notifee. Available at: https://notifee.app/ (Accessed: 21 March 2024).
+- krizzu (2024) @react-native-async-storage/async-storage, npm. Available at: https://www.npmjs.com/package/@react-native-async-storage/async-storage (Accessed: 21 March 2024).
+- Mark Lawlor (2023) NativeWind. Available at: https://nativewind.dev/ (Accessed: 24 February 2024).
+- oblador (2023) react-native-vector-icons, npm. Available at: https://www.npmjs.com/package/react-native-vector-icons (Accessed: 21 March 2024).
+- React Navigation (2024) React Navigation. Available at: https://reactnavigation.org/ (Accessed: 24 February 2024).
+- Software Mansion (2023) React Native Reanimated. Available at: https://docs.swmansion.com/react-native-reanimated/ (Accessed: 21 March 2024).
 - Web Ridge (2024) Paper Dates. Available at: https://web-ridge.github.io/react-native-paper-dates/ (Accessed: 24 February 2024).
 
-
-# Getting Started
-
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
-
-## Step 1: Start the Metro Server
-
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
-
-To start Metro, run the following command from the _root_ of your React Native project:
-
-```bash
-# using npm
-npm start
-
-# OR using Yarn
-yarn start
-```
-
-## Step 2: Start your Application
-
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
-
-### For Android
-
-```bash
-# using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
-
-### For iOS
-
-```bash
-# using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
-
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
-
-## Step 3: Modifying your App
-
-Now that you have successfully run the app, let's modify it.
-
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.

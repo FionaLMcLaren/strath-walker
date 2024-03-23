@@ -1,10 +1,17 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {Pressable, View} from "react-native";
-import {Button, Icon} from "react-native-paper";
+import {Icon} from "react-native-paper";
 import TimeSelect from "./TimeSelect";
-import SwitchBtn from "../Elements/Switch";
 import Text from "../Elements/Text";
-import Popup from "../Elements/Popup";
+
+/*
+The button that opens up the `TimeSelect` dialog that the user
+uses to pick their start/end times for walks.
+ It takes...
+- time, which is the time that is to be set
+- timeSetter, which changes the value of the time
+- prevTime, which is used to show if the user is setting an end time
+ */
 
 export default function TimeSetter({ time, timeSetter, prevTime }) {
     const [modalVisible, toggleModalVisible] = React.useState(false);
@@ -39,7 +46,7 @@ export default function TimeSetter({ time, timeSetter, prevTime }) {
                         </View>
                     </View>
 
-                    <View className="absolute w-3/5 h-full bg-pink-300 p-6 scale-105 scale-y-125 border-black border-2 border-b-4 rounded-lg" />
+                    <View className="absolute w-[58%] h-full bg-pink-300 p-6 scale-105 scale-y-125 border-black border-2 border-b-4 rounded-lg" />
                 </Pressable>
 
             <TimeSelect

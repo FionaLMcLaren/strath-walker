@@ -4,9 +4,16 @@ import MapView from "react-native-maps";
 import {Location} from '../Routes/Location.js';
 import {Marker} from "react-native-maps";
 import SwitchBtn from "../Elements/Switch";
-import Text from "../Elements/Text";
+import {MarkerStyle} from "./LocationMarker";
 import Geolocation from "@react-native-community/geolocation";
+import Text from "../Elements/Text";
+import {mapStyle} from "./mapStyle"
 import {universityLocations} from "./LocationData";
+
+/*
+This map is displayed for when the user is choosing a start/end point. It shows all
+the possible University locations they can start/end their walk.
+ */
 
 export default function MapLocationPicker(props) {
 
@@ -15,9 +22,10 @@ export default function MapLocationPicker(props) {
             loc => {
                 props.changeLoc(new Location("User Location", loc.coords.latitude, loc.coords.longitude))
                 setUsingCurLoc(true);
+                switchSetter(true);
             },
             error => {
-                console.log(error.code, error.message);
+
                 setUsingCurLoc(false);
             },
             {},
@@ -27,61 +35,21 @@ export default function MapLocationPicker(props) {
     const resetLoc = () => {
         props.changeLoc(new Location("",0,0))
         setUsingCurLoc(false);
+        switchSetter(false);
     }
 
     const [usingCurLoc, setUsingCurLoc] = useState(false);
+    const [switchValue, switchSetter] = React.useState(false);
 
-    const mapStyle = [
-        {
-            "featureType": "administrative",
-            "elementType": "geometry",
-            "stylers": [
-                {
-                    "visibility": "off"
-                }
-            ]
-        },
-        {
-            "featureType": "poi",
-            "stylers": [
-                {
-                    "visibility": "off"
-                }
-            ]
-        },
-        {
-            "featureType": "poi.park",
-            "stylers": [
-                {
-                    "visibility": "simplified"
-                }
-            ]
-        },
-        {
-            "featureType": "road",
-            "elementType": "labels.icon",
-            "stylers": [
-                {
-                    "visibility": "off"
-                }
-            ]
-        },
-        {
-            "featureType": "transit",
-            "stylers": [
-                {
-                    "visibility": "off"
-                }
-            ]
-        }
-    ]
+
 
     return(
            <View className="mt-6">
 
                <View className="absolute z-40 px-1 rounded-sm border-black border-b-4 border-2 -rotate-2 bg-white left-1 ">
                    <SwitchBtn
-                       switchDefault={usingCurLoc}
+                       switchValue={switchValue}
+                       switchSetter={switchSetter}
                        switchText={"Use current location"}
                        switchAction={setToCurLoc}
                        switchOffAction={resetLoc}
@@ -101,14 +69,19 @@ export default function MapLocationPicker(props) {
                     longitudeDelta: 0.002,
                   }}
                 >
-                {universityLocations.map((marker) => (
+                {universityLocations.map((marker, index) => (
                     <Marker
                       coordinate={marker.getPos()}
-                      onPress = {e=>props.changeLoc(marker)}
-                      key={marker.getName()}
+                      onPress = {e=> {
+                          props.changeLoc(marker)
+                          setUsingCurLoc(false);
+                          switchSetter(false)
+                      }
+                    }
+                      key={index}
                       tracksViewChanges={false}
                     >
-                    <MarkerStyle loc={props.loc} name={marker.getName()}/>
+                    <LocationMarkerStyle loc={props.loc} name={marker.getName()}/>
 
                     </Marker>
                   ))}
@@ -123,39 +96,25 @@ export default function MapLocationPicker(props) {
 
 }
 
-const MarkerStyle=(props)=>{
-    if(props.loc.getName() === props.name){
-        return(
+const LocationMarkerStyle =(props)=>{
+    if(props.loc.getName() === props.name) {
+        return (
             <View className=" p-1 ">
-                <View className="border-black border-2 border-b-4 rounded-md bg-teal-100 p-1 scale-105  ">
+                <View className="border-black border-2 border-b-4 rounded-md bg-teal-100 p-1  ">
                     <Text className="z-30 text-black ">{props.name}</Text>
                 </View>
-                <View className="absolute bg-teal-100 border-4 border-t-transparent border-l-transparent w-4 h-4 left-10 bottom-2 rotate-45 -translate-y-2 z-20 " />
-                <View className="rounded-full h-4 w-4 bg-amber-400 border-2 border-white translate-x-9 translate-y-0.5 z-10 " />
-                <View className=" absolute rounded-full h-5 w-5 bg-black border-8 translate-x-9 translate-y-0.5 left-0.5 bottom-0.5 " />
+                <View
+                    className="absolute bg-teal-100 border-4 border-t-transparent border-l-transparent w-4 h-4 left-10 bottom-2 rotate-45 translate-x-7 -translate-y-2 z-20 "/>
+                <View
+                    className="rounded-full h-4 w-4 bg-yellow-400 border-2 border-white translate-x-16 translate-y-0.5 z-10 "/>
+                <View
+                    className=" absolute rounded-full h-5 w-5 bg-black border-8 translate-x-16 translate-y-0.5 left-0.5 bottom-0.5 "/>
             </View>
         );
-
     }else{
-        return(
-            <View className=" p-1 ">
-                <View className="border-black border-2 border-b-4 rounded-md bg-white p-1 ">
-                    <Text className="z-30 text-black">{props.name}</Text>
-                </View>
-                <View className="absolute bg-white border-4 border-t-transparent border-l-transparent w-4 h-4 left-10 bottom-2 rotate-45 -translate-y-2 z-20 " />
-                <View className="rounded-full h-4 w-4 bg-amber-200 border-2 border-white translate-x-9 translate-y-0.5 z-10 " />
-                <View className=" absolute rounded-full h-5 w-5 bg-black border-8 translate-x-9 translate-y-0.5 left-0.5 bottom-0.5 " />
-            </View>
-        );
-
+        return(<MarkerStyle name={props.name}/>);
     }
 }
-
-
-const styles = {
-   		map: "items-center justify-center h-4/5 ",
-   	};
-
 
 
 
