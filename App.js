@@ -1,14 +1,14 @@
 import "./global.css"
 import Home from './src/screens/Home';
-import StartPoint from './src/screens/StartPoint';
-import EndPoint from './src/screens/EndPoint';
-import Routes from './src/screens/Routes';
-import Walk from './src/screens/Walk';
-import StartWalk from './src/screens/StartWalk';
-import EndWalk from './src/screens/EndWalk';
-import SavedRoute from './src/screens/SavedRoute';
-import SelectedRoute from './src/screens/SelectedRoute';
-import WalkDataView from './src/screens/WalkDataView';
+import StartPoint from './src/screens/SelectPoint/StartPoint';
+import EndPoint from './src/screens/SelectPoint/EndPoint';
+import Routes from './src/screens/Route/Routes';
+import Walk from './src/screens/Walk/Walk';
+import StartWalk from './src/screens/Walk/StartWalk';
+import EndWalk from './src/screens/Walk/EndWalk';
+import SavedRoute from './src/screens/Route/SavedRoute';
+import SelectedRoute from './src/screens/Route/SelectedRoute';
+import WalkDataView from './src/screens/Walk/WalkDataView';
 
 import NavHead from './src/components/Elements/NavHead';
 
@@ -38,11 +38,11 @@ export default function App() {
                 <Stack.Screen name="EndPoint" component={EndPoint} options={{ title: 'Set End Point' }}/>
                 <Stack.Screen name="StartWalk" component={StartWalk} options={{ title: 'Start your Walk' }}/>
                 <Stack.Screen name="Walk" component={Walk} options={{ headerShown: false }} />
-                <Stack.Screen name="EndWalk" component={EndWalk} options={{ title: 'End your Walk' }}/>
+                <Stack.Screen name="EndWalk" component={EndWalk} options={{ headerShown: false }} />
                 <Stack.Screen name="Routes" component={Routes} options={{ title: 'Select your Route' }}/>
-                <Stack.Screen name="SavedRoute" component={SavedRoute} options={{ title: 'Select Saved Routes' }}/>
-                <Stack.Screen name="SelectedRoute" component={SelectedRoute} options={{ title: 'See your Selected Route' }}/>
-                <Stack.Screen name="WalkDataView" component={WalkDataView} options={{ title: 'View Past Data'}}/>
+                <Stack.Screen name="SavedRoute" component={SavedRoute} options={{ title: 'View Saved Routes' }}/>
+                <Stack.Screen name="SelectedRoute" component={SelectedRoute} options={{ title: 'See Selected Route' }}/>
+                <Stack.Screen name="WalkDataView" component={WalkDataView} options={{ title: 'View Past Walks'}}/>
               </Stack.Navigator>
             </NavigationContainer>
         </PaperProvider>

@@ -1,60 +1,19 @@
-import {Text, View, StyleSheet} from "react-native";
-import MapView, {Polyline} from "react-native-maps";
-import {Marker} from "react-native-maps";
+import {StyleSheet, Text, View} from "react-native";
+import MapView, {Marker, Polyline} from "react-native-maps";
 import React from "react";
-import {PosMarker} from "./UserMarker";
+import {mapStyle} from "./mapStyle"
 
+/*
+This map is displayed for viewing a past walk and the polyline it generated, and the points that
+were used as route stops on that walk
+ */
 export function PrevWalkMap(route) {
-    const mapStyle = [
-        {
-            "featureType": "administrative",
-            "elementType": "geometry",
-            "stylers": [
-                {
-                    "visibility": "off"
-                }
-            ]
-        },
-        {
-            "featureType": "poi",
-            "stylers": [
-                {
-                    "visibility": "simplified"
-                }
-            ]
-        },
-        {
-            "featureType": "poi.park",
-            "stylers": [
-                {
-                    "visibility": "simplified"
-                }
-            ]
-        },
-        {
-            "featureType": "road",
-            "elementType": "labels.icon",
-            "stylers": [
-                {
-                    "visibility": "off"
-                }
-            ]
-        },
-        {
-            "featureType": "transit",
-            "stylers": [
-                {
-                    "visibility": "simplified"
-                }
-            ]
-        }
-    ]
 
   return (
     <MapView
       className={styles.map}
       minZoomLevel={10}
-      style={StyleSheet.absoluteFillObject, {height:"80%"}}
+      style={StyleSheet.absoluteFillObject, {height:"100%"}}
       customMapStyle={mapStyle}
       initialRegion={{
           latitude: 55.851873,
@@ -76,16 +35,17 @@ export function PrevWalkMap(route) {
       }
       {
         route.walk &&
-        route.walk['selectedRoute'].map((marker) => (
-        <Marker
-          coordinate={{
-            latitude: marker['latitude'] ? marker['latitude'] : 0,
-            longitude: marker['longitude'] ? marker['longitude'] : 0
-        }}
-        >
-          <MarkerStyle name={marker['name']}/>
+        route.walk['selectedRoute'].map((marker, index) => (
+            <Marker
+              coordinate={{
+                latitude: marker['latitude'] ? marker['latitude'] : 0,
+                longitude: marker['longitude'] ? marker['longitude'] : 0
+            }}
+              key={index}
+            >
+              <MarkerStyle name={marker['name']}/>
 
-        </Marker>
+            </Marker>
       ))}
     </MapView>
 
@@ -93,9 +53,17 @@ export function PrevWalkMap(route) {
 }
 
 const MarkerStyle=({name})=>{
-    return(<View style={{backgroundColor: "yellow", padding: 10}}>
-      <Text>{name}</Text>
-    </View>);
+    return(
+        <View className=" p-1 z-10 ">
+            <View className="border-black border-2 border-b-4 rounded-md bg-white p-1  ">
+                <Text className="z-30 text-black ">{name}</Text>
+            </View>
+            <View className="absolute bg-white border-4 border-t-transparent border-l-transparent w-4 h-4 left-10 bottom-2 rotate-45 -translate-y-2 z-20 " />
+            <View className="rounded-full h-4 w-4 bg-yellow-300 border-2 border-white translate-x-9 translate-y-0.5 z-10 " />
+            <View className=" absolute rounded-full h-5 w-5 bg-black border-8 translate-x-9 translate-y-0.5 left-0.5 bottom-0.5 " />
+        </View>
+
+    );
 }
 
 const styles = {

@@ -6,7 +6,7 @@
 import React, {useCallback, useState} from "react";
 import {useFocusEffect} from "@react-navigation/native";
 import {View} from "react-native";
-import {IconButton, iconButton} from "react-native-paper";
+import {IconButton} from "react-native-paper";
 import Label from "../Elements/Label";
 import Text from "../Elements/Text";
 import Modal from "../Elements/Modal"
@@ -14,8 +14,6 @@ import Modal from "../Elements/Modal"
 // https://react-native-sensors.github.io/docs/Usage.html
 import { accelerometer, setUpdateIntervalForType, SensorTypes } from 'react-native-sensors';
 import { scan } from 'rxjs';
-import {Dialog, Portal} from "react-native-paper";
-import CompassModal from "./CompassModal";
 
 
 const ACCELEROMETER_UPDATE_INTERVAL = 400;  // Time in ms between each accelerometer reading

@@ -5,6 +5,19 @@ import React from "react";
 import classNames from 'classnames';
 import {Icon} from "react-native-paper";
 
+/*
+Buttons that display on saved pages to represent the data. It will display
+ for either past walks (in which `data` will be truthy) or
+ saved route (in which `route` will be truthy).
+ Other than that, they take in...
+- OnPress, which is the action that happens when you click on the data.
+Often, this will be navigating to the selectedRoute page to render the polyline
+for that data and show more details.
+- A colour, which can either be "yl", "tq", or "pk" - which are
+part of the colour scheme. This is rendered as the primary
+ background of the button
+ */
+
 function SavedRouteContent ({route }) {
     return (
         <>
@@ -48,13 +61,11 @@ export default function WalkListItem({ route, data, onPress, colour }) {
     return (
         <Pressable onPress={onPress}
                    className={classNames(
-                       "border-b-4 border-r-4 border-2 rounded-lg mt-6 ",
-                       "flex active:scale-95 transition-all",
+                       "flex border-b-4 border-r-4 border-2 rounded-lg mt-6 scale-95 ",
+                       "active:border-r-2 active:border-b-2 active:scale-90 transition-all",
                        colour==="tq" && "bg-teal-100",
                        colour==="pk" && "bg-pink-100",
                        colour==="yl" && "bg-yellow-100")}>
-
-
 
             <View className="flex " >
 
@@ -67,7 +78,7 @@ export default function WalkListItem({ route, data, onPress, colour }) {
 
                 <View className="w-3/4 p-4 flex gap-2 ">
                     {
-                        route ?
+                        route && !data ?
                             <SavedRouteContent route={route} />
                             :
                             <PastWalkContent data={data} />
