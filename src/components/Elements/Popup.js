@@ -14,7 +14,7 @@ It takes in...
 - snackbarVisible and snackbarVisible - which controls if the popup is
 showing on screen or not.
  */
-export default function Popup({snackbarVisible, snackbarVisible, text}) {
+export default function Popup({snackbarVisible, toggleSnackbarVisible, text}) {
 
     useEffect(() => {
         if (snackbarVisible) {
