@@ -24,6 +24,9 @@ To install the app's dependencies, run...
 npm install --legacy-peer-deps
 ```
 
+**A NDK will be needed and although this should download automatically with this command, if it does not, you can download the NDK by going on Android Studio and then going to ``Setting > SDK Manager > SDK Tools`` and installing ``NDK (Side by side)``**
+![NDK in SDK Manager](image.png)
+
 ### Step 3: Start the Application
 
 To start the application, run...
