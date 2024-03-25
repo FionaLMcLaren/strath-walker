@@ -7,7 +7,7 @@ This is a [**React Native**](https://reactnative.dev) project, bootstrapped usin
 # Installing the App
 
 ## Release Build
-Please download the APK we have set up from this app here.
+Please download the APK we have set up from this app [HERE](https://devweb2023.cis.strath.ac.uk/~njb21127/app-download/).
 
 ## Development Build
 
