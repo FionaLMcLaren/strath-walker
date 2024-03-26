@@ -29,8 +29,8 @@ export default function StartPoint({ navigation }) {
     }, []);
 
     return (
-        <View className="mt-2">
-            <View className="flex justify-center h-full ">
+        <View className="mt-4">
+            <View className="flex gap-1.5 ">
                 <View>
 
                 <Title
@@ -38,7 +38,6 @@ export default function StartPoint({ navigation }) {
                     icon={"map-marker"}
                     colour={"yl"}
                 />
-
 
                 <Label
                     title={"Start Point"}

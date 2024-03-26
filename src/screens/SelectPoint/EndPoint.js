@@ -28,8 +28,8 @@ export default function EndPoint({ route, navigation }) {
 	}, []);
 
 	return (
-		<View className="mt-2">
-			<View className="flex justify-center h-full ">
+		<View className="mt-4">
+			<View className="flex gap-1.5 ">
 				<View>
 
 					<Title
