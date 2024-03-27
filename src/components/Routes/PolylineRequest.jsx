@@ -118,6 +118,12 @@ export const getPolyline = async (path) => {
         const distance = route.distanceMeters;
 
         let pace = await getAvgPace();
+        if(pace>2){ //caps the pace
+            pace = 2;
+        }else if(pace<0.75) {
+            pace = 0.75;
+        }
+
         let duration = parseInt(route.duration.slice(0, -1));
         if(pace !== null && pace !== "0"){
             pace = pace.toFixed(2);  //uses average pace to calculate time it would take for user
@@ -125,8 +131,6 @@ export const getPolyline = async (path) => {
             let equivalentDist = 1.33*duration;
             duration = equivalentDist/pace;
         }
-
-
 
 
         return new Polyline(
@@ -159,10 +163,6 @@ export const getSuitablePolylines = async (sortedPaths, startTime, endTime) => {
 
     let polylineDictionary = {};
 
-
-
-
-    const debugTime = new Date().getTime();
 
     //Checks midway through array searching for a value within the acceptable array
     while ((!(minDurationIndex in polylineDictionary) || !(maxDurationIndex in polylineDictionary)) && minDurationIndex <= maxDurationIndex) {
