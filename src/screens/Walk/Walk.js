@@ -163,12 +163,13 @@ const DirectionTab = ({onLine, walkTracker, dist, angle, header, changeOnLine}) 
 			<Label title={"Directions"} colour={"yl"} >
 				{
 					(!onLine) ?
-						<Pressable
-							onPress={() => {walkTracker.reroute().then(()=>changeOnLine(walkTracker.checkAtStartPoint()));}}
-							className="pt-2 active:scale-95 transition-all "
-						>
-							<Text colour={true} title={true} >Not on route </Text>
-						</Pressable>
+						<Text>
+								<Text colour={true}
+									  title={true}
+									  action={() => {walkTracker.reroute().then(()=>changeOnLine(walkTracker.checkAtStartPoint()));}}>
+									Not on route
+								</Text>
+						</Text>
 						: <Text>Head {dist}m at {angle}° {header}</Text>
 
 				}
