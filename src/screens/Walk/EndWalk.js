@@ -8,9 +8,9 @@ import Text from "../../components/Elements/Text";
 import Button from "../../components/Elements/NextBtn";
 import MapTab from "../../components/Elements/MapTab";
 import Label from "../../components/Elements/Label";
-import TwoBtnModal from "../../components/Elements/TwoBtnModal";
 import Modal from "../../components/Elements/Modal";
 import {Path} from "../../components/Routes/Path";
+import {Location} from "../../components/Routes/Location";
 
 export default function EndWalk({route, navigation}) {
 
@@ -29,7 +29,6 @@ export default function EndWalk({route, navigation}) {
 
     const steps = route.params.steps; //get steps
 
-    const [overwriteModal, setOverwriteModal] = useState(false);
     const [saveModal, setSaveModal] = useState(false);
     const [saveResultMsg, setSaveResultMsg] = useState("");
     const [prevData, setPrevData] = useState(null);
@@ -139,7 +138,7 @@ export default function EndWalk({route, navigation}) {
                         <Button
                             title="Save Route"
                             action={() => {
-                                savePath(new Path(walkTracker.getPoints())).finally( () => {
+                                savePath(new Path(walkTracker.getPoints().map(p => new Location(p["name"], p["latitude"], p["longitude"])))).finally( () => {
                                         setSaveResultMsg("Route saved successfully!")
                                         setSaveModal(true)
                                     }
@@ -169,35 +168,6 @@ export default function EndWalk({route, navigation}) {
                     <Text>{saveResultMsg}</Text>
                 </View>
             </Modal>
-
-            <TwoBtnModal
-                actionOne={() =>{
-                    setOverwriteModal(false)
-                    saveWalkData(true).then(
-                        success => {
-                            let msg;
-                            success ? msg = "Successfully saved walk data." : msg = "Failed to save walk data.";
-                            setSaveResultMsg(msg)
-                            setSaveModal(true);
-                        }
-                    )
-                }}
-                actionOneText={"Confirm"}
-
-                actionTwo={() => {
-                    setOverwriteModal(false)
-                }}
-                actionTwoText={"Cancel"}
-
-                modalVisible={overwriteModal}
-                toggleModalVisible={setOverwriteModal}
-                title={"Limit Reached"}
-            >
-                <View className="p-4 ">
-                    <Text>Saving this walk will overwrite your oldest saved walk. Is this okay? </Text>
-                </View>
-            </TwoBtnModal>
-
 
         </View >
     );
