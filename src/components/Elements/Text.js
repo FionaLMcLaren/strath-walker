@@ -13,6 +13,8 @@ font family. It takes...
 - title, which makes the text bigger than normal text
 - xlTitle, which makes the text bigger than title text and normal text
 - children, which is the text content
+- action, which is what happens if the text is pressed - for making text buttons
+like the reroute button
  */
 export default function Txt(props) {
 
@@ -36,8 +38,10 @@ export default function Txt(props) {
                 !props.accent && !props.title && "text-xl",
                 props.title && "tracking-wide text-2xl",
                 props.xlTitle && "tracking-wide text-4xl",
-                props.colour && "text-pink-400 text-center tracking-widest "
+                props.colour && "text-pink-400 text-center tracking-widest ",
+                props.action && "active:scale-95 transition-all "
             )}
+            onPress={props.action}
         >
                 {props.children}
         </Text>
