@@ -28,6 +28,10 @@ npm install --legacy-peer-deps
 **A NDK will be needed and although this should download automatically with this command, if it does not, you can download the NDK by going on Android Studio and then going to ``Setting > SDK Manager > SDK Tools`` and installing ``NDK (Side by side)``**
 ![NDK in SDK Manager](image.png)
 
+>**Note**: You will have to set up your own Google Maps Platform API key for the route feature to work. Once you generate a key, sub it into the empty quote marks for `android:value=""/>`, located in `AndroidManifest.xml` file (found `android\app\src\main\AndroidManifest.xml`)
+>![image](https://github.com/user-attachments/assets/c40ee495-fa71-4463-b630-3774cb448e11)
+
+
 ### Step 3: Start the Application
 
 To start the application, run...
